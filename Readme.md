@@ -24,31 +24,42 @@ Proyek ini bertujuan untuk membangun sistem rekomendasi buku dengan menggunakan 
 
 ## Business Understanding
 
-Pada bagian ini, Anda perlu menjelaskan proses klarifikasi masalah.
-
-Bagian laporan ini mencakup:
+Bagian Business Understanding dalam proyek ini bertujuan untuk mengidentifikasi dan menjelaskan permasalahan yang ada dalam platform penyedia buku, serta menguraikan solusi yang akan dikembangkan melalui penerapan sistem rekomendasi berbasis Content-Based Filtering. Dalam konteks ini, akan menganalisis bagaimana sistem rekomendasi dapat membantu pengguna menemukan buku yang lebih relevan dan sesuai dengan minat mereka, sekaligus meningkatkan pengalaman pengguna serta penjualan buku di platform. Proyek ini berfokus pada memberikan solusi untuk masalah-masalah yang ada, termasuk kesulitan pengguna dalam mencari buku yang relevan dan kurangnya rekomendasi yang personal.
 
 ### Problem Statements
 
-Menjelaskan pernyataan masalah:
-- Pernyataan Masalah 1
-- Pernyataan Masalah 2
-- Pernyataan Masalah n
+Pada tahap ini, kita akan memulai dengan menganalisis masalah-masalah utama yang sering dihadapi oleh pengguna platform penyedia buku:
+1. Masalah Pilihan Buku yang Berlebihan
+Dengan jumlah buku yang sangat banyak yang tersedia di berbagai platform digital, pengguna sering kali merasa bingung dan kewalahan dalam memilih buku yang sesuai dengan minat mereka. Platform yang menyediakan koleksi buku dalam jumlah besar tanpa adanya sistem rekomendasi yang efektif seringkali membuat pengguna kehilangan arah dalam pencarian mereka.
+2. Kurangnya Rekomendasi yang Relevan
+Banyak platform buku yang tidak mampu memberikan rekomendasi yang sesuai dengan preferensi pengguna. Hal ini menyebabkan pengguna harus menghabiskan waktu yang lebih lama untuk mencari buku yang mereka minati, atau bahkan mereka tidak menemukan buku yang relevan sama sekali. Rekomendasi yang tidak personal atau tidak akurat dapat menurunkan kualitas pengalaman pengguna secara keseluruhan.
+3. Tidak Ada Sistem yang Dapat Meningkatkan Penjualan Buku
+Tanpa adanya sistem rekomendasi yang tepat, pengguna cenderung membeli buku yang sudah mereka kenal, sementara buku-buku baru atau buku lain yang relevan dengan minat mereka mungkin tidak mendapatkan perhatian. Ini mengarah pada penurunan penjualan buku yang dapat dengan mudah ditingkatkan dengan sistem rekomendasi berbasis konten.
 
 ### Goals
+Dalam rangka mengatasi permasalahan tersebut, tujuan dari proyek ini adalah:
+1. Menyediakan Rekomendasi Buku yang Personalisasi dan Relevan
+Sistem rekomendasi berbasis Content-Based Filtering yang akan dibangun bertujuan untuk menganalisis fitur-fitur buku seperti judul, pengarang, dan penerbit. Sistem ini akan memberikan rekomendasi buku yang relevan berdasarkan kesamaan fitur dengan buku yang sebelumnya dibaca atau disukai oleh pengguna.
 
-Menjelaskan tujuan proyek yang menjawab pernyataan masalah:
-- Jawaban pernyataan masalah 1
-- Jawaban pernyataan masalah 2
-- Jawaban pernyataan masalah n
+2. Meningkatkan Pengalaman Pengguna dengan Rekomendasi yang Akurat
+Salah satu tujuan utama dari proyek ini adalah untuk meningkatkan pengalaman pengguna dengan memberikan rekomendasi yang lebih akurat dan personal. Dengan sistem rekomendasi yang relevan, pengguna tidak hanya akan lebih mudah menemukan buku yang mereka suka, tetapi juga merasa lebih dihargai karena platform memahami preferensi mereka.
 
-Semua poin di atas harus diuraikan dengan jelas. Anda bebas menuliskan berapa pernyataan masalah dan juga goals yang diinginkan.
+3. Meningkatkan Penjualan Buku
+Melalui penerapan sistem rekomendasi berbasis konten, platform penyedia buku diharapkan dapat meningkatkan penjualan buku. Dengan memberikan rekomendasi yang relevan dan menarik bagi pengguna, buku yang mungkin sebelumnya tidak dipertimbangkan akan lebih sering dibeli. Hal ini berpotensi meningkatkan pendapatan dan efisiensi dalam penggunaan katalog buku.
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Menambahkan bagian “Solution Approach” yang menguraikan cara untuk meraih goals. Bagian ini dibuat dengan ketentuan sebagai berikut: 
+### Solution Approach
+Untuk mencapai tujuan tersebut, beberapa pendekatan yang akan digunakan dalam mengembangkan sistem rekomendasi berbasis konten antara lain:
 
-    ### Solution statements
-    - Mengajukan 2 atau lebih solution approach (algoritma atau pendekatan sistem rekomendasi).
+1. Content-Based Filtering
+Content-Based Filtering adalah pendekatan yang digunakan untuk menganalisis dan membandingkan kesamaan antar buku berdasarkan fitur kontennya. Dalam hal ini, fitur buku seperti judul, pengarang, dan penerbit akan digunakan untuk menghitung tingkat kesamaan antar buku yang sudah dibaca dan buku yang belum dibaca pengguna. Buku yang memiliki kesamaan tinggi dengan buku yang disukai pengguna akan lebih cenderung direkomendasikan.
+
+2. Cosine Similarity
+Salah satu metode yang dapat digunakan untuk mengukur kesamaan antar buku adalah Cosine Similarity. Teknik ini mengukur derajat kesamaan antara dua buku dengan membandingkan vektor fitur mereka. Semakin kecil sudut antara dua vektor, semakin mirip buku tersebut. Metode ini efektif untuk memberikan rekomendasi yang akurat berdasarkan kemiripan fitur buku.
+
+3. TF-IDF (Term Frequency-Inverse Document Frequency)
+TF-IDF adalah teknik yang digunakan untuk menghitung pentingnya kata dalam deskripsi buku, judul, atau kategori. Dengan menggunakan TF-IDF, sistem dapat memberi bobot lebih pada kata-kata yang lebih relevan, sehingga meningkatkan akurasi dalam memberikan rekomendasi buku yang sesuai dengan preferensi pengguna.
+
+Dengan pendekatan-pendekatan ini, diharapkan sistem rekomendasi yang dibangun akan efektif dalam memberikan saran buku yang relevan, meningkatkan pengalaman pengguna, serta membantu meningkatkan penjualan buku di platform.
 
 ## Data Understanding
 Paragraf awal bagian ini menjelaskan informasi mengenai jumlah data, kondisi data, dan informasi mengenai data yang digunakan. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).

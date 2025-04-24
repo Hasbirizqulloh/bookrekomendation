@@ -62,17 +62,69 @@ TF-IDF adalah teknik yang digunakan untuk menghitung pentingnya kata dalam deskr
 Dengan pendekatan-pendekatan ini, diharapkan sistem rekomendasi yang dibangun akan efektif dalam memberikan saran buku yang relevan, meningkatkan pengalaman pengguna, serta membantu meningkatkan penjualan buku di platform.
 
 ## Data Understanding
-Paragraf awal bagian ini menjelaskan informasi mengenai jumlah data, kondisi data, dan informasi mengenai data yang digunakan. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
+Proyek ini menggunakan dataset dari platform Book-Crossing Dataset yang tersedia di Kaggle. Dataset ini berisi informasi tentang buku, pengguna, serta penilaian (rating) yang diberikan pengguna terhadap buku tersebut. Dataset ini terdiri dari tiga file utama, yaitu Books.csv, Users.csv, dan Ratings.csv, yang masing-masing memiliki jumlah data sebagai berikut:
 
-Selanjutnya, uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
+- Books.csv: berisi 271.360 entri data mengenai buku, termasuk ISBN, judul, pengarang, tahun terbit, penerbit, serta link gambar sampul dalam berbagai ukuran.
 
-Variabel-variabel pada Restaurant UCI dataset adalah sebagai berikut:
-- accepts : merupakan jenis pembayaran yang diterima pada restoran tertentu.
-- cuisine : merupakan jenis masakan yang disajikan pada restoran.
-- dst
+- Users.csv: berisi 278.858 data pengguna yang mencakup ID pengguna, lokasi, dan usia (jika tersedia).
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data beserta insight atau exploratory data analysis.
+- Ratings.csv: berisi 1.149.780 data rating yang diberikan oleh pengguna terhadap buku tertentu, yang direpresentasikan dalam skala integer dari 0 hingga 10.
+
+### Informasi Dataset
+Berikut ini adalah penjabaran variabel dari masing-masing file dalam dataset:
+
+1. Books.csv
+
+      - ISBN: Nomor identifikasi unik untuk setiap buku.
+
+      - Book-Title: Judul buku.
+
+      - Book-Author: Nama pengarang buku.
+
+      - Year-Of-Publication: Tahun buku tersebut diterbitkan.
+
+      - Publisher: Nama penerbit buku.
+        
+      - Image-URL-S: URL gambar sampul buku dalam ukuran kecil.
+
+      - Image-URL-M: URL gambar sampul buku dalam ukuran sedang.
+
+      - Image-URL-L: URL gambar sampul buku dalam ukuran besar.
+
+2. Users.csv
+   
+      - User-ID: ID unik dari setiap pengguna.
+
+      - Location: Lokasi pengguna yang umumnya terdiri dari kota, negara bagian, dan negara.
+
+      - Age: Umur pengguna. Nilai ini bersifat opsional dan terdapat banyak nilai yang hilang.
+  
+3.  Ratings.csv
+      - User-ID: ID pengguna yang memberikan rating.
+
+      - ISBN: ID buku yang dinilai.
+
+      - Book-Rating: Nilai rating yang diberikan, berkisar dari 0 (tidak memberikan penilaian) hingga 10 (penilaian tertinggi).
+  
+### Kondisi dan Kualitas Data
+Setelah dilakukan analisis awal terhadap missing values, diperoleh beberapa insight sebagai berikut:
+
+- Dataset Books.csv memiliki sedikit nilai kosong, seperti pada kolom Book-Author dan Publisher, masing-masing hanya kurang dari 0.001% dari total data. Kolom Image-URL-L juga memiliki beberapa nilai kosong namun tidak signifikan.
+
+- Dataset Users.csv menunjukkan bahwa kolom Age memiliki banyak nilai kosong (sekitar 39,7%), sehingga perlu dilakukan pertimbangan apakah kolom ini akan digunakan atau dibersihkan.
+
+- Dataset Ratings.csv tidak memiliki nilai kosong, sehingga dapat langsung digunakan untuk analisis dan pelatihan model.
+
+### Visualisasi dan Insight Awal
+Sebagai bagian dari exploratory data analysis (EDA), dilakukan beberapa visualisasi sederhana untuk memahami karakteristik data:
+
+- Distribusi Rating: Rating terbanyak adalah 0, yang mengindikasikan rating implisit (bukan penilaian aktual).
+
+- Frekuensi Buku Terpopuler: Beberapa buku memiliki jumlah rating yang sangat tinggi, menunjukkan buku tersebut populer atau sering muncul dalam interaksi pengguna.
+
+- Pengguna Aktif: Ditemukan sejumlah pengguna yang memberikan banyak rating, yang dapat dipertimbangkan dalam filtering nantinya untuk menghindari bias dari pengguna sangat aktif.
+
+Analisis ini membantu dalam mempersiapkan strategi preprocessing dan modeling yang lebih tepat, terutama dalam membangun sistem rekomendasi yang efisien dan akurat.
 
 ## Data Preparation
 Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.

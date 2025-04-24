@@ -105,15 +105,6 @@ Berikut ini adalah penjabaran variabel dari masing-masing file dalam dataset:
       - ISBN: ID buku yang dinilai.
 
       - Book-Rating: Nilai rating yang diberikan, berkisar dari 0 (tidak memberikan penilaian) hingga 10 (penilaian tertinggi).
-  
-### Kondisi dan Kualitas Data
-Setelah dilakukan analisis awal terhadap missing values, diperoleh beberapa insight sebagai berikut:
-
-- Dataset Books.csv memiliki sedikit nilai kosong, seperti pada kolom Book-Author dan Publisher, masing-masing hanya kurang dari 0.001% dari total data. Kolom Image-URL-L juga memiliki beberapa nilai kosong namun tidak signifikan.
-
-- Dataset Users.csv menunjukkan bahwa kolom Age memiliki banyak nilai kosong (sekitar 39,7%), sehingga perlu dilakukan pertimbangan apakah kolom ini akan digunakan atau dibersihkan.
-
-- Dataset Ratings.csv tidak memiliki nilai kosong, sehingga dapat langsung digunakan untuk analisis dan pelatihan model.
 
 ### Visualisasi dan Insight Awal
 Sebagai bagian dari exploratory data analysis (EDA), dilakukan analisis univariat terhadap sejumlah fitur utama dalam dataset. Analisis ini bertujuan untuk memahami karakteristik data sebelum masuk ke tahap modeling. Berikut beberapa insight penting:
@@ -121,31 +112,65 @@ Sebagai bagian dari exploratory data analysis (EDA), dilakukan analisis univaria
 1. Distribusi Tahun Terbit Buku
 Sebagian besar buku dalam dataset diterbitkan antara tahun 1980 hingga 2005, dengan puncaknya terjadi sekitar tahun 2000. Ini mengindikasikan bahwa dataset lebih merepresentasikan buku-buku modern yang kemungkinan besar masih relevan dengan selera pembaca masa kini. Buku-buku yang diterbitkan sebelum tahun 1960 jumlahnya sangat sedikit dan dapat dianggap sebagai data historis.
 
-![]()
+      ![Deskripsi Gambar](https://drive.google.com/uc?export=view&id=1ceqmWdwoFTOiIL7XUI3GMgFOqzcBq5qy)
 
-3. Top 10 Penerbit Buku
+2. Top 10 Penerbit Buku
 Penerbit Harlequin muncul sebagai penerbit paling dominan dengan lebih dari 7.000 judul buku, diikuti oleh Silhouette dan Pocket. Ketiga penerbit ini dikenal luas sebagai penerbit buku fiksi ringan, khususnya genre roman dan sastra populer. Ini memberi gambaran bahwa koleksi buku dalam dataset memiliki kecenderungan kuat terhadap genre-genre tersebut.
 
-4. Distribusi Rating Buku
+3. Distribusi Rating Buku
 Rating dengan nilai 0 mendominasi data, yang kemungkinan besar menunjukkan tidak adanya penilaian yang diberikan (implisit), bukan rating rendah. Sementara itu, rating eksplisit (1–10) cenderung berkonsentrasi di kisaran 8 hingga 10, mengindikasikan bahwa pengguna lebih terdorong memberikan ulasan terhadap buku-buku yang mereka sukai.
 
-5. Distribusi Umur Pengguna
+      ![Deskripsi Gambar](https://drive.google.com/uc?export=view&id=1mC0bLSaRn7WaKIpuYwPuoYHVxaEdbHMS)
+
+4. Distribusi Umur Pengguna
 Rentang usia pengguna menunjukkan puncak pada sekitar usia 30 tahun, yang mencerminkan mayoritas pembaca berada pada tahap dewasa muda. Terdapat nilai-nilai ekstrem, seperti umur 0 hingga 244, yang jelas merupakan outlier dan perlu ditangani sebelum masuk ke proses modeling, terutama jika kolom umur akan digunakan sebagai salah satu fitur.
 
-6. Penulis Paling Produktif
+      ![Deskripsi Gambar](https://drive.google.com/uc?export=view&id=1y4fAiOFIOLBy3iDCEpRkqEi0qIiO4Ihx)
+
+5. Penulis Paling Produktif
 Agatha Christie tercatat sebagai penulis paling produktif dalam dataset dengan lebih dari 600 judul buku, diikuti oleh William Shakespeare dan Stephen King. Ini menunjukkan representasi kuat dari penulis klasik dan penulis genre misteri/thriller dalam koleksi buku, yang penting dalam konteks content-based filtering yang mengandalkan metadata buku.
 
-7. Lokasi Pengguna Teratas
+6. Lokasi Pengguna Teratas
 Lokasi pengguna paling banyak berasal dari negara-negara berbahasa Inggris, seperti United Kingdom, Canada, Australia, dan USA. Kota dengan jumlah pengguna terbanyak adalah London, UK (2.506 pengguna), disusul oleh Toronto, Canada (2.250 pengguna). Hal ini menunjukkan bias geografis pada data pengguna, yang dapat memengaruhi hasil interpretasi preferensi genre dan rekomendasi buku.
 
-Analisis ini membantu dalam mempersiapkan strategi preprocessing dan modeling yang lebih tepat, terutama dalam membangun sistem rekomendasi yang efisien dan akurat.
+### Kesimpulan
+1. Ratings.csv didominasi rating bernilai 0 (lebih dari 50%), yang mengindikasikan banyaknya data tidak valid atau implicit feedback, sehingga kurang ideal untuk pemodelan.
+
+2. Users.csv memiliki lebih dari 39% data usia yang hilang dan banyak outlier ekstrem, sehingga informasi pengguna sulit dimanfaatkan secara efektif.
+
+3. Books.csv relatif bersih dan lengkap, serta memuat metadata penting seperti judul, penulis, dan penerbit—sesuai untuk pendekatan content-based filtering.
+
+Berdasarkan pertimbangan-pertimbangan di atas, maka pendekatan Content-Based Filtering dengan menggunakan metadata buku dari Books.csv menjadi pilihan terbaik untuk proyek ini. Fokus akan diberikan pada pemrosesan metadata seperti judul, penulis, dan penerbit untuk membangun sistem rekomendasi yang relevan dan informatif.
 
 ## Data Preparation
-Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
+Pada tahap ini, dilakukan serangkaian proses untuk mempersiapkan data agar siap digunakan dalam proses pemodelan sistem rekomendasi berbasis konten. Fokus utama berada pada data Books.csv, karena telah terbukti lebih bersih dan relevan untuk pendekatan yang digunakan.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan proses data preparation yang dilakukan
-- Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
+### 1. Seleksi dan Reduksi Fitur
+**Langkah yang Dilakukan:**  
+Kolom yang tidak memberikan kontribusi terhadap representasi konten buku seperti `Image-URL-S`, `Image-URL-M`, dan `Image-URL-L` dihapus dari dataset.  
+Hanya atribut utama yang dipertahankan, yaitu:  
+- `Book-Title`  
+- `Book-Author`  
+- `Publisher`  
+- `Year-Of-Publication`
+
+**Pertimbangan:**  
+Fitur-fitur tersebut memiliki nilai deskriptif terhadap konten buku dan akan digunakan sebagai dasar dalam proses ekstraksi fitur berbasis teks.
+
+
+### 2. Penyesuaian Format Data
+**Langkah yang Dilakukan:**  
+Kolom `Year-Of-Publication` dikonversi ke dalam format numerik (`integer`). Nilai-nilai tidak valid telah ditangani pada tahap eksplorasi sebelumnya.
+
+**Pertimbangan:**  
+Penyesuaian format ini bertujuan untuk memastikan konsistensi tipe data dan memungkinkan analisis statistik tambahan jika diperlukan di tahap evaluasi atau visualisasi data.
+
+### 3. Pembuatan Fitur Gabungan (Text Concatenation)
+**Langkah yang Dilakukan:**  
+Dibuat kolom baru bernama `Combined Features` dengan menggabungkan nilai dari `Book-Title`, `Book-Author`, dan `Publisher` menjadi satu string teks.
+
+**Pertimbangan:**  
+Fitur ini akan digunakan sebagai dasar representasi untuk proses ekstraksi vektor menggunakan **TF-IDF** yang bertujuan untuk mengukur **kemiripan antar buku** berdasarkan metadata-nya.
 
 ## Modeling
 Tahapan ini membahas mengenai model sisten rekomendasi yang Anda buat untuk menyelesaikan permasalahan. Sajikan top-N recommendation sebagai output.

@@ -116,13 +116,27 @@ Setelah dilakukan analisis awal terhadap missing values, diperoleh beberapa insi
 - Dataset Ratings.csv tidak memiliki nilai kosong, sehingga dapat langsung digunakan untuk analisis dan pelatihan model.
 
 ### Visualisasi dan Insight Awal
-Sebagai bagian dari exploratory data analysis (EDA), dilakukan beberapa visualisasi sederhana untuk memahami karakteristik data:
+Sebagai bagian dari exploratory data analysis (EDA), dilakukan analisis univariat terhadap sejumlah fitur utama dalam dataset. Analisis ini bertujuan untuk memahami karakteristik data sebelum masuk ke tahap modeling. Berikut beberapa insight penting:
 
-- Distribusi Rating: Rating terbanyak adalah 0, yang mengindikasikan rating implisit (bukan penilaian aktual).
+1. Distribusi Tahun Terbit Buku
+Sebagian besar buku dalam dataset diterbitkan antara tahun 1980 hingga 2005, dengan puncaknya terjadi sekitar tahun 2000. Ini mengindikasikan bahwa dataset lebih merepresentasikan buku-buku modern yang kemungkinan besar masih relevan dengan selera pembaca masa kini. Buku-buku yang diterbitkan sebelum tahun 1960 jumlahnya sangat sedikit dan dapat dianggap sebagai data historis.
 
-- Frekuensi Buku Terpopuler: Beberapa buku memiliki jumlah rating yang sangat tinggi, menunjukkan buku tersebut populer atau sering muncul dalam interaksi pengguna.
+![]()
 
-- Pengguna Aktif: Ditemukan sejumlah pengguna yang memberikan banyak rating, yang dapat dipertimbangkan dalam filtering nantinya untuk menghindari bias dari pengguna sangat aktif.
+3. Top 10 Penerbit Buku
+Penerbit Harlequin muncul sebagai penerbit paling dominan dengan lebih dari 7.000 judul buku, diikuti oleh Silhouette dan Pocket. Ketiga penerbit ini dikenal luas sebagai penerbit buku fiksi ringan, khususnya genre roman dan sastra populer. Ini memberi gambaran bahwa koleksi buku dalam dataset memiliki kecenderungan kuat terhadap genre-genre tersebut.
+
+4. Distribusi Rating Buku
+Rating dengan nilai 0 mendominasi data, yang kemungkinan besar menunjukkan tidak adanya penilaian yang diberikan (implisit), bukan rating rendah. Sementara itu, rating eksplisit (1–10) cenderung berkonsentrasi di kisaran 8 hingga 10, mengindikasikan bahwa pengguna lebih terdorong memberikan ulasan terhadap buku-buku yang mereka sukai.
+
+5. Distribusi Umur Pengguna
+Rentang usia pengguna menunjukkan puncak pada sekitar usia 30 tahun, yang mencerminkan mayoritas pembaca berada pada tahap dewasa muda. Terdapat nilai-nilai ekstrem, seperti umur 0 hingga 244, yang jelas merupakan outlier dan perlu ditangani sebelum masuk ke proses modeling, terutama jika kolom umur akan digunakan sebagai salah satu fitur.
+
+6. Penulis Paling Produktif
+Agatha Christie tercatat sebagai penulis paling produktif dalam dataset dengan lebih dari 600 judul buku, diikuti oleh William Shakespeare dan Stephen King. Ini menunjukkan representasi kuat dari penulis klasik dan penulis genre misteri/thriller dalam koleksi buku, yang penting dalam konteks content-based filtering yang mengandalkan metadata buku.
+
+7. Lokasi Pengguna Teratas
+Lokasi pengguna paling banyak berasal dari negara-negara berbahasa Inggris, seperti United Kingdom, Canada, Australia, dan USA. Kota dengan jumlah pengguna terbanyak adalah London, UK (2.506 pengguna), disusul oleh Toronto, Canada (2.250 pengguna). Hal ini menunjukkan bias geografis pada data pengguna, yang dapat memengaruhi hasil interpretasi preferensi genre dan rekomendasi buku.
 
 Analisis ini membantu dalam mempersiapkan strategi preprocessing dan modeling yang lebih tepat, terutama dalam membangun sistem rekomendasi yang efisien dan akurat.
 

@@ -59,6 +59,9 @@ Salah satu metode yang dapat digunakan untuk mengukur kesamaan antar buku adalah
 3. TF-IDF (Term Frequency-Inverse Document Frequency)
 TF-IDF adalah teknik yang digunakan untuk menghitung pentingnya kata dalam deskripsi buku, judul, atau kategori. Dengan menggunakan TF-IDF, sistem dapat memberi bobot lebih pada kata-kata yang lebih relevan, sehingga meningkatkan akurasi dalam memberikan rekomendasi buku yang sesuai dengan preferensi pengguna.
 
+4. RecommenderNet – Custom Keras Model Class
+Selain pendekatan berbasis TF-IDF, akan digunakan juga pendekatan pemodelan menggunakan class RecommenderNet, yaitu model rekomendasi berbasis neural network menggunakan TensorFlow Keras. Model ini akan dilatih untuk memahami relasi antara pengguna dan item (buku) menggunakan embedding layer, sehingga dapat mempelajari pola interaksi dan preferensi pengguna secara lebih dalam.
+
 Dengan pendekatan-pendekatan ini, diharapkan sistem rekomendasi yang dibangun akan efektif dalam memberikan saran buku yang relevan, meningkatkan pengalaman pengguna, serta membantu meningkatkan penjualan buku di platform.
 
 ## Data Understanding

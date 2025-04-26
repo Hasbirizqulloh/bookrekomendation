@@ -159,7 +159,7 @@ Lokasi pengguna paling banyak berasal dari negara-negara berbahasa Inggris, sepe
 Berdasarkan evaluasi tersebut, sistem rekomendasi akan dibangun dengan menggabungkan informasi dari Ratings.csv dan Users.csv, menggunakan pendekatan Collaborative Filtering. Fokus utama akan diberikan pada analisis interaksi pengguna dengan buku, untuk menentukan pola preferensi antar pengguna yang dapat digunakan untuk memberikan rekomendasi buku yang relevan berdasarkan perilaku pengguna serupa.
 
 ## Data Preparation
-Pada tahap ini, dilakukan serangkaian proses untuk mempersiapkan data agar siap digunakan dalam proses pemodelan sistem rekomendasi berbasis konten. 
+Pada tahap ini, dilakukan serangkaian proses untuk mempersiapkan data agar siap digunakan dalam proses pemodelan sistem rekomendasi berbasis Collaborative Filtering. 
 
 
 ### 1. Pembersihan Data Rating
@@ -172,7 +172,7 @@ Langkah ini dilakukan untuk menjaga kualitas data input serta mengurangi beban m
 
 ### 2. Seleksi Data Buku Berdasarkan Data Rating
 **Langkah yang Dilakukan:**
-- Dari 20.000 data rating yang telah dipilih, diambil seluruh ISBN unik yang muncul.
+- Dari seluruh data rating, diambil seluruh ISBN unik yang muncul.
 - Dataset Books.csv kemudian disaring untuk hanya menyertakan buku-buku yang memiliki ISBN yang sesuai dengan data rating tersebut.
 
 **Pertimbangan:**   

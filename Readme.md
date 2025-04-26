@@ -52,28 +52,27 @@ Salah satu tujuan utama dari proyek ini adalah untuk meningkatkan pengalaman pen
 Melalui penerapan sistem rekomendasi berbasis Collaborative Filtering, platform penyedia buku diharapkan dapat meningkatkan penjualan buku. Dengan memberikan rekomendasi yang relevan dan menarik bagi pengguna berdasarkan data historis pengguna lainnya, buku yang mungkin sebelumnya tidak dipertimbangkan akan lebih sering dibeli. Hal ini berpotensi meningkatkan pendapatan dan efisiensi dalam penggunaan katalog buku.
 
 ### Solution Approach
-Untuk mencapai tujuan tersebut, beberapa pendekatan yang akan digunakan dalam mengembangkan sistem rekomendasi berbasis konten antara lain:
 
-1. Collaborative Filtering   
-Collaborative Filtering adalah pendekatan yang mengandalkan data interaksi antara pengguna dan item (dalam hal ini buku) untuk membuat prediksi atau rekomendasi. Sistem ini mencari pengguna atau item yang memiliki kesamaan preferensi dengan pengguna tertentu dan memberikan rekomendasi berdasarkan kesamaan tersebut. Ada dua pendekatan utama dalam Collaborative Filtering yang dapat digunakan:
+Untuk mencapai tujuan sistem rekomendasi buku yang relevan dan personal, akan digunakan dua pendekatan utama:
 
-    - User-Based Collaborative Filtering:    
-Mencari pengguna yang memiliki preferensi atau pola perilaku yang mirip dengan pengguna target dan memberikan rekomendasi buku yang disukai oleh pengguna-pengguna serupa.
+1. Content-Based Filtering  
+Content-Based Filtering adalah metode yang merekomendasikan item (buku) berdasarkan kesamaan karakteristik item tersebut dengan preferensi pengguna sebelumnya. Sistem akan menganalisis atribut dari buku, seperti genre, penulis, sinopsis, atau kata kunci, lalu mencocokkannya dengan profil minat pengguna. Dengan teknik ini, rekomendasi yang diberikan lebih bersifat personal karena fokus pada karakteristik konten buku yang disukai pengguna.  
+Beberapa metode yang digunakan dalam Content-Based Filtering antara lain:  
+    - TF-IDF (Term Frequency-Inverse Document Frequency): Untuk mengekstraksi fitur dari deskripsi buku dan menghitung bobot pentingnya kata-kata kunci.
+    - Cosine Similarity: Untuk mengukur tingkat kemiripan antar buku berdasarkan fitur-fitur yang telah diekstraksi, sehingga sistem dapat merekomendasikan buku yang mirip dengan buku yang pernah disukai pengguna.
 
-    - Item-Based Collaborative Filtering:   
-Mencari item (buku) yang serupa berdasarkan perilaku pengguna lain, dan merekomendasikan item-item serupa kepada pengguna yang belum pernah berinteraksi dengan buku tersebut.
+2. Collaborative Filtering  
+Collaborative Filtering adalah metode yang membuat rekomendasi berdasarkan pola interaksi pengguna lain tanpa memperhatikan konten buku itu sendiri. Pendekatan ini mengandalkan kesamaan perilaku antar pengguna atau antar item untuk memprediksi preferensi.  
+Collaborative Filtering terdiri dari dua pendekatan:
+    - User-Based Collaborative Filtering: Mencari pengguna dengan pola preferensi serupa, lalu merekomendasikan buku yang disukai oleh pengguna-pengguna tersebut.
+    - Item-Based Collaborative Filtering: Menemukan buku yang sering dikaitkan bersama berdasarkan perilaku pengguna lain, lalu merekomendasikan buku serupa kepada pengguna.
+  
+    Beberapa metode pendukung Collaborative Filtering:
+    - Pearson Correlation dan Cosine Similarity: Untuk mengukur tingkat kesamaan antar pengguna atau antar item.
+    - Matrix Factorization (misalnya SVD - Singular Value Decomposition): Untuk menemukan pola tersembunyi dalam data besar pengguna-buku dan membuat prediksi rekomendasi yang lebih akurat.
+    - K-Nearest Neighbors (KNN): Untuk mencari pengguna atau buku yang paling mirip sebagai dasar pemberian rekomendasi.
 
-2. Cosine Similarity dan Pearson Correlation  
-Cosine Similarity dan Pearson Correlation adalah metode untuk mengukur kemiripan antar item atau antar pengguna. Dengan mengukur kemiripan ini, sistem dapat memberikan rekomendasi buku yang memiliki kesamaan dengan buku yang sudah dibaca atau disukai oleh pengguna, berdasarkan kesamaan perilaku pengguna lainnya.
-
-3. Matrix Factorization   
-Matrix Factorization adalah metode yang digunakan untuk menurunkan dimensi matriks pengguna-item, sehingga mengidentifikasi pola tersembunyi antara pengguna dan item yang dapat digunakan untuk prediksi rating atau rekomendasi. Salah satu algoritma yang populer adalah Singular Value Decomposition (SVD). Dengan menggunakan teknik ini, sistem rekomendasi dapat memprediksi rating yang belum diberikan oleh pengguna untuk item tertentu dan memberikan rekomendasi yang lebih akurat.
-
-4. K-Nearest Neighbors (KNN)  
-K-Nearest Neighbors (KNN) adalah algoritma yang digunakan untuk mencari tetangga terdekat antara pengguna atau item berdasarkan kemiripan rating atau interaksi. Dalam konteks Collaborative Filtering, KNN akan digunakan untuk mencari pengguna atau buku yang paling mirip dengan pengguna tertentu atau buku yang sudah dibaca oleh pengguna. Sistem akan merekomendasikan buku berdasarkan kesamaan pengguna atau item.
-
-
-Dengan pendekatan-pendekatan ini, diharapkan sistem rekomendasi yang dibangun akan efektif dalam memberikan saran buku yang relevan, meningkatkan pengalaman pengguna, serta membantu meningkatkan penjualan buku di platform.
+Dengan menggabungkan kedua pendekatan ini — Content-Based Filtering dan Collaborative Filtering — sistem rekomendasi diharapkan dapat memberikan saran buku yang lebih relevan dan personal, meningkatkan pengalaman pengguna, serta mendorong pertumbuhan penjualan buku di platform.
 
 ## Data Understanding
 Proyek ini menggunakan dataset dari platform Book-Crossing Dataset yang tersedia di Kaggle. Dataset ini berisi informasi tentang buku, pengguna, serta penilaian (rating) yang diberikan pengguna terhadap buku tersebut. Dataset ini terdiri dari tiga file utama, yaitu Books.csv, Users.csv, dan Ratings.csv, yang masing-masing memiliki jumlah data sebagai berikut:

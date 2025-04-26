@@ -232,11 +232,37 @@ Penggabungan ketiga dataset ini memungkinkan untuk membangun sistem rekomendasi 
 Sampling data dan pembagian antara data pelatihan dan pengujian memastikan bahwa model dapat diuji secara objektif sebelum digunakan untuk menghasilkan rekomendasi yang lebih luas.
 
 ## Modeling
-Tahapan ini membahas mengenai model sisten rekomendasi yang Anda buat untuk menyelesaikan permasalahan. Sajikan top-N recommendation sebagai output.
+Tahapan ini membahas mengenai model sistem rekomendasi yang dibangun untuk menyelesaikan permasalahan dalam membantu pengguna menemukan buku yang sesuai dengan minat mereka. Sistem rekomendasi ini menggunakan pendekatan Collaborative Filtering dengan dua algoritma yang berbeda, yaitu User-Based Collaborative Filtering dan Item-Based Collaborative Filtering. Output dari model adalah Top-N Recommendation, yaitu daftar rekomendasi buku terbaik yang dipersonalisasi untuk setiap pengguna.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menyajikan dua solusi rekomendasi dengan algoritma yang berbeda.
-- Menjelaskan kelebihan dan kekurangan dari solusi/pendekatan yang dipilih.
+### 1. User-Based Collaborative Filtering
+User-Based Collaborative Filtering mencari kemiripan antar pengguna berdasarkan pola rating yang diberikan terhadap buku. Sistem kemudian merekomendasikan buku-buku yang disukai oleh pengguna lain yang memiliki preferensi serupa.
+Algoritma yang Digunakan:  
+- K-Nearest Neighbors (KNN) untuk mencari tetangga terdekat antar pengguna.
+- Similarity Metric: Cosine Similarity.  
+
+Kelebihan:
+- Mudah dipahami dan diimplementasikan.
+- Dapat memberikan rekomendasi yang bersifat eksploratif berdasarkan minat komunitas pengguna serupa.   
+
+Kekurangan:
+- Sulit bekerja dengan baik jika jumlah pengguna sangat besar (scalability problem).
+- Butuh data rating yang cukup banyak (dense data) agar bisa menemukan kesamaan antar pengguna.  
+- Mengalami masalah cold-start untuk pengguna baru yang belum pernah memberikan rating.
+
+### 2. Item-Based Collaborative Filtering
+Item-Based Collaborative Filtering berfokus pada mencari item (dalam hal ini buku) yang mirip berdasarkan pola rating dari seluruh pengguna. Buku yang mirip dengan buku yang telah disukai pengguna akan direkomendasikan.
+Algoritma yang digunakan:  
+- K-Nearest Neighbors (KNN)  
+- Cosine Similarity antar item.  
+
+Kelebihan:
+- Lebih stabil dan akurat dalam banyak kasus karena perilaku terhadap item cenderung konsisten.
+- Lebih efisien untuk skala besar, karena jumlah item biasanya lebih sedikit dibanding pengguna.
+- Cocok untuk platform dengan banyak pengguna aktif.  
+
+Kekurangan:
+- Masih mengalami cold-start jika ada item baru yang belum pernah dirating.
+- Rekomendasi cenderung terlalu serupa dengan item sebelumnya (kurang eksploratif).
 
 ## Evaluation
 Pada bagian ini Anda perlu menyebutkan metrik evaluasi yang digunakan. Kemudian, jelaskan hasil proyek berdasarkan metrik evaluasi tersebut.

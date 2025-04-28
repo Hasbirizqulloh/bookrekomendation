@@ -250,9 +250,7 @@ Langkah-langkah:
 - Memberikan top-N rekomendasi item yang paling mirip dengan item yang pernah disukai pengguna.
   
 Top-N Recommendation Output:  
-Sebagai contoh, untuk seorang pengguna yang menyukai film aksi, sistem merekomendasikan 5 film lain yang memiliki genre serupa dan tingkat kemiripan tinggi. Contoh, untuk pengguna yang menyukai buku "**Fire and Hemlock**", sistem merekomendasikan:                                                                                                                                                  
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+Sebagai contoh, untuk seorang pengguna yang menyukai film aksi, sistem merekomendasikan 5 film lain yang memiliki genre serupa dan tingkat kemiripan tinggi. Contoh, untuk pengguna yang menyukai buku "**Fire and Hemlock**", sistem merekomendasikan:                                                                                                                                           
 | Rank | Book Title             | Book Author         | Predicted Rating |
 |:----:|:-----------------------|:--------------------|:----------------:|
 | 1    | Power of three          | Diana Wynne Jones    | 5.9              |
@@ -272,22 +270,55 @@ Langkah-langkah:
 - Membuat matriks interaksi pengguna-buku berdasarkan User-ID, ISBN, dan Book-Rating.
 - Melakukan dekomposisi matriks menggunakan algoritma SVD untuk menemukan representasi laten pengguna dan buku.
 - Memperkirakan rating buku yang belum pernah dibaca pengguna.
-- Memberikan top-5 rekomendasi buku berdasarkan prediksi rating tertinggi.
+- Memberikan top-10 rekomendasi buku berdasarkan prediksi rating tertinggi.
 
-Top-5 Recommendation Output:  
-Sebagai contoh, sistem merekomendasikan 5 film yang secara historis disukai oleh pengguna lain yang memiliki pola rating serupa. Contoh, untuk pengguna ID 12345 yang suka dengan genre fantasi dan sebelumnya memberikan rating tinggi untuk "The Lord of the Rings", sistem merekomendasikan:
-1. Harry Potter and the Goblet of Fire — J.K. Rowling
-2. A Game of Thrones — George R.R. Martin
-3. The Silmarillion — J.R.R. Tolkien
-4. The Chronicles of Narnia — C.S. Lewis
-5. The Golden Compass — Philip Pullman
+Top-10 Recommendation Output:  
+Sebagai contoh, sistem merekomendasikan 10 film yang secara historis disukai oleh pengguna lain yang memiliki pola rating serupa. Contoh, untuk pengguna ID 116320 yang suka dengan genre fantasi dan sebelumnya memberikan rating tinggi untuk "The Lord of the Rings", sistem merekomendasikan:
 
+
+| Rank | Book Title                                        | Book Author         | Predicted Rating   |
+|:----:|:--------------------------------------------------|:--------------------|:------------------:|
+| 1    | The Alienist                                       | Caleb Carr           | 3.77e-17           |
+| 2    | A College of Magics                                | Caroline Stevermer   | 3.10e-17           |
+| 3    | The Lovely Bones: A Novel                          | Alice Sebold         | 1.12e-16           |
+| 4    | The Many-Colored Land                              | Julian May           | 3.45e-17           |
+| 5    | Stealing Heaven: The Love Story of Heloise and...  | Marion Meade         | 3.10e-17           |
+| 6    | Blue Guide: Wales and the Marches                  | Tomeo                | 3.10e-17           |
+| 7    | The Inner Sky: How to Make Wiser Choices for a...  | Steven Forrest       | 3.45e-17           |
+| 8    | Asteroid Goddesses                                 | Demetra George       | 3.10e-17           |
+| 9    | A Dictionary of Heraldry                           | Stephen Friar        | 3.45e-17           |
+| 10   | The Npr Guide to Building a Classical Cd Collection| Ted Libbey           | 3.45e-17           |
+
+---
+### 3. User-Based Collaborative Filtering
+Pada pendekatan User-Based Collaborative Filtering, sistem menggunakan pola rating pengguna untuk menemukan pengguna lain dengan perilaku yang mirip. Kemudian, sistem merekomendasik
+Langkah-langkah:
+- Membuat matriks interaksi pengguna-buku berdasarkan User-ID, ISBN, dan Book-Rating.
+- Menghitung cosine similarity antar pengguna untuk mengukur tingkat kemiripan preferensi.
+- Menentukan k tetangga terdekat (k-nearest neighbors) berdasarkan skor kemiripan tertinggi.
+- Menghitung weighted average rating buku dari tetangga terdekat.
+
+Top-10 Recommendation Output:    
+Sebagai contoh, sistem merekomendasikan 10 buku yang secara historis disukai oleh pengguna lain dengan pola rating serupa. Contohnya, untuk User-ID 232959, sistem merekomendasikan:
+
+| Rank | Book Title                                         | Book Author           | Predicted Rating |
+|:----:|:---------------------------------------------------|:----------------------|:----------------:|
+| 1    | Fiona Range                                        | Mary McGarry Morris    | 2.64             |
+| 2    | The Buddha of Brewer Street                        | Michael Dobbs          | 1.68             |
+| 3    | With Thanks and Appreciation: The Sweet Nellie... | Pat Ross               | 1.52             |
+| 4    | Talk Before Sleep: A Novel                         | Elizabeth Berg         | 1.52             |
+| 5    | Now All We Need Is a Title: Famous Book Titles...  | Andre Bernard          | 1.35             |
+| 6    | Liar                                               | Stephen Fry            | 1.35             |
+| 7    | Betrayal in Death                                  | Nora Roberts           | 1.35             |
+| 8    | Mrs Dalloway                                       | Virginia Woolf         | 1.18             |
+| 9    | Timoleon Vieta Come Home: A Sentimental Journey    | Dan Rhodes             | 0.00             |
+| 10   | The Master of All Desires                          | Judith Merkle Riley     | 0.00             |
 
 
 ## Evaluation
 Dalam proyek ini menggunakan beberapa metrik evaluasi yang disesuaikan dengan pendekatan sistem rekomendasi yang diterapkan, yaitu Content-Based Filtering dan Collaborative Filtering.
-### 1. Content-Based Filtering
-Pada pendekatan Content-Based Filtering, model berfokus untuk merekomendasikan item serupa berdasarkan preferensi pengguna. Karena hasil akhirnya adalah daftar item (top-N recommendation), maka evaluasi dilakukan menggunakan Precision@K dan Recall@K.
+### 1. Content-Based Filtering dan User-Based Collaborative Filtering (UserCF)
+Pada pendekatan Content-Based Filtering dan User-Based Collaborative Filtering (UserCF), model berfokus untuk merekomendasikan item serupa berdasarkan preferensi pengguna. Karena hasil akhirnya adalah daftar item (top-N recommendation), maka evaluasi dilakukan menggunakan Precision@K dan Recall@K.
 
 #### Rumus Precision@K
 $$
@@ -307,7 +338,7 @@ $$
 **Penjelasan**:  
 Recall@K menilai seberapa banyak item relevan yang berhasil ditangkap oleh sistem rekomendasi dari keseluruhan item relevan yang tersedia. Semakin tinggi recall, semakin banyak item relevan yang ditemukan oleh sistem.
 
-## 2. Collaborative Filtering (SVD)
+## 2. Collaborative Filtering (Item-Based Collaborative Filtering (SVD))
 Untuk pendekatan Collaborative Filtering, model berfokus untuk memprediksi rating yang akan diberikan pengguna pada item tertentu. Oleh karena itu, evaluasi dilakukan menggunakan RMSE (Root Mean Squared Error) dan MAE (Mean Absolute Error).
 
 #### Rumus RMSE (Root Mean Squared Error)
@@ -337,29 +368,133 @@ MAE menghitung rata-rata dari selisih absolut antara nilai aktual dan nilai pred
 
 ### Hasil Evaluasi
 
-Content-Based Filtering  
+#### Content-Based Filtering 
+Buku yang Disukai oleh User:
+- Monkeys on the Interstate: And Other Tales from America's Favorite Zookeeper
+- The Lost Boy: A Foster Child's Search for the Love of a Family
+- The Four Agreements: A Practical Guide to Personal Freedom
+- Color Purple
+- Marilyn Monroe: Photographs 1945-1962 (Schirmer's Visual Library)
+- Jurassic Park
+- Macroscope
+- How Stella Got Her Groove Back
+- Letters from the Earth
+- My Story
+
+Hasil Rekomendasi Model:
+- Power of three
+- Dark Lord of Derkholm
+- Hemlock Bay
+- No Other Option
+- Stuart Little
+- Stuart Little
+- Voyager
+- Outlander
+- Outlander
+- Outlander
+
+Evaluation Metrics:
 - Precision@5: 0.00
 - Recall@5: 0.00
 
+Interpretasi:    
+Model Content-Based Filtering belum berhasil memberikan rekomendasi yang sesuai dengan buku-buku yang disukai pengguna. Tidak ada satu pun rekomendasi yang cocok. Ini menunjukkan perlunya perbaikan pada teknik ekstraksi fitur atau metode similarity.
+
+#### Item-Based Collaborative Filtering (SVD)  
+- RMSE: 7.5156
+- MAE: 7.0376
+
 Interpretasi:  
-Dari setiap 5 rekomendasi yang diberikan, sekitar 72% di antaranya benar-benar relevan bagi pengguna. Model ini cukup presisi dalam memilih rekomendasi, meskipun Recall menunjukkan bahwa masih ada banyak buku relevan yang belum berhasil ditemukan oleh sistem.
+Model Item-Based Collaborative Filtering berbasis SVD menunjukkan kesalahan prediksi yang cukup tinggi.
+RMSE dan MAE di atas 7 berarti rata-rata prediksi rating berbeda jauh dari rating aktual. Ini bisa disebabkan oleh sparsity data (rating yang sedikit) atau kurang optimalnya jumlah latent factors.
 
-Collaborative Filtering (SVD)  
-- RMSE: 0.00
-- MAE: 0.00
+#### User-Based Collaborative Filtering (UserCF)
+Buku yang Disukai oleh User:
+- Confessions of a Shopaholic
 
-Interpretasi:  
-Prediksi rating dari model SVD memiliki rata-rata kesalahan kurang dari 1 poin dari rating aktual pengguna. Ini menunjukkan performa yang baik dalam memahami pola rating pengguna.
+Hasil Rekomendasi Model:
+- A Trip to the Light Fantastic: Travels With a Mexican Circus
+- House of Cards
+- The Buddha of Brewer Street
+- Queen of Shaba: The Story of an African Leopard
+- Triple Factor
+- Liar
+- Airport International: Level 4 - Intermediate (Nelson Readers)
+- Steel Bonnets: The Story of the Anglo-Scottish Border Reivers
+- Girlfriend in a Coma
+- Firewing
 
+Evaluation Metrics:
+- Precision@10: 0.0000
+- Recall@10: 0.0000
+
+Interpretasi:    
+Sama seperti Content-Based Filtering, model User-Based Collaborative Filtering saat ini juga belum mampu merekomendasikan buku yang relevan. Meskipun pola kesamaan antar pengguna sudah dihitung, namun belum mampu menangkap preferensi pengguna dengan akurat.
+
+#### Evaluation Results
+
+| Model                          | Precision@10 | Recall@10 | RMSE   | MAE    |
+|---------------------------------|--------------|-----------|--------|--------|
+| Content-Based Filtering (CBF)   | 0.0000       | 0.0000    | -      | -      |
+| Item-Based Collaborative Filtering | -          | -         | 7.5156 | 7.0376 |
+| User-Based Collaborative Filtering | 0.0000     | 0.0000    | -      | -      |
+
+Berdasarkan hasil evaluasi terhadap beberapa pendekatan sistem rekomendasi:
+
+- Content-Based Filtering    
+Menghasilkan Precision@10 dan Recall@10 sebesar 0.0000. Ini menunjukkan bahwa sistem belum mampu merekomendasikan buku yang benar-benar relevan berdasarkan kemiripan konten buku. Dengan demikian, pendekatan ini belum efektif untuk kebutuhan rekomendasi dalam platform.
+
+- Item-Based Collaborative Filtering (menggunakan SVD)    
+Model ini menunjukkan hasil evaluasi RMSE sebesar 7.5156 dan MAE sebesar 7.0376. Meskipun prediksi rating dapat dilakukan, error yang relatif besar ini menunjukkan bahwa model belum cukup akurat dalam memahami preferensi pengguna.
+
+- User-Based Collaborative Filtering    
+Pendekatan ini menghasilkan Precision@10 dan Recall@10 sebesar 0.0000, yang menunjukkan bahwa sistem belum berhasil memberikan rekomendasi berbasis pola kesamaan antar pengguna.
+
+Dari ketiga pendekatan yang dievaluasi, Item-Based Collaborative Filtering (SVD) menjadi model yang paling layak untuk dipilih dalam tahap awal, karena:
+- Satu-satunya pendekatan yang mampu menghasilkan prediksi rating numerik.
+- Meskipun error masih cukup besar, pendekatan ini lebih dekat untuk membangun fondasi sistem rekomendasi berbasis perilaku pengguna.
+
+Dengan perbaikan pada sisi data (seperti filtering data sparse, pengayaan metadata buku, atau hybrid dengan content-based), model ini berpotensi memberikan hasil yang jauh lebih baik.
+
+📌 Model yang Dipilih:  
+Item-Based Collaborative Filtering menggunakan SVD dipilih sebagai dasar pengembangan sistem rekomendasi, karena memiliki performa prediksi terbaik dibandingkan pendekatan lain yang diuji.
 
 ### Kesimpulan Evaluasi
-Dari hasil evaluasi:  
-- Pendekatan Content-Based Filtering menghasilkan rekomendasi yang presisi tinggi, cocok jika fokus utama adalah memberikan rekomendasi relevan dengan minat spesifik pengguna.
-- Pendekatan Collaborative Filtering menghasilkan prediksi rating yang cukup akurat, cocok untuk meningkatkan pengalaman personalisasi berdasarkan perilaku pengguna lain yang serupa.
+Hasil evaluasi sistem rekomendasi menunjukkan bahwa pendekatan yang diterapkan sebagian telah membantu menjawab permasalahan yang dirumuskan dalam tahap Business Understanding:
 
-Pemilihan metrik evaluasi disesuaikan dengan tujuan masing-masing pendekatan:
-- Untuk daftar rekomendasi, digunakan Precision@K dan Recall@K.
-- Untuk prediksi rating, digunakan RMSE dan MAE.
+1. Problem Statement 1 – Masalah Pilihan Buku yang Berlebihan:    
+Pendekatan Collaborative Filtering (baik user-based maupun item-based/SVD) bertujuan mengurangi kebingungan pengguna dalam memilih buku dengan memberikan rekomendasi yang dipersonalisasi.
+Namun, berdasarkan hasil evaluasi, sistem ini belum mampu menghasilkan rekomendasi yang relevan secara konsisten (Precision@10 dan Recall@10 = 0 untuk user-based, dan RMSE/MAE cukup besar untuk item-based). Ini menunjukkan bahwa masalah kebingungan dalam memilih buku belum terselesaikan secara optimal.
+
+2. Problem Statement 2 – Kurangnya Rekomendasi yang Relevan:    
+Content-Based Filtering mencoba menawarkan rekomendasi buku yang mirip dengan buku yang disukai pengguna.
+Namun, hasil evaluasi menunjukkan Precision@10 dan Recall@10 = 0, yang berarti rekomendasi yang dihasilkan masih belum cukup relevan dengan preferensi pengguna. Dengan demikian, sistem belum berhasil sepenuhnya menjawab kebutuhan pengguna akan rekomendasi yang lebih personal.
+
+3. Problem Statement 3 – Tidak Ada Sistem untuk Meningkatkan Penjualan Buku:    
+Karena relevansi rekomendasi masih rendah, potensi untuk meningkatkan penjualan buku melalui penemuan buku baru juga belum maksimal.
+Sistem rekomendasi yang relevan diperlukan untuk mendorong penjualan, tetapi saat ini performa model masih perlu ditingkatkan untuk mencapai tujuan ini.
+
+#### Pencapaian Goals Proyek
+Meskipun terdapat banyak ruang untuk perbaikan, beberapa goals proyek tetap tercapai:
+- Pengembangan sistem rekomendasi berbasis Collaborative Filtering dan Content-Based Filtering telah berhasil dilakukan sesuai rencana solusi.
+- Evaluasi model telah dilakukan menggunakan metrik yang sesuai:
+      - Precision@K dan Recall@K untuk mengevaluasi relevansi rekomendasi.
+      - RMSE dan MAE untuk mengukur akurasi prediksi rating.
+- Penerapan teknik Cosine Similarity dan SVD memungkinkan sistem memahami hubungan antar pengguna dan antar item, sesuai dengan pendekatan yang direncanakan.
+
+Namun, dari segi dampak terhadap tujuan bisnis (meningkatkan relevansi rekomendasi, pengalaman pengguna, dan potensi penjualan), hasil saat ini menunjukkan bahwa performa sistem masih perlu diperbaiki untuk memberikan dampak bisnis yang signifikan.
+
+#### Kesimpulan Akhir
+Model rekomendasi yang dikembangkan sudah menjawab sebagian aspek solusi dengan membangun Content-Based dan Collaborative Filtering.
+Namun, performa aktual model saat ini belum cukup kuat untuk benar-benar mengatasi masalah utama yang telah dirumuskan. Pengembangan lebih lanjut sangat diperlukan, seperti:
+- Peningkatan kualitas data,
+- Penambahan informasi metadata buku,
+- Penerapan hybrid recommendation system,
+- Dan tuning lebih lanjut terhadap model Collaborative Filtering.
+
+Dengan peningkatan ini, diharapkan sistem rekomendasi dapat lebih relevan, personal, dan efektif, sehingga benar-benar mendorong pengalaman pengguna dan pertumbuhan penjualan buku di platform.
+
+
 
 
 

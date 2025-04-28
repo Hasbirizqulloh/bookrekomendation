@@ -132,25 +132,28 @@ Sebagai bagian dari exploratory data analysis (EDA), dilakukan analisis univaria
 1. Distribusi Tahun Terbit Buku
 Sebagian besar buku dalam dataset diterbitkan antara tahun 1980 hingga 2005, dengan puncaknya terjadi sekitar tahun 2000. Ini mengindikasikan bahwa dataset lebih merepresentasikan buku-buku modern yang kemungkinan besar masih relevan dengan selera pembaca masa kini. Buku-buku yang diterbitkan sebelum tahun 1960 jumlahnya sangat sedikit dan dapat dianggap sebagai data historis.
 
-      ![Deskripsi Gambar](https://drive.google.com/uc?export=view&id=1ceqmWdwoFTOiIL7XUI3GMgFOqzcBq5qy)
+      ![Image](https://github.com/user-attachments/assets/ac4c3af0-bb5c-43b9-a59c-272dfd94ba9a)
 
-2. Top 10 Penerbit Buku
+
+3. Top 10 Penerbit Buku
 Penerbit Harlequin muncul sebagai penerbit paling dominan dengan lebih dari 7.000 judul buku, diikuti oleh Silhouette dan Pocket. Ketiga penerbit ini dikenal luas sebagai penerbit buku fiksi ringan, khususnya genre roman dan sastra populer. Ini memberi gambaran bahwa koleksi buku dalam dataset memiliki kecenderungan kuat terhadap genre-genre tersebut.
 
-3. Distribusi Rating Buku
+4. Distribusi Rating Buku
 Rating dengan nilai 0 mendominasi data, yang kemungkinan besar menunjukkan tidak adanya penilaian yang diberikan (implisit), bukan rating rendah. Sementara itu, rating eksplisit (1–10) cenderung berkonsentrasi di kisaran 8 hingga 10, mengindikasikan bahwa pengguna lebih terdorong memberikan ulasan terhadap buku-buku yang mereka sukai.
 
-      ![Deskripsi Gambar](https://drive.google.com/uc?export=view&id=1mC0bLSaRn7WaKIpuYwPuoYHVxaEdbHMS)
+      ![download (2)](https://github.com/user-attachments/assets/264a1928-e959-49eb-97b5-c7cdf629a173)
 
-4. Distribusi Umur Pengguna
+
+6. Distribusi Umur Pengguna
 Rentang usia pengguna menunjukkan puncak pada sekitar usia 30 tahun, yang mencerminkan mayoritas pembaca berada pada tahap dewasa muda. Terdapat nilai-nilai ekstrem, seperti umur 0 hingga 244, yang jelas merupakan outlier dan perlu ditangani sebelum masuk ke proses modeling, terutama jika kolom umur akan digunakan sebagai salah satu fitur.
 
-      ![Deskripsi Gambar](https://drive.google.com/uc?export=view&id=1y4fAiOFIOLBy3iDCEpRkqEi0qIiO4Ihx)
+      ![download (3)](https://github.com/user-attachments/assets/20800dc2-6440-40a5-9699-d527188b3eaf)
 
-5. Penulis Paling Produktif
+
+8. Penulis Paling Produktif
 Agatha Christie tercatat sebagai penulis paling produktif dalam dataset dengan lebih dari 600 judul buku, diikuti oleh William Shakespeare dan Stephen King. Ini menunjukkan representasi kuat dari penulis klasik dan penulis genre misteri/thriller dalam koleksi buku, yang penting dalam konteks content-based filtering yang mengandalkan metadata buku.
 
-6. Lokasi Pengguna Teratas
+9. Lokasi Pengguna Teratas
 Lokasi pengguna paling banyak berasal dari negara-negara berbahasa Inggris, seperti United Kingdom, Canada, Australia, dan USA. Kota dengan jumlah pengguna terbanyak adalah London, UK (2.506 pengguna), disusul oleh Toronto, Canada (2.250 pengguna). Hal ini menunjukkan bias geografis pada data pengguna, yang dapat memengaruhi hasil interpretasi preferensi genre dan rekomendasi buku.
 
 ### Kesimpulan
@@ -166,7 +169,6 @@ Berdasarkan evaluasi tersebut, sistem rekomendasi akan dibangun dengan menggabun
 
 ## Data Preparation
 Pada tahap ini, dilakukan serangkaian proses untuk mempersiapkan data agar siap digunakan dalam proses pemodelan sistem rekomendasi berbasis Collaborative Filtering. 
-
 
 ### 1. Pembersihan Data Rating
 **Langkah yang Dilakukan:** 

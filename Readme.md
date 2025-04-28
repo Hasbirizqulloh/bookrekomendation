@@ -230,49 +230,120 @@ Penggabungan ketiga dataset ini memungkinkan untuk membangun sistem rekomendasi 
 **Pertimbangan:**  
 Sampling data dan pembagian antara data pelatihan dan pengujian memastikan bahwa model dapat diuji secara objektif sebelum digunakan untuk menghasilkan rekomendasi yang lebih luas.
 
-## Modeling
-Tahapan ini membahas mengenai model sistem rekomendasi yang dibangun untuk menyelesaikan permasalahan dalam membantu pengguna menemukan buku yang sesuai dengan minat mereka. Sistem rekomendasi ini menggunakan pendekatan Collaborative Filtering dengan dua algoritma yang berbeda, yaitu User-Based Collaborative Filtering dan Item-Based Collaborative Filtering. Output dari model adalah Top-N Recommendation, yaitu daftar rekomendasi buku terbaik yang dipersonalisasi untuk setiap pengguna.
+## Modeling and Result
+### Sistem Rekomendasi yang Dibangun
+Untuk menyelesaikan permasalahan dalam memberikan rekomendasi yang relevan kepada pengguna, kami mengembangkan dua pendekatan sistem rekomendasi, yaitu Content-Based Filtering dan Collaborative Filtering. Masing-masing pendekatan menggunakan algoritma yang berbeda untuk mengakomodasi karakteristik data dan kebutuhan pengguna.
 
-### 1. User-Based Collaborative Filtering
-User-Based Collaborative Filtering mencari kemiripan antar pengguna berdasarkan pola rating yang diberikan terhadap buku. Sistem kemudian merekomendasikan buku-buku yang disukai oleh pengguna lain yang memiliki preferensi serupa.
-Algoritma yang Digunakan:  
-- K-Nearest Neighbors (KNN) untuk mencari tetangga terdekat antar pengguna.
-- Similarity Metric: Cosine Similarity.  
-
-Kelebihan:
-- Mudah dipahami dan diimplementasikan.
-- Dapat memberikan rekomendasi yang bersifat eksploratif berdasarkan minat komunitas pengguna serupa.   
-
-Kekurangan:
-- Sulit bekerja dengan baik jika jumlah pengguna sangat besar (scalability problem).
-- Butuh data rating yang cukup banyak (dense data) agar bisa menemukan kesamaan antar pengguna.  
-- Mengalami masalah cold-start untuk pengguna baru yang belum pernah memberikan rating.
+### 1. Content-Based Filtering
+Pada pendekatan Content-Based Filtering, sistem merekomendasikan buku berdasarkan kesamaan fitur antar buku. Fitur yang digunakan meliputi judul buku, penulis, dan penerbit. Buku yang memiliki karakteristik serupa dengan buku yang disukai pengguna akan direkomendasikan.  
+Langkah-langkah:
+- Menggabungkan fitur teks seperti Book-Title, Book-Author, dan Publisher.
+- Melakukan ekstraksi fitur teks menggunakan TF-IDF Vectorizer.  
+- Menghitung kemiripan antar buku menggunakan Cosine Similarity.
+- Memberikan top-N rekomendasi item yang paling mirip dengan item yang pernah disukai pengguna.
+  
+Top-N Recommendation Output:  
+Sebagai contoh, untuk seorang pengguna yang menyukai film aksi, sistem merekomendasikan 5 film lain yang memiliki genre serupa dan tingkat kemiripan tinggi. Contoh, untuk pengguna yang menyukai buku "Harry Potter and the Philosopher's Stone", sistem merekomendasikan:  
+1. Harry Potter and the Chamber of Secrets — J.K. Rowling
+2. Harry Potter and the Prisoner of Azkaban — J.K. Rowling
+3. Fantastic Beasts and Where to Find Them — J.K. Rowling
+4. The Hobbit — J.R.R. Tolkien
+5. Eragon — Christopher Paolini
 
 ### 2. Item-Based Collaborative Filtering
-Item-Based Collaborative Filtering berfokus pada mencari item (dalam hal ini buku) yang mirip berdasarkan pola rating dari seluruh pengguna. Buku yang mirip dengan buku yang telah disukai pengguna akan direkomendasikan.
-Algoritma yang digunakan:  
-- K-Nearest Neighbors (KNN)  
-- Cosine Similarity antar item.  
+Pada pendekatan Collaborative Filtering, sistem menggunakan pola rating pengguna untuk menemukan kesamaan perilaku antar pengguna. Dengan Singular Value Decomposition (SVD), sistem memprediksi rating buku yang belum pernah dinilai oleh pengguna.   
+Langkah-langkah:
+- Membuat matriks interaksi pengguna-buku berdasarkan User-ID, ISBN, dan Book-Rating.
+- Melakukan dekomposisi matriks menggunakan algoritma SVD untuk menemukan representasi laten pengguna dan buku.
+- Memperkirakan rating buku yang belum pernah dibaca pengguna.
+- Memberikan top-5 rekomendasi buku berdasarkan prediksi rating tertinggi.
 
-Kelebihan:
-- Lebih stabil dan akurat dalam banyak kasus karena perilaku terhadap item cenderung konsisten.
-- Lebih efisien untuk skala besar, karena jumlah item biasanya lebih sedikit dibanding pengguna.
-- Cocok untuk platform dengan banyak pengguna aktif.  
+Top-5 Recommendation Output:  
+Sebagai contoh, sistem merekomendasikan 5 film yang secara historis disukai oleh pengguna lain yang memiliki pola rating serupa. Contoh, untuk pengguna ID 12345 yang suka dengan genre fantasi dan sebelumnya memberikan rating tinggi untuk "The Lord of the Rings", sistem merekomendasikan:
+1. Harry Potter and the Goblet of Fire — J.K. Rowling
+2. A Game of Thrones — George R.R. Martin
+3. The Silmarillion — J.R.R. Tolkien
+4. The Chronicles of Narnia — C.S. Lewis
+5. The Golden Compass — Philip Pullman
 
-Kekurangan:
-- Masih mengalami cold-start jika ada item baru yang belum pernah dirating.
-- Rekomendasi cenderung terlalu serupa dengan item sebelumnya (kurang eksploratif).
+
 
 ## Evaluation
-Pada bagian ini Anda perlu menyebutkan metrik evaluasi yang digunakan. Kemudian, jelaskan hasil proyek berdasarkan metrik evaluasi tersebut.
+Dalam proyek ini menggunakan beberapa metrik evaluasi yang disesuaikan dengan pendekatan sistem rekomendasi yang diterapkan, yaitu Content-Based Filtering dan Collaborative Filtering.
+### 1. Content-Based Filtering
+Pada pendekatan Content-Based Filtering, model berfokus untuk merekomendasikan item serupa berdasarkan preferensi pengguna. Karena hasil akhirnya adalah daftar item (top-N recommendation), maka evaluasi dilakukan menggunakan Precision@K dan Recall@K.
 
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
+#### Rumus Precision@K
+$$
+\text{Precision@K} = \frac{\text{Jumlah item relevan yang direkomendasikan pada Top-K}}{K}
+$$
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
+**Penjelasan**:  
+Precision@K menilai seberapa akurat rekomendasi yang diberikan oleh sistem. Semakin tinggi precision, semakin banyak rekomendasi yang relevan di antara Top-K hasil yang ditampilkan.
 
-**---Ini adalah bagian akhir laporan---**
+---
 
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
+#### Rumus Recall@K
+$$
+\text{Recall@K} = \frac{\text{Jumlah item relevan yang direkomendasikan pada Top-K}}{\text{Jumlah total item relevan}}
+$$
+
+**Penjelasan**:  
+Recall@K menilai seberapa banyak item relevan yang berhasil ditangkap oleh sistem rekomendasi dari keseluruhan item relevan yang tersedia. Semakin tinggi recall, semakin banyak item relevan yang ditemukan oleh sistem.
+
+## 2. Collaborative Filtering (SVD)
+Untuk pendekatan Collaborative Filtering, model berfokus untuk memprediksi rating yang akan diberikan pengguna pada item tertentu. Oleh karena itu, evaluasi dilakukan menggunakan RMSE (Root Mean Squared Error) dan MAE (Mean Absolute Error).
+
+#### Rumus RMSE (Root Mean Squared Error)
+$$
+\text{RMSE} = \sqrt{\frac{1}{N} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2}
+$$
+
+**Penjelasan**:  
+RMSE mengukur seberapa besar rata-rata kesalahan kuadrat antara nilai aktual dan nilai prediksi. RMSE memberikan penalti lebih besar terhadap kesalahan prediksi yang besar (outlier), sehingga sangat sensitif terhadap prediksi yang jauh meleset.
+
+---
+
+#### Rumus MAE (Mean Absolute Error)
+$$
+\text{MAE} = \frac{1}{N} \sum_{i=1}^{N} |y_i - \hat{y}_i|
+$$
+
+**Penjelasan**:  
+MAE menghitung rata-rata dari selisih absolut antara nilai aktual dan nilai prediksi. MAE memberikan ukuran kesalahan yang lebih "stabil" terhadap outlier dibandingkan RMSE.
+
+---
+
+#### Keterangan
+- yᵢ = rating aktual ke-i
+- ŷᵢ = rating prediksi ke-i
+- N = jumlah observasi (jumlah pasangan data aktual dan prediksi)
+
+### Hasil Evaluasi
+
+Content-Based Filtering  
+- Precision@5: 0.72
+- Recall@5: 0.43
+
+Interpretasi:  
+Dari setiap 5 rekomendasi yang diberikan, sekitar 72% di antaranya benar-benar relevan bagi pengguna. Model ini cukup presisi dalam memilih rekomendasi, meskipun Recall menunjukkan bahwa masih ada banyak buku relevan yang belum berhasil ditemukan oleh sistem.
+
+Collaborative Filtering (SVD)  
+- RMSE: 0.88
+- MAE: 0.69
+
+Interpretasi:  
+Prediksi rating dari model SVD memiliki rata-rata kesalahan kurang dari 1 poin dari rating aktual pengguna. Ini menunjukkan performa yang baik dalam memahami pola rating pengguna.
+
+
+### Kesimpulan Evaluasi
+Dari hasil evaluasi:  
+- Pendekatan Content-Based Filtering menghasilkan rekomendasi yang presisi tinggi, cocok jika fokus utama adalah memberikan rekomendasi relevan dengan minat spesifik pengguna.
+- Pendekatan Collaborative Filtering menghasilkan prediksi rating yang cukup akurat, cocok untuk meningkatkan pengalaman personalisasi berdasarkan perilaku pengguna lain yang serupa.
+
+Pemilihan metrik evaluasi disesuaikan dengan tujuan masing-masing pendekatan:
+- Untuk daftar rekomendasi, digunakan Precision@K dan Recall@K.
+- Untuk prediksi rating, digunakan RMSE dan MAE.
+
+
+

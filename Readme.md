@@ -329,15 +329,15 @@ MAE menghitung rata-rata dari selisih absolut antara nilai aktual dan nilai pred
 ### Hasil Evaluasi
 
 Content-Based Filtering  
-- Precision@5: 0.72
-- Recall@5: 0.43
+- Precision@5: 0.00
+- Recall@5: 0.00
 
 Interpretasi:  
 Dari setiap 5 rekomendasi yang diberikan, sekitar 72% di antaranya benar-benar relevan bagi pengguna. Model ini cukup presisi dalam memilih rekomendasi, meskipun Recall menunjukkan bahwa masih ada banyak buku relevan yang belum berhasil ditemukan oleh sistem.
 
 Collaborative Filtering (SVD)  
-- RMSE: 0.88
-- MAE: 0.69
+- RMSE: 0.00
+- MAE: 0.00
 
 Interpretasi:  
 Prediksi rating dari model SVD memiliki rata-rata kesalahan kurang dari 1 poin dari rating aktual pengguna. Ini menunjukkan performa yang baik dalam memahami pola rating pengguna.

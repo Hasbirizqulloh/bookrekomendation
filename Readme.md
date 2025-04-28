@@ -58,21 +58,28 @@ Untuk mencapai tujuan sistem rekomendasi buku yang relevan dan personal, akan di
 1. Content-Based Filtering  
 Content-Based Filtering adalah metode yang merekomendasikan item (buku) berdasarkan kesamaan karakteristik item tersebut dengan preferensi pengguna sebelumnya. Sistem akan menganalisis atribut dari buku, seperti genre, penulis, sinopsis, atau kata kunci, lalu mencocokkannya dengan profil minat pengguna. Dengan teknik ini, rekomendasi yang diberikan lebih bersifat personal karena fokus pada karakteristik konten buku yang disukai pengguna.  
 Beberapa metode yang digunakan dalam Content-Based Filtering antara lain:  
-    - TF-IDF (Term Frequency-Inverse Document Frequency): Untuk mengekstraksi fitur dari deskripsi buku dan menghitung bobot pentingnya kata-kata kunci.
-    - Cosine Similarity: Untuk mengukur tingkat kemiripan antar buku berdasarkan fitur-fitur yang telah diekstraksi, sehingga sistem dapat merekomendasikan buku yang mirip dengan buku yang pernah disukai pengguna.
+    - TF-IDF (Term Frequency-Inverse Document Frequency)    
+Untuk mengekstraksi fitur dari deskripsi buku dan menghitung bobot pentingnya kata-kata kunci.
+    - Cosine Similarity  
+Untuk mengukur tingkat kemiripan antar buku berdasarkan fitur-fitur yang telah diekstraksi, sehingga sistem dapat merekomendasikan buku yang mirip dengan buku yang pernah disukai pengguna.
 
 2. Collaborative Filtering  
 Collaborative Filtering adalah metode yang membuat rekomendasi berdasarkan pola interaksi pengguna lain tanpa memperhatikan konten buku itu sendiri. Pendekatan ini mengandalkan kesamaan perilaku antar pengguna atau antar item untuk memprediksi preferensi.  
 Collaborative Filtering terdiri dari dua pendekatan:
-    - User-Based Collaborative Filtering: Mencari pengguna dengan pola preferensi serupa, lalu merekomendasikan buku yang disukai oleh pengguna-pengguna tersebut.
-    - Item-Based Collaborative Filtering: Menemukan buku yang sering dikaitkan bersama berdasarkan perilaku pengguna lain, lalu merekomendasikan buku serupa kepada pengguna.
+    - User-Based Collaborative Filtering  
+Mencari pengguna dengan pola preferensi serupa, lalu merekomendasikan buku yang disukai oleh pengguna-pengguna tersebut.
+    - Item-Based Collaborative Filtering  
+Menemukan buku yang sering dikaitkan bersama berdasarkan perilaku pengguna lain, lalu merekomendasikan buku serupa kepada pengguna.
   
     Beberapa metode pendukung Collaborative Filtering:
-    - Pearson Correlation dan Cosine Similarity: Untuk mengukur tingkat kesamaan antar pengguna atau antar item.
-    - Matrix Factorization (misalnya SVD - Singular Value Decomposition): Untuk menemukan pola tersembunyi dalam data besar pengguna-buku dan membuat prediksi rekomendasi yang lebih akurat.
-    - K-Nearest Neighbors (KNN): Untuk mencari pengguna atau buku yang paling mirip sebagai dasar pemberian rekomendasi.
+    - Pearson Correlation dan Cosine Similarity    
+Untuk mengukur tingkat kesamaan antar pengguna atau antar item.
+    - Matrix Factorization Singular Value Decomposition    
+Untuk menemukan pola tersembunyi dalam data besar pengguna-buku dan membuat prediksi rekomendasi yang lebih akurat.
+    - K-Nearest Neighbors (KNN)    
+Untuk mencari pengguna atau buku yang paling mirip sebagai dasar pemberian rekomendasi.
 
-Dengan menggabungkan kedua pendekatan ini — Content-Based Filtering dan Collaborative Filtering — sistem rekomendasi diharapkan dapat memberikan saran buku yang lebih relevan dan personal, meningkatkan pengalaman pengguna, serta mendorong pertumbuhan penjualan buku di platform.
+Dengan menggabungkan kedua pendekatan ini Content-Based Filtering dan Collaborative Filtering, sistem rekomendasi diharapkan dapat memberikan saran buku yang lebih relevan dan personal, meningkatkan pengalaman pengguna, serta mendorong pertumbuhan penjualan buku di platform.
 
 ## Data Understanding
 Proyek ini menggunakan dataset dari platform Book-Crossing Dataset yang tersedia di Kaggle. Dataset ini berisi informasi tentang buku, pengguna, serta penilaian (rating) yang diberikan pengguna terhadap buku tersebut. Dataset ini terdiri dari tiga file utama, yaitu Books.csv, Users.csv, dan Ratings.csv, yang masing-masing memiliki jumlah data sebagai berikut:
@@ -120,7 +127,7 @@ Berikut ini adalah penjabaran variabel dari masing-masing file dalam dataset:
       - Book-Rating: Nilai rating yang diberikan, berkisar dari 0 (tidak memberikan penilaian) hingga 10 (penilaian tertinggi).
 
 ### Visualisasi dan Insight Awal
-Sebagai bagian dari exploratory data analysis (EDA), dilakukan analisis univariat terhadap sejumlah fitur utama dalam dataset. Analisis ini bertujuan untuk memahami karakteristik data sebelum masuk ke tahap modeling. Berikut beberapa insight penting:
+Sebagai bagian dari exploratory data analysis (EDA), dilakukan analisis univariate terhadap sejumlah fitur utama dalam dataset. Analisis ini bertujuan untuk memahami karakteristik data sebelum masuk ke tahap modeling. Berikut beberapa insight penting:
 
 1. Distribusi Tahun Terbit Buku
 Sebagian besar buku dalam dataset diterbitkan antara tahun 1980 hingga 2005, dengan puncaknya terjadi sekitar tahun 2000. Ini mengindikasikan bahwa dataset lebih merepresentasikan buku-buku modern yang kemungkinan besar masih relevan dengan selera pembaca masa kini. Buku-buku yang diterbitkan sebelum tahun 1960 jumlahnya sangat sedikit dan dapat dianggap sebagai data historis.
@@ -147,7 +154,7 @@ Agatha Christie tercatat sebagai penulis paling produktif dalam dataset dengan l
 Lokasi pengguna paling banyak berasal dari negara-negara berbahasa Inggris, seperti United Kingdom, Canada, Australia, dan USA. Kota dengan jumlah pengguna terbanyak adalah London, UK (2.506 pengguna), disusul oleh Toronto, Canada (2.250 pengguna). Hal ini menunjukkan bias geografis pada data pengguna, yang dapat memengaruhi hasil interpretasi preferensi genre dan rekomendasi buku.
 
 ### Kesimpulan
-1. Ratings.csv menunjukkan dominasi rating bernilai 0 (lebih dari 50%), yang mengindikasikan adanya banyak data yang tidak valid atau berupa implicit feedback. Meskipun begitu, data ini tetap akan digunakan setelah dilakukan seleksi data dan pembersihan untuk menjaga kualitas input sistem rekomendasi. Hanya data dengan rating eksplisit (1–10) yang akan dipertimbangkan untuk digunakan dalam model rekomendasi, sementara data dengan rating 0 akan dihapus atau diperlakukan sebagai data yang tidak relevan. Rating eksplisit yang valid akan menjadi basis utama untuk membangun hubungan antar pengguna dan item dalam model Collaborative Filtering.
+1. Ratings.csv menunjukkan dominasi rating bernilai 0 (lebih dari 50%), yang mengindikasikan adanya banyak data yang tidak valid atau berupa implicit feedback. Meskipun begitu, data ini tetap akan digunakan setelah dilakukan seleksi data dan pembersihan untuk menjaga kualitas input sistem rekomendasi. Hanya data dengan rating eksplisit (1–10) yang akan dipertimbangkan untuk digunakan dalam model rekomendasi, sementara data dengan rating 0 akan dihapus atau diperlakukan sebagai data yang tidak relevan. Rating eksplisit yang valid akan menjadi basis utama untuk membangun hubungan antar pengguna dalam item untuk model Collaborative Filtering.
 
 2. Users.csv mengandung lebih dari 39% data usia yang hilang dan juga banyak nilai outlier ekstrem. Untuk itu, data pengguna akan dibersihkan terlebih dahulu, dan nilai usia yang hilang akan ditangani menggunakan teknik imputasi atau dengan menghapus entri yang tidak lengkap. Selain itu, informasi lokasi yang tersedia dalam dataset juga akan dipertimbangkan untuk mengidentifikasi pola preferensi berdasarkan wilayah, meskipun fokus utama tetap pada data rating dan interaksi pengguna.
   
@@ -155,7 +162,7 @@ Lokasi pengguna paling banyak berasal dari negara-negara berbahasa Inggris, sepe
 
 4. Mengingat keterbatasan memori, hanya sekitar 10.000 entri dari masing-masing dataset (Books.csv, Ratings.csv, Users.csv) yang akan dipertimbangkan untuk meminimalkan penggunaan sumber daya dan memastikan bahwa proses modeling tetap efisien. Gabungan antara data dari ketiga file ini akan dilakukan dengan mencocokkan User-ID dari Ratings.csv dengan User-ID di Users.csv, serta mencocokkan ISBN dari Ratings.csv dengan ISBN di Books.csv.
 
-Berdasarkan evaluasi tersebut, sistem rekomendasi akan dibangun dengan menggabungkan informasi dari Ratings.csv dan Users.csv, menggunakan pendekatan Collaborative Filtering. Fokus utama akan diberikan pada analisis interaksi pengguna dengan buku, untuk menentukan pola preferensi antar pengguna yang dapat digunakan untuk memberikan rekomendasi buku yang relevan berdasarkan perilaku pengguna serupa.
+Berdasarkan evaluasi tersebut, sistem rekomendasi akan dibangun dengan menggabungkan informasi dari Ratings.csv dan Users.csv, menggunakan pendekatan Content-Based Filtering dan Collaborative Filtering. Fokus utama akan diberikan pada analisis interaksi pengguna dengan buku, untuk menentukan pola preferensi antar pengguna yang dapat digunakan untuk memberikan rekomendasi buku yang relevan berdasarkan perilaku pengguna serupa.
 
 ## Data Preparation
 Pada tahap ini, dilakukan serangkaian proses untuk mempersiapkan data agar siap digunakan dalam proses pemodelan sistem rekomendasi berbasis Collaborative Filtering. 
@@ -167,7 +174,7 @@ Pada tahap ini, dilakukan serangkaian proses untuk mempersiapkan data agar siap 
 Dihapus semua entri pada Ratings.csv yang memiliki nilai rating 0, karena dianggap sebagai umpan balik implisit atau tidak valid.
 
 **Pertimbangan:**   
-Langkah ini dilakukan untuk menjaga kualitas data input serta mengurangi beban memori komputasi.
+Langkah ini dilakukan untuk menjaga kualitas data input untuk Colaborative Filtering serta mengurangi beban memori komputasi.
 
 ### 2. Seleksi Data Buku Berdasarkan Data Rating
 **Langkah yang Dilakukan:**
@@ -181,8 +188,8 @@ Menjamin bahwa semua entri pada data rating memiliki referensi metadata buku yan
 
 **Langkah yang Dilakukan:**  
 - Dataset Users.csv digunakan untuk menambahkan informasi terkait pengguna ke dalam data rating yang telah dipilih.
-- Data pada Ratings.csv yang memiliki User-ID akan digabungkan dengan data pada Users.csv berdasarkan kolom User-ID untuk memperoleh informasi pengguna seperti lokasi dan usia (meskipun ada data usia yang hilang dan outlier, informasi ini tetap akan ditambahkan).
-- Penggabungan ini bertujuan untuk memastikan bahwa rekomendasi yang dihasilkan juga mempertimbangkan faktor demografis pengguna (misalnya, lokasi atau usia pengguna, jika tersedia).
+- Data pada Ratings.csv yang memiliki User-ID akan digabungkan dengan data pada Users.csv berdasarkan kolom User-ID untuk memperoleh informasi pengguna seperti lokasi dan usia. Meskipun ada data usia yang hilang dan outlier, informasi ini tetap akan ditambahkan.
+- Penggabungan ini bertujuan untuk memastikan bahwa rekomendasi yang dihasilkan juga mempertimbangkan faktor demografis pengguna misalnya, lokasi atau usia pengguna, jika tersedia.
 
 **Pertimbangan:**    
 Penggabungan data ini memungkinkan analisis yang lebih mendalam terhadap preferensi pengguna berdasarkan karakteristik demografis mereka.
@@ -215,20 +222,20 @@ Fitur-fitur tersebut memiliki nilai deskriptif terhadap konten buku dan akan dig
 ### 6. Penggabungan Ketiga Dataset untuk Persiapan Final
 
 Langkah yang Dilakukan:
-- Setelah semua data dibersihkan, dataset Ratings.csv, Books.csv, dan Users.csv akan digabungkan. Data akan digabungkan berdasarkan kolom User-ID (untuk menggabungkan data pengguna dengan rating yang diberikan) dan ISBN (untuk menggabungkan data rating dengan metadata buku).
+- Setelah semua data dibersihkan, dataset Ratings.csv, Books.csv, dan Users.csv akan digabungkan. Data akan digabungkan berdasarkan kolom User-ID untuk menggabungkan data pengguna dengan rating yang diberikan dan ISBN untuk menggabungkan data rating dengan metadata buku.
+- Cek kembali missing values pada data yang digabungkan karena diduga akan terjadi missing values dari metadata buku yang baru digabungkan.
 - Gabungan ini akan menghasilkan sebuah dataset yang komprehensif, yang mencakup informasi pengguna, rating buku, serta metadata buku yang relevan.
 
 **Pertimbangan:**  
 Penggabungan ketiga dataset ini memungkinkan untuk membangun sistem rekomendasi yang lebih kaya dan lebih akurat dengan informasi lengkap tentang buku, pengguna, dan preferensi rating.
 
-### 7. Sampling dan Pembagian Data untuk Pelatihan dan Pengujian
+### 7. Sampling Data
 
 **Langkah yang Dilakukan:**
 - Setelah data final disiapkan, dilakukan sampling untuk memilih subset data yang lebih kecil untuk pelatihan model. Karena keterbatasan memori, sekitar 10.000 entri akan dipilih dari gabungan ketiga dataset tersebut.
-- Pembagian data untuk pelatihan dan pengujian dilakukan menggunakan teknik train-test split, dengan sebagian data digunakan untuk melatih model dan sebagian lainnya digunakan untuk menguji akurasi rekomendasi yang dihasilkan.
 
 **Pertimbangan:**  
-Sampling data dan pembagian antara data pelatihan dan pengujian memastikan bahwa model dapat diuji secara objektif sebelum digunakan untuk menghasilkan rekomendasi yang lebih luas.
+Sampling data bertujuan untuk mengurangi beban komputasi saat nanti data di training.
 
 ## Modeling and Result
 ### Sistem Rekomendasi yang Dibangun

@@ -250,12 +250,21 @@ Langkah-langkah:
 - Memberikan top-N rekomendasi item yang paling mirip dengan item yang pernah disukai pengguna.
   
 Top-N Recommendation Output:  
-Sebagai contoh, untuk seorang pengguna yang menyukai film aksi, sistem merekomendasikan 5 film lain yang memiliki genre serupa dan tingkat kemiripan tinggi. Contoh, untuk pengguna yang menyukai buku "Harry Potter and the Philosopher's Stone", sistem merekomendasikan:  
-1. Harry Potter and the Chamber of Secrets — J.K. Rowling
-2. Harry Potter and the Prisoner of Azkaban — J.K. Rowling
-3. Fantastic Beasts and Where to Find Them — J.K. Rowling
-4. The Hobbit — J.R.R. Tolkien
-5. Eragon — Christopher Paolini
+Sebagai contoh, untuk seorang pengguna yang menyukai film aksi, sistem merekomendasikan 5 film lain yang memiliki genre serupa dan tingkat kemiripan tinggi. Contoh, untuk pengguna yang menyukai buku "**Fire and Hemlock**", sistem merekomendasikan:                                                                                                                                                  
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+| Rank | Book Title             | Book Author         | Predicted Rating |
+|:----:|:-----------------------|:--------------------|:----------------:|
+| 1    | Power of three          | Diana Wynne Jones    | 5.9              |
+| 2    | Dark Lord of Derkholm   | Diana Wynne Jones    | 4.7              |
+| 3    | Hemlock Bay             | Catherine Coulter    | 3.1              |
+| 4    | No Other Option         | Marcus Wynne         | 2.6              |
+| 5    | Stuart Little           | E. B. White          | 2.0              |
+| 6    | Stuart Little           | E. B. White          | 2.0              |
+| 7    | Voyager                 | DIANA GABALDON       | 1.9              |
+| 8    | Outlander               | DIANA GABALDON       | 1.9              |
+| 9    | Outlander               | DIANA GABALDON       | 1.9              |
+| 10   | Outlander               | DIANA GABALDON       | 1.9              |
 
 ### 2. Item-Based Collaborative Filtering
 Pada pendekatan Collaborative Filtering, sistem menggunakan pola rating pengguna untuk menemukan kesamaan perilaku antar pengguna. Dengan Singular Value Decomposition (SVD), sistem memprediksi rating buku yang belum pernah dinilai oleh pengguna.   

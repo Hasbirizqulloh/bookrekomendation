@@ -6,15 +6,22 @@ Sistem rekomendasi adalah teknologi yang saat ini banyak digunakan untuk membant
 
 Dalam berbagai aplikasi, mulai dari platform belanja online, media sosial, hingga layanan streaming, sistem rekomendasi telah diterapkan dengan tujuan untuk mempermudah pengguna dalam menemukan produk atau konten yang sesuai dengan keinginan mereka. Sebagai contoh, platform seperti Amazon, Netflix, dan Spotify menggunakan sistem rekomendasi untuk memberikan saran produk, film, atau musik yang relevan. Namun, tantangan utama dalam sistem rekomendasi adalah bagaimana memastikan bahwa rekomendasi yang diberikan benar-benar sesuai dengan preferensi pengguna.
 
-Salah satu metode yang banyak digunakan dalam membangun sistem rekomendasi adalah Collaborative Filtering. Metode ini bekerja dengan menganalisis interaksi pengguna terhadap item (misalnya buku, film, produk) dan mencari hubungan atau kesamaan antara pengguna atau item yang serupa. Dalam konteks proyek ini, sistem rekomendasi akan dibangun untuk buku dengan menggunakan pendekatan Collaborative Filtering, di mana sistem akan memberikan rekomendasi berdasarkan interaksi pengguna dengan buku lainnya. Rekomendasi ini akan didasarkan pada perilaku pengguna yang serupa, sehingga buku yang direkomendasikan adalah buku yang disukai oleh pengguna dengan preferensi serupa.
+Dalam membangun sistem rekomendasi, dua metode yang banyak digunakan adalah Content-Based Filtering dan Collaborative Filtering. Kedua metode ini bekerja dengan menganalisis interaksi pengguna terhadap item, seperti buku, film, atau produk, untuk menemukan pola kesamaan antara pengguna atau item. Pada proyek ini, sistem rekomendasi akan dikembangkan menggunakan pendekatan Collaborative Filtering. Sistem akan memberikan rekomendasi buku berdasarkan perilaku pengguna lain yang memiliki preferensi serupa. Dengan demikian, buku yang direkomendasikan adalah buku yang disukai oleh pengguna lain dengan minat yang mirip.
 
 ### Mengapa Proyek Ini Penting?
-Dalam dunia digital yang penuh dengan pilihan, pengguna sering merasa kewalahan mencari buku yang sesuai dengan minat mereka. Dengan adanya sistem rekomendasi berbasis Collaborative Filtering, pengguna dapat mendapatkan saran buku berdasarkan apa yang telah disukai atau dibaca oleh pengguna lain dengan preferensi serupa. Hal ini tidak hanya menghemat waktu pengguna dalam mencari buku, tetapi juga meningkatkan pengalaman mereka dengan memberi saran yang lebih relevan. Sistem ini membantu pengguna merasa lebih dihargai, karena rekomendasi yang diberikan lebih bersifat personal.
+Dalam dunia digital yang penuh dengan pilihan, pengguna sering merasa kewalahan dalam menemukan buku yang sesuai dengan minat mereka. Untuk mengatasi tantangan ini, sistem rekomendasi dikembangkan dengan memanfaatkan dua pendekatan utama, yaitu Collaborative Filtering dan Content-Based Filtering.
 
-Selain itu, sistem rekomendasi ini dapat meningkatkan interaksi pengguna dengan platform, mendorong mereka untuk membeli buku yang mungkin sebelumnya tidak mereka pertimbangkan, dan mengenalkan mereka pada buku-buku baru yang relevan. Hal ini berpotensi meningkatkan penjualan buku serta memperluas penggunaan koleksi buku yang ada di platform.
+Melalui Collaborative Filtering, pengguna akan mendapatkan rekomendasi buku berdasarkan preferensi pengguna lain yang memiliki pola kesukaan serupa. Pendekatan ini membantu pengguna menemukan buku-buku yang populer di kalangan individu dengan minat yang mirip, sehingga menghemat waktu pencarian dan meningkatkan relevansi rekomendasi.
+
+Sementara itu, Content-Based Filtering menganalisis karakteristik buku, seperti genre, tema, atau penulis, dan mencocokkannya dengan riwayat preferensi pengguna. Dengan demikian, pengguna dapat memperoleh rekomendasi yang lebih personal berdasarkan kesamaan konten dengan buku yang pernah mereka sukai.
+
+Kombinasi kedua pendekatan ini tidak hanya meningkatkan pengalaman pengguna dengan menyediakan saran yang relevan dan personal, tetapi juga mendorong interaksi yang lebih tinggi dengan platform. Pengguna akan lebih mungkin menemukan dan membeli buku-buku baru yang mungkin sebelumnya tidak mereka pertimbangkan, sekaligus memperluas eksplorasi terhadap koleksi buku yang tersedia. Pada akhirnya, hal ini berpotensi meningkatkan kepuasan pengguna dan mendorong pertumbuhan penjualan buku di platform.
+
 
 ### Solusi yang Akan Dikembangkan
-Proyek ini bertujuan untuk membangun sistem rekomendasi buku dengan menggunakan Collaborative Filtering. Sistem ini akan menganalisis data interaksi pengguna terhadap buku, seperti rating atau pembelian buku, untuk mencari pola yang ada di antara pengguna yang memiliki preferensi serupa. Dengan menggunakan pendekatan ini, sistem akan merekomendasikan buku yang sebelumnya disukai oleh pengguna lain yang memiliki kesamaan minat atau preferensi. Oleh karena itu, rekomendasi yang diberikan akan lebih relevan dan personal, meningkatkan pengalaman pengguna dan mendorong peningkatan penjualan serta interaksi yang lebih tinggi dengan platform.
+Proyek ini bertujuan untuk membangun sistem rekomendasi buku dengan menggabungkan pendekatan Collaborative Filtering dan Content-Based Filtering. Sistem ini akan menganalisis data interaksi pengguna terhadap buku, seperti pemberian rating, ulasan, atau riwayat pembelian, untuk menemukan pola di antara pengguna yang memiliki preferensi serupa (Collaborative Filtering). Selain itu, sistem juga akan memanfaatkan informasi karakteristik buku, seperti genre, penulis, atau sinopsis, untuk memberikan rekomendasi berdasarkan kesamaan konten dengan buku-buku yang pernah disukai oleh pengguna (Content-Based Filtering).
+
+Dengan kombinasi kedua pendekatan ini, sistem rekomendasi akan mampu memberikan saran buku yang lebih relevan, personal, dan beragam. Solusi ini diharapkan dapat meningkatkan pengalaman pengguna, mempercepat proses pencarian buku yang sesuai, serta mendorong peningkatan penjualan dan interaksi yang lebih tinggi dengan platform.
   
 ### Referensi: 
 - [Enhancing Personalized Book Recommender System](https://www.ijana.in/papers/V14I3-11.pdf)
@@ -26,7 +33,11 @@ Proyek ini bertujuan untuk membangun sistem rekomendasi buku dengan menggunakan 
 
 ## Business Understanding
 
-Bagian Business Understanding dalam proyek ini bertujuan untuk mengidentifikasi dan menjelaskan permasalahan yang ada dalam platform penyedia buku, serta menguraikan solusi yang akan dikembangkan melalui penerapan sistem rekomendasi berbasis Collaborative Filtering. Dalam konteks ini, kami akan menganalisis bagaimana sistem rekomendasi dapat membantu pengguna menemukan buku yang lebih relevan dan sesuai dengan minat mereka, sekaligus meningkatkan pengalaman pengguna serta penjualan buku di platform. Proyek ini berfokus pada memberikan solusi untuk masalah-masalah yang ada, termasuk kesulitan pengguna dalam mencari buku yang relevan dan kurangnya rekomendasi yang personal.
+Bagian ini bertujuan untuk mengidentifikasi dan menjelaskan permasalahan yang dihadapi oleh platform penyedia buku, serta menguraikan solusi yang akan dikembangkan melalui penerapan sistem rekomendasi berbasis Collaborative Filtering dan Content-Based Filtering. Saat ini, pengguna sering mengalami kesulitan dalam menemukan buku yang relevan dengan minat mereka karena keterbatasan sistem rekomendasi yang ada. Kurangnya saran yang personal dan relevan dapat berdampak pada rendahnya tingkat kepuasan pengguna dan minimnya interaksi dengan platform.
+
+Melalui penerapan Collaborative Filtering, sistem akan menganalisis pola interaksi pengguna untuk menemukan kesamaan preferensi dengan pengguna lain, sehingga dapat merekomendasikan buku berdasarkan pilihan pengguna dengan minat serupa. Di sisi lain, Content-Based Filtering akan menganalisis karakteristik buku seperti genre, tema, atau penulis, untuk memberikan rekomendasi berdasarkan kesamaan konten dengan buku-buku yang pernah disukai pengguna.
+
+Proyek ini berfokus pada pengembangan solusi yang mampu meningkatkan relevansi rekomendasi buku, memperkaya pengalaman pengguna, mempercepat pencarian buku yang sesuai, serta mendorong peningkatan penjualan dan keterlibatan pengguna di platform.
 
 ### Problem Statements
 
@@ -82,7 +93,7 @@ Untuk mencari pengguna atau buku yang paling mirip sebagai dasar pemberian rekom
 Dengan menggabungkan kedua pendekatan ini Content-Based Filtering dan Collaborative Filtering, sistem rekomendasi diharapkan dapat memberikan saran buku yang lebih relevan dan personal, meningkatkan pengalaman pengguna, serta mendorong pertumbuhan penjualan buku di platform.
 
 ## Data Understanding
-Proyek ini menggunakan dataset dari platform Book-Crossing Dataset yang tersedia di Kaggle. Dataset ini berisi informasi tentang buku, pengguna, serta penilaian (rating) yang diberikan pengguna terhadap buku tersebut. Dataset ini terdiri dari tiga file utama, yaitu Books.csv, Users.csv, dan Ratings.csv, yang masing-masing memiliki jumlah data sebagai berikut:
+Proyek ini menggunakan dataset dari platform Book-Crossing Dataset yang tersedia di [Kaggle](https://www.kaggle.com/datasets/arashnic/book-recommendation-dataset). Dataset ini berisi informasi tentang buku, pengguna, serta penilaian (rating) yang diberikan pengguna terhadap buku tersebut. Dataset ini terdiri dari tiga file utama, yaitu Books.csv, Users.csv, dan Ratings.csv, yang masing-masing memiliki jumlah data sebagai berikut:
 
 - Books.csv: berisi 271.360 entri data mengenai buku, termasuk ISBN, judul, pengarang, tahun terbit, penerbit, serta link gambar sampul dalam berbagai ukuran.
 

@@ -48,9 +48,6 @@ Dengan jumlah buku yang sangat banyak yang tersedia di berbagai platform digital
 2. Kurangnya Rekomendasi yang Relevan  
 Banyak platform buku yang tidak mampu memberikan rekomendasi yang sesuai dengan preferensi pengguna. Hal ini menyebabkan pengguna harus menghabiskan waktu yang lebih lama untuk mencari buku yang mereka minati, atau bahkan mereka tidak menemukan buku yang relevan sama sekali. Rekomendasi yang tidak personal atau tidak akurat, seperti yang sering terjadi pada sistem berbasis konten, dapat menurunkan kualitas pengalaman pengguna secara keseluruhan. Dalam konteks Collaborative Filtering, masalah ini timbul karena kurangnya hubungan antar item atau pengguna yang serupa yang bisa digunakan untuk memberikan rekomendasi.
 
-3. Tidak Ada Sistem yang Dapat Meningkatkan Penjualan Buku  
-Tanpa adanya sistem rekomendasi yang tepat, pengguna cenderung membeli buku yang sudah mereka kenal, sementara buku-buku baru atau buku lain yang relevan dengan minat mereka mungkin tidak mendapatkan perhatian. Ini mengarah pada penurunan penjualan buku yang dapat dengan mudah ditingkatkan dengan sistem rekomendasi berbasis Collaborative Filtering. Dalam hal ini, pengguna akan lebih mudah menemukan buku baru yang disukai oleh pengguna dengan preferensi serupa, yang akhirnya meningkatkan peluang penjualan buku yang lebih tinggi.
-
 ### Goals
 Dalam rangka mengatasi permasalahan tersebut, tujuan dari proyek ini adalah:
 1. Menyediakan Rekomendasi Buku yang Personalisasi dan Relevan  
@@ -59,38 +56,30 @@ Sistem rekomendasi berbasis Collaborative Filtering akan dikembangkan untuk memb
 2. Meningkatkan Pengalaman Pengguna dengan Rekomendasi yang Akurat  
 Salah satu tujuan utama dari proyek ini adalah untuk meningkatkan pengalaman pengguna dengan memberikan rekomendasi yang lebih akurat dan personal. Dengan sistem rekomendasi berbasis Collaborative Filtering, pengguna tidak hanya akan lebih mudah menemukan buku yang mereka suka, tetapi juga merasa lebih dihargai karena platform memahami preferensi mereka berdasarkan interaksi mereka dengan pengguna lain yang serupa.
 
-3. Meningkatkan Penjualan Buku  
-Melalui penerapan sistem rekomendasi berbasis Collaborative Filtering, platform penyedia buku diharapkan dapat meningkatkan penjualan buku. Dengan memberikan rekomendasi yang relevan dan menarik bagi pengguna berdasarkan data historis pengguna lainnya, buku yang mungkin sebelumnya tidak dipertimbangkan akan lebih sering dibeli. Hal ini berpotensi meningkatkan pendapatan dan efisiensi dalam penggunaan katalog buku.
 
 ### Solution Approach
 
 Untuk mencapai tujuan sistem rekomendasi buku yang relevan dan personal, akan digunakan dua pendekatan utama:
 
 1. Content-Based Filtering  
-Content-Based Filtering adalah metode yang merekomendasikan item (buku) berdasarkan kesamaan karakteristik item tersebut dengan preferensi pengguna sebelumnya. Sistem akan menganalisis atribut dari buku, seperti genre, penulis, sinopsis, atau kata kunci, lalu mencocokkannya dengan profil minat pengguna. Dengan teknik ini, rekomendasi yang diberikan lebih bersifat personal karena fokus pada karakteristik konten buku yang disukai pengguna.  
-Beberapa metode yang digunakan dalam Content-Based Filtering antara lain:  
+Content-Based Filtering merekomendasikan buku berdasarkan kesamaan konten dengan buku yang pernah disukai pengguna. Sistem menganalisis atribut buku seperti judul, penulis, dan kata kunci yang diturunkan dari metadata buku.
+Teknik yang digunakan:  
     - TF-IDF (Term Frequency-Inverse Document Frequency)    
 Untuk mengekstraksi fitur dari deskripsi buku dan menghitung bobot pentingnya kata-kata kunci.
     - Cosine Similarity  
 Untuk mengukur tingkat kemiripan antar buku berdasarkan fitur-fitur yang telah diekstraksi, sehingga sistem dapat merekomendasikan buku yang mirip dengan buku yang pernah disukai pengguna.
+Pendekatan ini efektif untuk menangkap kemiripan tematik, terutama untuk seri buku atau penulis dengan gaya khas.
 
-2. Collaborative Filtering  
-Collaborative Filtering adalah metode yang membuat rekomendasi berdasarkan pola interaksi pengguna lain tanpa memperhatikan konten buku itu sendiri. Pendekatan ini mengandalkan kesamaan perilaku antar pengguna atau antar item untuk memprediksi preferensi.  
-Collaborative Filtering terdiri dari dua pendekatan:
-    - User-Based Collaborative Filtering  
-Mencari pengguna dengan pola preferensi serupa, lalu merekomendasikan buku yang disukai oleh pengguna-pengguna tersebut.
-    - Item-Based Collaborative Filtering  
-Menemukan buku yang sering dikaitkan bersama berdasarkan perilaku pengguna lain, lalu merekomendasikan buku serupa kepada pengguna.
-  
-    Beberapa metode pendukung Collaborative Filtering:
-    - Pearson Correlation dan Cosine Similarity    
-Untuk mengukur tingkat kesamaan antar pengguna atau antar item.
-    - Matrix Factorization Singular Value Decomposition    
-Untuk menemukan pola tersembunyi dalam data besar pengguna-buku dan membuat prediksi rekomendasi yang lebih akurat.
-    - K-Nearest Neighbors (KNN)    
-Untuk mencari pengguna atau buku yang paling mirip sebagai dasar pemberian rekomendasi.
+2. Neural Collaborative Filtering (NCF)  
+Neural Collaborative Filtering adalah pendekatan deep learning yang memodelkan interaksi non-linear antara pengguna dan item. NCF tidak memerlukan informasi konten, melainkan belajar dari pola interaksi historis pengguna.    
+Langkah-langkah utama:
 
-Dengan menggabungkan kedua pendekatan ini Content-Based Filtering dan Collaborative Filtering, sistem rekomendasi diharapkan dapat memberikan saran buku yang lebih relevan dan personal, meningkatkan pengalaman pengguna, serta mendorong pertumbuhan penjualan buku di platform.
+- Penggunaan embedding layers untuk merepresentasikan User dan Item (ISBN) dalam bentuk vektor.
+- Pemrosesan vektor melalui jaringan neural yang mempelajari hubungan kompleks antara pengguna dan buku.
+- Model dilatih untuk meminimalkan error prediksi rating terhadap data yang tersedia.
+- Evaluasi dilakukan menggunakan Root Mean Squared Error (RMSE) untuk mengukur akurasi prediksi rating, serta visualisasi training loss untuk memantau proses pelatihan.
+
+Dengan kombinasi CBF dan NCF, sistem rekomendasi ini mampu memberikan rekomendasi berbasis kesamaan konten buku (CBF) dan rekomendasi berbasis pola perilaku pengguna (NCF). Pendekatan ini diharapkan memberikan saran buku yang lebih personal dan relevan, sekaligus mengatasi keterbatasan masing-masing metode jika digunakan secara terpisah.
 
 ## Data Understanding
 Proyek ini menggunakan dataset dari platform Book-Crossing Dataset yang tersedia di [Kaggle](https://www.kaggle.com/datasets/arashnic/book-recommendation-dataset). Dataset ini berisi informasi tentang buku, pengguna, serta penilaian (rating) yang diberikan pengguna terhadap buku tersebut. Dataset ini terdiri dari tiga file utama, yaitu Books.csv, Users.csv, dan Ratings.csv, yang masing-masing memiliki jumlah data sebagai berikut:
@@ -242,13 +231,21 @@ Langkah yang Dilakukan:
 **Pertimbangan:**  
 Penggabungan ketiga dataset ini memungkinkan untuk membangun sistem rekomendasi yang lebih kaya dan lebih akurat dengan informasi lengkap tentang buku, pengguna, dan preferensi rating.
 
-### 5. Sampling Data
+### 5. Sampling Data, Encode, dan Splitting Data
 
 **Langkah yang Dilakukan:**
+
 - Setelah data final disiapkan, dilakukan sampling untuk memilih subset data yang lebih kecil untuk pelatihan model. Karena keterbatasan memori, sekitar 10.000 entri akan dipilih dari gabungan ketiga dataset tersebut.
 
+- Selanjutnya, dilakukan proses **encoding** terhadap kolom `User-ID` dan `ISBN`. Karena kedua kolom ini bersifat kategorikal (berisi string atau kode unik), perlu diubah menjadi nilai numerik menggunakan `LabelEncoder`. Hal ini penting karena sebagian besar algoritma machine learning hanya dapat memproses data numerik. (Khusus untuk Colaborative Filtering)
+
+- Setelah data dalam bentuk numerik siap, dataset dibagi menjadi dua bagian menggunakan metode **train-test split**: 80% data untuk pelatihan dan 20% data untuk pengujian. Ini bertujuan agar performa model dapat dievaluasi pada data yang belum pernah dilihat sebelumnya. (Khusus untuk Colaborative Filtering)
+
 **Pertimbangan:**  
-Sampling data bertujuan untuk mengurangi beban komputasi saat nanti data di training.
+- Sampling data bertujuan untuk mengurangi beban komputasi saat pelatihan model, tanpa harus mengolah seluruh data asli yang jauh lebih besar.  
+- Encoding memungkinkan sistem memahami data kategorikal dalam bentuk angka yang dapat dimanfaatkan model.  
+- Train-test split penting untuk mengevaluasi kemampuan generalisasi model dan mencegah overfitting terhadap data pelatihan.
+
 
 ## Modeling and Result
 ### Sistem Rekomendasi yang Dibangun
@@ -263,9 +260,9 @@ Langkah-langkah:
 - Memberikan top-N rekomendasi item yang paling mirip dengan item yang pernah disukai pengguna.
 
 Kelebihan:
-- Personalisasi Tinggi, Rekomendasi berdasarkan preferensi individu pengguna.
-- Tidak Bergantung pada Pengguna Lain, Tidak memerlukan data dari pengguna lain untuk merekomendasikan buku.
-- Dapat Mengatasi Cold-Start Item, Buku baru bisa direkomendasikan jika memiliki fitur yang jelas.
+- Rekomendasi berdasarkan preferensi individu pengguna.
+- Tidak memerlukan data dari pengguna lain untuk merekomendasikan buku.
+- Buku baru bisa direkomendasikan jika memiliki fitur yang jelas.
 
 Kekurangan:
 - Kurang Diversitas membuat rekomendasi cenderung terbatas pada buku dengan fitur yang mirip.
@@ -274,131 +271,79 @@ Kekurangan:
 
   
 Top-N Recommendation Output:  
-Sebagai contoh, untuk seorang pengguna yang menyukai film aksi, sistem merekomendasikan 10 film lain yang memiliki genre serupa dan tingkat kemiripan tinggi. Contoh, untuk pengguna yang menyukai buku "**The Dragon Reborn (The Wheel of Time, Book 3)**", sistem merekomendasikan:                                                                                                                                           
-| No | Book Title                                                                 | Book Author     | Predicted Rating |
-|----|-----------------------------------------------------------------------------|------------------|------------------|
-| 1  | The Eye of the World (The Wheel of Time, Book 1)                           | Robert Jordan    | 10.0             |
-| 2  | The Eye of the World (The Wheel of Time, Book 1)                           | Robert Jordan    | 7.0              |
-| 3  | The World of Robert Jordan's The Wheel of Time...                          | Robert Jordan    | 7.0              |
-| 4  | Lord of Chaos (The Wheel of Time, Book 6)                                  | Robert Jordan    | 6.8              |
-| 5  | A Crown of Swords (The Wheel of Time, Book 7)                              | Robert Jordan    | 6.7              |
-| 6  | A Crown of Swords (The Wheel of Time, Book 7)                              | Robert Jordan    | 6.6              |
-| 7  | A Crown of Swords (The Wheel of Time, Book 7)                              | Robert Jordan    | 6.6              |
-| 8  | The Great Hunt: Book Two of 'The Wheel of Time'                            | Robert Jordan    | 6.6              |
-| 9  | The Shadow Rising: Book Four of 'The Wheel of Time'                        | Robert Jordan    | 6.3              |
-| 10 | The Shadow Rising: Book Four of 'The Wheel of Time'                        | *Unknown*        | 6.3              |
+Sebagai contoh, untuk seorang pengguna yang menyukai buku dalam seri tertentu, sistem merekomendasikan 10 buku lain yang memiliki penulis serupa dan tingkat kemiripan tinggi. Contoh, untuk pengguna yang menyukai buku "**The Dragon Reborn (The Wheel of Time, Book 3)**", sistem merekomendasikan:                                                                                                                                           
+| Rank | Judul Buku | Penulis | Penerbit | Predicted Rating |
+|------|------------|---------|----------|------------------|
+| 1 | *The Eye of the World (The Wheel of Time, Book 1)* | Robert Jordan | Tor Fantasy | 7.0 |
+| 2 | *The World of Robert Jordan's The Wheel of Time* | Robert Jordan | Tor Books | 6.8 |
+| 3 | *Lord of Chaos (The Wheel of Time, Book 6)* | Robert Jordan | Tor Fantasy | 6.7 |
+| 4 | *A Crown of Swords (The Wheel of Time, Book 7)* | Robert Jordan | Tor Fantasy | 6.6 |
+| 5 | *The Great Hunt : Book Two of 'The Wheel of Time'* | Robert Jordan | Tor Books | 6.3 |
+| 6 | *The Shadow Rising : Book Four of 'The Wheel of Time'* | Robert Jordan | Tor Books | 6.3 |
+| 7 | *Winter's Heart (The Wheel of Time, Book 9)* | Robert Jordan | Tor Books | 6.1 |
+| 8 | *Earthquake Weather (Tor Fantasy)* | Tim Powers | Tor Books | 2.6 |
+| 9 | *Into the Darkness (World at War, Book 1)* | Harry Turtledove | Tor Fantasy | 2.5 |
+|10 | *Mount Dragon: A Novel* | Douglas Preston | Tor Books | 2.4 |
+
+---
 
 #### 📊 Insight dari Rekomendasi Content-Based untuk 'The Dragon Reborn (The Wheel of Time, Book 3)'
-Berdasarkan sistem rekomendasi berbasis konten, hasilnya menunjukkan bahwa buku-buku yang sangat mirip dengan "The Dragon Reborn" adalah buku-buku lain dalam seri "The Wheel of Time" karya Robert Jordan. Ini mencakup buku seperti "The Eye of the World" dan "The Lord of Chaos", yang juga merupakan bagian dari seri yang sama. Hal ini mengonfirmasi bahwa sistem dapat mengenali pola konten yang konsisten di antara buku-buku dalam satu seri.
-
-- Buku dengan peringkat tertinggi: "The Eye of the World" muncul beberapa kali di rekomendasi, dengan peringkat yang sangat tinggi (10.0).
-- Buku lain dalam seri yang sama: Banyak buku dari seri "The Wheel of Time", seperti "Lord of Chaos" dan "A Crown of Swords", juga mendapatkan peringkat yang cukup baik (di atas 6.0), menunjukkan bahwa kemiripan tematik dan genre sangat mempengaruhi rekomendasi.
-- Peringkat Prediksi: Peringkat prediksi untuk buku-buku terkait berkisar antara 6.3 hingga 10.0, memberikan gambaran bahwa pengguna kemungkinan besar akan tertarik pada buku-buku dalam seri yang sama, dengan variasi dalam tingkat kesukaan.  
-
-Dengan rekomendasi ini, sistem berhasil mengidentifikasi dan menyarankan buku-buku yang sangat relevan, meningkatkan pengalaman pengguna dalam menemukan buku-buku lanjutan dalam seri yang mereka sukai.
+- Buku-buku yang direkomendasikan **mayoritas berasal dari seri yang sama** (*The Wheel of Time*), menunjukkan bahwa pendekatan content-based sangat efektif dalam mengenali keterkaitan konten berdasarkan judul, penulis, dan penerbit.
+- **Robert Jordan** mendominasi hasil rekomendasi, menunjukkan bahwa fitur penulis berpengaruh kuat terhadap kemiripan.
+- Buku dari penerbit **Tor Books** dan **Tor Fantasy** juga sering muncul, mengindikasikan bahwa penerbitan juga menjadi sinyal penting dalam penilaian kemiripan.
+- Tiga rekomendasi terbawah memiliki prediksi rating yang lebih rendah (sekitar 2.4–2.6), mungkin karena hanya berbagi kesamaan dari penerbit atau genre luas, bukan seri atau penulis.
 
 ----
 
-### 2. Item-Based Collaborative Filtering
-Pada pendekatan Collaborative Filtering, sistem menggunakan pola rating pengguna untuk menemukan kesamaan perilaku antar pengguna. Dengan Singular Value Decomposition (SVD), sistem memprediksi rating buku yang belum pernah dinilai oleh pengguna.   
+### 2. Neural Collaborative Filtering (NCF)
+
+Pada pendekatan **Neural Collaborative Filtering (NCF)**, sistem menggunakan pola interaksi pengguna dan item (seperti buku) untuk memprediksi rating atau preferensi yang belum diberikan oleh pengguna. NCF menggunakan model berbasis **neural network** yang lebih fleksibel dan dapat menangkap hubungan non-linear antara pengguna dan item. 
+
 Langkah-langkah:
-- Membuat matriks interaksi pengguna-buku berdasarkan User-ID, ISBN, dan Book-Rating.
-- Melakukan dekomposisi matriks menggunakan algoritma SVD untuk menemukan representasi laten pengguna dan buku.
-- Memperkirakan rating buku yang belum pernah dibaca pengguna.
-- Memberikan top-10 rekomendasi buku berdasarkan prediksi rating tertinggi.
+- **Membuat Matriks Interaksi Pengguna-Item** dengan menggunakan **User-ID**, **Item-ID** (misalnya ISBN), dan **Rating** untuk membangun matriks interaksi. Matriks ini berisi data rating yang diberikan pengguna terhadap item (buku).
+- Membangun **Model NCF** dengan menggunakan jaringan saraf, **embedding layer** digunakan untuk merepresentasikan pengguna dan item dalam bentuk vektor laten. Vektor-vektor ini kemudian digabungkan melalui lapisan **MLP (Multilayer Perceptron)** untuk memprediksi rating.
+- Model dilatih untuk meminimalkan **loss function** yaitu, **MSE Loss**, dengan memperkirakan rating yang belum pernah diberikan oleh pengguna.
+- Setelah model terlatih, prediksi rating dilakukan untuk item-item yang belum dinilai oleh pengguna, dan kemudian diberikan **top-10 rekomendasi buku** berdasarkan rating tertinggi.
 
 Kelebihan:
-- Menggunakan Data Historis yang memanfaatkan rating pengguna untuk memberikan rekomendasi yang lebih relevan.
-- Dapat Menangani Sparsity melakukan dekomposisi matriks dengan SVD membantu mengatasi masalah sparsity data (data yang jarang).
-- Fleksibel dan dapat digunakan untuk prediksi rating buku yang belum pernah dinilai pengguna.
+- Dengan menggunakan **neural network**, NCF dapat menangkap hubungan non-linear dan interaksi kompleks antara pengguna dan item yang lebih sulit dipecahkan oleh model tradisional seperti SVD.
+- Dengan **embedding layer** dan **MLP**, NCF dapat menangani masalah sparsity dalam data rating dengan baik. Embedding memungkinkan model untuk belajar representasi laten yang efektif meskipun data interaksi pengguna dan item tidak lengkap.
+- Dapat memberikan rekomendasi yang lebih relevan dengan memprediksi rating pada item yang belum pernah dinilai, bahkan untuk item baru (cold start problem).
 
 Kekurangan:
-- Memerlukan banyak data pengguna untuk memberikan rekomendasi yang akurat (lebih baik dengan data yang lebih padat).
-- Kesulitan dalam merekomendasikan item baru atau item yang tidak cukup mendapat rating.
-- Proses dekomposisi matriks dengan SVD bisa memakan waktu dan sumber daya komputasi yang besar, terutama untuk dataset besar.
+- NCF membutuhkan jumlah data yang besar untuk dapat melatih model yang efektif. Semakin banyak data interaksi pengguna-item, semakin baik model dalam memberikan rekomendasi.
+- Sama seperti model berbasis collaborative filtering lainnya, NCF mengalami kesulitan dalam merekomendasikan item baru atau pengguna baru yang tidak memiliki cukup data interaksi.
+- Proses pelatihan model NCF, terutama untuk dataset yang besar, membutuhkan waktu dan sumber daya komputasi yang lebih banyak dibandingkan dengan teknik tradisional seperti SVD.
+
 
 Top-10 Recommendation Output:  
-Sebagai contoh, sistem merekomendasikan 10 buku yang secara historis disukai oleh pengguna lain yang memiliki pola rating serupa. Contoh, untuk pengguna ID 123284 yang suka dengan buku sebelumnya memberikan rating tinggi untuk "Year of Wonders", sistem merekomendasikan:
-| Rank | Book Title                                                                     | Book Author         | Predicted Rating     |
-|------|----------------------------------------------------------------------------------|----------------------|-----------------------|
-| 1    | A Child's Christmas in Wales                                                    | Dylan Thomas         | 6.93×10⁻¹⁷           |
-| 2    | Rainbow Tribe: Ordinary People Journeying on the Red Road                      | Ed McGaa             | 6.93×10⁻¹⁷           |
-| 3    | The Compact Trail of Tsathoggua (Call of Cthulhu Role Playing Game Supplement) | Keith Herber         | 6.93×10⁻¹⁷           |
-| 4    | Standing Stones: Stonehenge, Carnac and the World of Megaliths                 | Jean Pierre Mohen    | 6.93×10⁻¹⁷           |
-| 5    | The Doctors Book of Home Remedies  Revised Edition                             | Prevention Magazine  | 6.93×10⁻¹⁷           |
-| 6    | A Dictionary of Sussex Folk Medicine                                            | Andrew Allen         | 6.93×10⁻¹⁷           |
-| 7    | Terry Pratchett's "Discworld" Quizbook                                          | David Langford       | 6.93×10⁻¹⁷           |
-| 8    | Coyote Waits (Joe Leaphorn/Jim Chee Novels)                                     | Tony Hillerman       | 7.54×10⁻¹⁷           |
-| 9    | Sacred Space                                                                    | Denise Linn          | 6.93×10⁻¹⁷           |
-| 10   | The Well of Loneliness                                                          | Radclyffe Hall       | 6.93×10⁻¹⁷           |
+Berikut adalah daftar **top-10 rekomendasi buku** untuk pengguna yang dihasilkan oleh model **Neural Collaborative Filtering (NCF)**.
 
-#### 📊 Insight dari Rekomendasi Item-Based Collaborative Filtering untuk User-ID 123284
-Berdasarkan Item-Based Collaborative Filtering, sistem merekomendasikan buku-buku yang serupa dengan buku yang telah diberikan rating oleh pengguna. Berikut adalah beberapa insight dari hasil tersebut:
-
-- Rekomendasi Berdasarkan Kemiripan Item: Rekomendasi buku yang diberikan didasarkan pada kemiripan antara buku yang telah dinilai oleh pengguna dengan buku lainnya. Hal ini menunjukkan bahwa sistem mencari buku-buku dengan pola rating yang serupa untuk memberikan rekomendasi.
-- Buku yang Berbeda Genre dan Tema: Sebagai contoh, buku seperti "A Child's Christmas in Wales" dan "Rainbow Tribe" disarankan meskipun genre dan temanya bisa sangat berbeda. Ini menunjukkan bahwa sistem melihat kesamaan dalam rating pengguna, meskipun buku tersebut mungkin memiliki topik yang berbeda.
-- Prediksi Rating yang Sangat Rendah: Prediksi rating untuk buku-buku ini, yang semuanya berada di angka sekitar 6.93e-17, mengindikasikan bahwa sistem mungkin mengalami masalah dalam memprediksi rating dengan baik, mungkin karena data sparsity atau kesalahan dalam dekomposisi matriks.
-- Rekomendasi yang Tidak Spesifik: Meskipun buku yang disarankan sesuai dengan pola rating pengguna lain, prediksi rating yang hampir sama rendahnya untuk semua buku menunjukkan bahwa sistem belum optimal dalam memberikan rekomendasi yang lebih terpersonalisasi. Data yang lebih kaya atau teknik lain seperti Matrix Factorization atau Deep Learning bisa membantu meningkatkan akurasi prediksi.
-
-🔎 Kesimpulan:
-Sistem Item-Based Collaborative Filtering berhasil memberikan rekomendasi berdasarkan kesamaan antar buku. Namun, kualitas rekomendasi dan prediksi rating perlu diperbaiki, mengingat prediksi rating yang rendah untuk sebagian besar buku. Untuk meningkatkan kualitas rekomendasi, teknik tambahan seperti Matrix Factorization atau Penurunan Dimensi bisa dicoba, atau memperkaya data dengan informasi lebih lanjut tentang interaksi pengguna.
-
----
-### 3. User-Based Collaborative Filtering
-Pada pendekatan User-Based Collaborative Filtering, sistem menggunakan pola rating pengguna untuk menemukan pengguna lain dengan perilaku yang mirip. Kemudian, sistem merekomendasik
-Langkah-langkah:
-- Membuat matriks interaksi pengguna-buku berdasarkan User-ID, ISBN, dan Book-Rating.
-- Menghitung cosine similarity antar pengguna untuk mengukur tingkat kemiripan preferensi.
-- Menentukan k tetangga terdekat (k-nearest neighbors) berdasarkan skor kemiripan tertinggi.
-- Menghitung weighted average rating buku dari tetangga terdekat.
-
-Kelebihan:
-- Memberikan rekomendasi berdasarkan kesamaan preferensi pengguna yang memiliki perilaku serupa, yang bisa lebih relevan untuk pengguna.
-- Algoritma User-Based Collaborative Filtering mudah dipahami dan diimplementasikan.
-- Memberikan rekomendasi yang lebih terpersonalisi dengan memanfaatkan informasi dari pengguna yang memiliki minat sama.
-
-Kekurangan:
-- Semakin banyak pengguna dan item, semakin sulit menghitung kemiripan antar pengguna, terutama dengan dataset besar.
-- Sulit untuk memberikan rekomendasi yang baik kepada pengguna baru atau item baru yang belum memiliki cukup interaksi.
-- Jika sebagian besar rating data pengguna kosong atau tidak lengkap, hasil rekomendasi bisa kurang akurat.
-- Pendekatan ini hanya efektif jika banyak pengguna yang aktif memberikan rating.
-
-Top-10 Recommendation Output:    
-Sebagai contoh, sistem merekomendasikan 10 buku yang secara historis disukai oleh pengguna lain dengan pola rating serupa. Contohnya, untuk User-ID 106893, sistem merekomendasikan:
-
-| Rank | Book Title                                                                 | Book Author       | Predicted Rating |
-|------|-----------------------------------------------------------------------------|-------------------|------------------|
-| 1    | Old Devils                                                                  | Kingsley Amis     | 6.70             |
-| 2    | The Polish Way: A Thousand-Year History of the Poles and Their Culture     | Adam Zamoyski     | 5.21             |
-| 3    | Vamps and Tramps: New Essays                                                | Camille Paglia    | 2.55             |
-| 4    | How to Become a Virgin                                                      | Quentin Crisp     | 2.55             |
-| 5    | The Hippopotamus                                                            | Stephen Fry       | 2.55             |
-| 6    | Skipped Parts                                                               | Tim Sandlin       | 2.30             |
-| 7    | Armadillo                                                                   | William Boyd      | 2.30             |
-| 8    | Neverwhere: A Novel                                                         | Neil Gaiman       | 2.30             |
-| 9    | Whit                                                                         | Iain Banks        | 2.30             |
-| 10   | Careless Love: The Unmaking of Elvis Presley                               | Peter Guralnick   | 2.30             |
+| No | Book Title | Author | Publisher | ISBN |
+|----|------------|--------|-----------|------|
+| 1  | Holes (Newbery Medal Book) | Louis Sachar | Farrar, Straus and Giroux (BYR) | 0374332657 |
+| 2  | Cryptonomicon | Neal Stephenson | Avon | 0380973464 |
+| 3  | The Blue Viking | Sandra Hill | Leisure Books | 0843948272 |
+| 4  | Acts of the Apostles | John F. X. Sundman | Rosalita Associates | 192975213X |
+| 5  | El fantasma de Canterville/El retrato de Dorian Gray/De profundis/La importancia de llamarse Ernesto/El abanico de Lady Windermere | Oscar Wilde | Edimat Libros | 8484036383 |
+| 6  | Before Night Falls | Reinaldo Arenas | Penguin Books | 0140157654 |
+| 7  | From the Mixed Up Files of Mrs Basil E. Frankweiler | E. L. Konigsburg | Random House Childrens Pub (Mm) | 044022733X |
+| 8  | Harry Bear's Railway Adventure | C.J. Whiting | Minerva Press | 186106800X |
+| 9  | To Marry an Irish Rogue (Irish Eyes Romance Series, 2) | Lisa Hendrix | Jove Books | 0515127868 |
+| 10 | Six Hours One Friday : Anchoring to the Power of the Cross | Max Lucado | Multnomah | 1576736016 |
 
 
-#### 📊 Insight dari User-Based CF Recommendations untuk User-ID 106893
-Sistem User-Based Collaborative Filtering berhasil memberikan rekomendasi buku untuk User-ID 106893 berdasarkan kemiripan preferensi dengan pengguna lainnya. Berikut adalah beberapa temuan dari hasil rekomendasi:
-
-- Buku dengan Peringkat Prediksi Tertinggi: Buku pertama yang direkomendasikan adalah "Old Devils" oleh Kingsley Amis, dengan rating yang diprediksi cukup tinggi (6.7). Ini menunjukkan bahwa buku tersebut memiliki kemiripan dengan preferensi pengguna.
-
-- Buku dengan Prediksi Rating Lebih Rendah: Buku seperti "The Polish Way" dan "Vamps and Tramps" memiliki rating yang lebih rendah (5.2 dan 2.55), namun tetap termasuk dalam rekomendasi, mengindikasikan bahwa mereka memiliki beberapa kesamaan dengan minat pengguna, meskipun tidak sekuat rekomendasi lainnya.
-
-- Buku Populer dan Tidak Familiar: Ada beberapa buku yang direkomendasikan, seperti "The Hippopotamus" dan "Neverwhere", yang beragam dalam genre dan tema. Ini menunjukkan bahwa sistem memberikan berbagai pilihan berdasarkan keberagaman minat pengguna yang serupa.
-
-- Rentang Prediksi Rating: Prediksi rating untuk buku yang direkomendasikan bervariasi antara 6.7 hingga 2.3. Buku-buku dengan rating rendah kemungkinan besar adalah buku yang relevan dalam konteks genre atau tema, tetapi dengan minat yang lebih terbatas dari pengguna serupa.    
-
-
-Dengan rekomendasi ini, pengguna diberikan berbagai pilihan buku yang relevan berdasarkan kesamaan rating dari pengguna lain yang memiliki preferensi serupa.
+#### 📊 Insight dari Rekomendasi **Neural Collaborative Filtering** 
+- Rekomendasi mencakup berbagai genre seperti petualangan, sejarah, sastra klasik, dan spiritualitas. Model collaborative filtering memberikan rekomendasi yang beragam, menunjukkan kecenderungan pengguna terhadap berbagai topik dan gaya bacaan.
+- Buku yang direkomendasikan berasal dari penulis dan penerbit yang berbeda, mulai dari penulis terkenal seperti Oscar Wilde hingga penulis yang kurang dikenal. Ini menunjukkan kemampuan model dalam mengenali beragam penulis dan memperkenalkan buku dari penulis yang lebih niche.
+- Collaborative filtering mencocokkan pola perilaku pembaca lain yang serupa dengan User 20. Buku-buku dalam daftar ini kemungkinan besar dipilih berdasarkan kesamaan preferensi dengan pengguna lain, menciptakan rekomendasi yang relevan dan menarik.
 
 ---
 
 ## Evaluation
 Dalam proyek ini menggunakan beberapa metrik evaluasi yang disesuaikan dengan pendekatan sistem rekomendasi yang diterapkan, yaitu Content-Based Filtering dan Collaborative Filtering.
-### 1. Content-Based Filtering dan User-Based Collaborative Filtering (UserCF)
+
+### 1. Content-Based Filtering 
 Pada pendekatan Content-Based Filtering dan User-Based Collaborative Filtering (UserCF), model berfokus untuk merekomendasikan item serupa berdasarkan preferensi pengguna. Karena hasil akhirnya adalah daftar item (top-N recommendation), maka evaluasi dilakukan menggunakan Precision@K dan Recall@K.
 
 #### Rumus Precision@K
@@ -419,8 +364,31 @@ $$
 **Penjelasan**:  
 Recall@K menilai seberapa banyak item relevan yang berhasil ditangkap oleh sistem rekomendasi dari keseluruhan item relevan yang tersedia. Semakin tinggi recall, semakin banyak item relevan yang ditemukan oleh sistem.
 
-## 2. Collaborative Filtering (Item-Based Collaborative Filtering (SVD))
-Untuk pendekatan Collaborative Filtering, model berfokus untuk memprediksi rating yang akan diberikan pengguna pada item tertentu. Oleh karena itu, evaluasi dilakukan menggunakan RMSE (Root Mean Squared Error) dan MAE (Mean Absolute Error).
+### Analisis Evaluasi
+
+- Precision: 0.10    
+**Precision** mengukur sejauh mana rekomendasi yang diberikan oleh model benar-benar relevan. Dalam hal ini, model menghasilkan rekomendasi buku yang relevan dengan **10% akurasi**. Artinya, hanya sekitar 10% dari total rekomendasi yang diberikan oleh model yang benar-benar sesuai dengan preferensi atau kebutuhan pengguna. Nilai precision yang rendah ini menunjukkan bahwa sebagian besar rekomendasi yang diberikan model tidak relevan atau tidak sesuai dengan harapan pengguna, sehingga model memerlukan peningkatan untuk memberikan rekomendasi yang lebih akurat.
+
+- Recall: 0.50    
+**Recall** mengukur sejauh mana model dapat menemukan seluruh item relevan yang tersedia di dalam dataset. Dengan nilai **50%**, model berhasil menemukan setengah dari item yang relevan yang bisa direkomendasikan kepada pengguna. Meskipun recall berada pada tingkat yang lebih tinggi dibandingkan precision, ini menunjukkan bahwa model mampu menangkap sebagian besar item yang relevan, tetapi masih banyak item relevan lainnya yang terlewatkan dalam rekomendasi.
+
+-  Cosine Similarity Heatmap
+![download](https://github.com/user-attachments/assets/274e6750-7492-447e-a879-329f56b9d33f)
+
+      Berdasarkan Cosine Similarity Heatmap sebagian besar buku dari seri The Wheel of Time menunjukkan skor cosine similarity yang tinggi (sekitar 0.6–0.8). Hal ini menunjukkan bahwa sistem rekomendasi mampu mengenali keterkaitan konten, gaya, dan tema dalam seri yang sama. Ini membuktikan efektivitas pendekatan content-based filtering dalam menangkap struktur tematik dari karya yang saling berhubungan.
+
+
+### Kesimpulan    
+- Meskipun precision yang rendah menunjukkan adanya banyak rekomendasi yang tidak relevan, **recall yang lebih tinggi** menunjukkan bahwa model mampu menangkap sebagian besar item relevan. Oleh karena itu, model ini memiliki potensi untuk memberikan rekomendasi yang lebih baik dengan penyesuaian lebih lanjut.
+- **Cosine similarity** yang tinggi di dalam seri **The Wheel of Time** membuktikan bahwa **content-based filtering** efektif dalam mengenali keterkaitan tematik dan gaya antar buku dalam satu seri. Ini menunjukkan bahwa pendekatan content-based filtering dapat sangat efektif untuk merekomendasikan buku dengan tema atau genre yang serupa.
+- Peningkatan **precision** dan **recall**, serta penyesuaian lebih lanjut pada representasi konten buku, akan lebih meningkatkan kinerja sistem dalam memberikan rekomendasi yang lebih akurat dan relevan.
+
+
+---
+
+## 2. Neural Collaborative Filtering 
+
+Untuk pendekatan **Neural Collaborative Filtering (NCF)**, model berfokus untuk memprediksi rating yang akan diberikan pengguna pada item tertentu. Oleh karena itu, evaluasi dilakukan menggunakan **RMSE** (Root Mean Squared Error) dan **MSE** (Mean Squared Error).
 
 #### Rumus RMSE (Root Mean Squared Error)
 $$
@@ -432,13 +400,13 @@ RMSE mengukur seberapa besar rata-rata kesalahan kuadrat antara nilai aktual dan
 
 ---
 
-#### Rumus MAE (Mean Absolute Error)
+#### Rumus MSE (Mean Squared Error)
 $$
-\text{MAE} = \frac{1}{N} \sum_{i=1}^{N} |y_i - \hat{y}_i|
+\text{MSE} = \frac{1}{N} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2
 $$
 
 **Penjelasan**:  
-MAE menghitung rata-rata dari selisih absolut antara nilai aktual dan nilai prediksi. MAE memberikan ukuran kesalahan yang lebih "stabil" terhadap outlier dibandingkan RMSE.
+MSE menghitung rata-rata dari kuadrat selisih antara nilai aktual dan nilai prediksi. MSE memberikan penalti yang lebih besar terhadap kesalahan yang lebih besar, dan lebih sensitif terhadap outlier dibandingkan dengan MAE. Dalam konteks **NCF**, MSE sering digunakan untuk mengukur seberapa baik model memprediksi rating pengguna.
 
 ---
 
@@ -447,155 +415,62 @@ MAE menghitung rata-rata dari selisih absolut antara nilai aktual dan nilai pred
 - ŷᵢ = rating prediksi ke-i
 - N = jumlah observasi (jumlah pasangan data aktual dan prediksi)
 
-### Analisis Evaluasi
+### Analisis Evaluasi 
 
-#### Content-Based Filtering 
-Buku yang Disukai oleh User:    
-['Fatal Voyage', 'A Prayer for the Dying', 'I Killed June Cleaver: Modern Moms Shatter the Myth of  Perfect Parenting']
+- Grafik Loss Curve yang dihasilkan selama pelatihan menunjukkan penurunan yang signifikan pada nilai loss dari epoch pertama hingga epoch ke-20. Di awal pelatihan, nilai loss cukup tinggi (sekitar 16.03), namun dengan bertambahnya epoch, loss menurun secara konsisten, mencapai nilai terendah pada epoch terakhir (sekitar 0.04).
+![download (1)](https://github.com/user-attachments/assets/dda7777f-756e-4e12-9c43-d24bb750c9b7)    
 
-Hasil Rekomendasi Model:    
-['Deja Dead', 'Death du Jour', 'Bare Bones : A Novel', 'Bare Bones : A Novel', 'Deadly Decisions', 'Death du Jour', 'Death du Jour', 'Lasst Knochen Sprechen', 'Fatal', 'Fatal']
+  Penurunan loss yang stabil ini menunjukkan bahwa model berhasil belajar dan melakukan optimasi terhadap parameter yang ada selama proses pelatihan. Hal ini mengindikasikan bahwa model menyesuaikan bobotnya dengan baik untuk meminimalkan kesalahan prediksi pada data pelatihan. Tantangan berikutnya adalah memastikan bahwa model tidak hanya bekerja baik pada data pelatihan tetapi juga mampu melakukan generalisasi dengan baik pada data uji.
 
-Evaluation Metrics:
-- Precision@5: 0.00
-- Recall@5: 0.00
+- Hasil Test RMSE yang diperoleh adalah 2.2320, yang mengukur perbedaan rata-rata antara rating yang diprediksi oleh model dan rating aktual yang diberikan oleh pengguna pada data uji. RMSE yang lebih rendah menunjukkan kinerja model yang baik dalam memprediksi rating dengan akurat. Sebagai acuan, semakin rendah nilai RMSE, semakin dekat prediksi model dengan nilai aktual, yang berarti model lebih akurat dalam memberikan prediksi rating. Dengan nilai RMSE sebesar 2.2320, model menunjukkan performa yang cukup baik, namun masih ada ruang untuk perbaikan lebih lanjut. Nilai RMSE ini menunjukkan bahwa model bisa lebih baik dalam menangkap variasi rating pengguna pada data yang lebih luas atau variatif.
 
-Interpretasi:    
-Model Content-Based Filtering yang diterapkan pada dataset ini belum berhasil memberikan rekomendasi yang sesuai dengan buku-buku yang disukai oleh pengguna. Dari 10 buku yang direkomendasikan, tidak ada satu pun yang relevan dengan preferensi yang telah ditunjukkan oleh pengguna. Precision@5 dan Recall@5 yang bernilai 0 menunjukkan bahwa model tidak dapat memberikan rekomendasi yang memadai pada level tersebut.
-
-Beberapa faktor yang dapat menyebabkan hasil ini antara lain:
-- Kemiripan Fitur yang Terbatas: Model hanya mengandalkan beberapa fitur seperti judul, penulis, dan penerbit, yang mungkin tidak cukup kuat untuk menangkap nuansa preferensi pengguna. Banyaknya kemiripan kata-kata dalam judul (seperti "Fatal" yang muncul di beberapa buku) bisa menyebabkan model kesulitan dalam membedakan antara buku yang relevan dan yang tidak.
-- Evaluasi yang Terpisah dari Training Data: Jika evaluasi dilakukan dengan data yang terpisah dari training data, model mungkin kesulitan memberikan rekomendasi yang relevan pada data yang belum pernah dilihat sebelumnya.
-- Fitur yang Tidak Memadai: Penggunaan fitur yang terbatas pada judul, penulis, dan penerbit saja mungkin belum cukup untuk menghasilkan rekomendasi yang tepat. Penggunaan fitur tambahan seperti deskripsi buku atau genre dapat meningkatkan akurasi model.    
-
-Secara keseluruhan, hasil evaluasi ini menunjukkan bahwa ada kebutuhan untuk memperbaiki teknik ekstraksi fitur atau metode similarity yang digunakan, serta mengeksplorasi kemungkinan untuk menggabungkan berbagai teknik lain seperti Collaborative Filtering atau menggunakan model berbasis deep learning untuk meningkatkan kualitas rekomendasi yang dihasilkan. Perbandingan antara **hasil training** dan **hasil evaluasi** menunjukkan adanya gap yang signifikan, yang mengindikasikan bahwa sistem perlu dilakukan penyempurnaan terutama pada bagian **penanganan data pengguna** dan **ekstraksi fitur**.
-
-#### **Kesimpulan dan Rekomendasi**
-- **Model Content-Based Filtering** dalam bentuk yang saat ini diterapkan belum memberikan rekomendasi yang memadai pada tahap evaluasi. Meskipun pada **training** hasil prediksi tampak baik, model perlu ditingkatkan dengan memperhatikan fitur yang lebih kaya dan teknik similarity yang lebih baik.
-- Evaluasi yang lebih beragam dan penggunaan **hybrid approaches** (misalnya menggabungkan model content-based dengan collaborative filtering) bisa menjadi solusi untuk mengatasi masalah ini.
-- Penambahan fitur **metadata** seperti **kategori buku**, **deskripsi singkat**, atau bahkan **review pengguna** bisa meningkatkan hasil rekomendasi secara keseluruhan.
-
----
-
-#### Item-Based Collaborative Filtering (SVD)  
-- RMSE: 7.5156
-- MAE: 7.0376
-
-Interpretasi:  
-Model Item-Based Collaborative Filtering berbasis Singular Value Decomposition (SVD) menunjukkan kinerja yang kurang optimal dengan nilai RMSE dan MAE yang cukup tinggi, masing-masing 7.5156 dan 7.0376. Kedua metrik ini menunjukkan bahwa prediksi rating yang dihasilkan model masih memiliki kesalahan yang cukup besar dari rating yang sebenarnya diberikan oleh pengguna.
-
-Beberapa faktor yang dapat menyebabkan hasil ini antara lain:
-- Sparsity Data: Dalam data yang memiliki banyak nilai kosong (rating yang hilang), model akan kesulitan memberikan prediksi yang akurat. Banyaknya data yang tidak diberi rating bisa mempengaruhi performa model secara signifikan.
-- Jumlah Latent Factors yang Kurang Optimal: Penggunaan 20 latent factors dalam dekomposisi SVD mungkin belum cukup untuk menangkap kompleksitas hubungan antara pengguna dan buku. Pengoptimalan jumlah latent factors bisa meningkatkan akurasi model.
-
-Kesimpulan:
-- RMSE dan MAE yang tinggi mengindikasikan bahwa model Collaborative Filtering berbasis SVD belum dapat memberikan prediksi yang akurat.
-- Rekomendasi yang dihasilkan tidak sesuai dengan rating yang seharusnya diberikan, kemungkinan karena data yang sangat jarang (sparse) atau pemilihan jumlah latent factors yang belum cukup baik.
-- Perlu ada upaya untuk mengoptimalkan model, seperti menyesuaikan jumlah latent factors atau menerapkan teknik lain untuk menangani sparsity dalam data, guna meningkatkan kualitas prediksi dan rekomendasi.
-
----
-
-#### User-Based Collaborative Filtering (UserCF)
-Buku yang Disukai oleh User:    
-['The Godforsaken']
-
-Hasil Rekomendasi Model:    
-['The Best of Rock: The Essential Cd Guide (The Essential CD Guides)', 'The angry tide: A novel of Cornwall, 1798-9', 'Collins guide to dinosaurs', 'The first Eden: The Mediterranean world and man', "Stalin's nose: Across the face of Europe", 'Girlfriend In a Coma', 'Forms of Devotion: Stories and Pictures', "Black as he's painted", "Little Wolf's Book of Badness", 'Agent In Place']
-
-Evaluation Metrics:
-- Precision@10: 0.0000
-- Recall@10: 0.0000
-
-Interpretasi:    
-Model User-Based Collaborative Filtering saat ini belum mampu memberikan rekomendasi buku yang relevan dengan preferensi pengguna. Meskipun model telah menghitung kesamaan antar pengguna, hasil rekomendasi yang dihasilkan tidak relevan dengan buku yang telah disukai oleh pengguna.
-Precision@10 dan Recall@10 yang menunjukkan nilai 0.0000 mengindikasikan bahwa tidak ada satu pun rekomendasi yang relevan dengan buku yang disukai oleh pengguna. Dalam hal ini, tidak ada kesamaan antara buku yang disukai pengguna dengan rekomendasi yang diberikan oleh model.
-
-Perbandingan dengan Hasil Training:    
-Ketika melakukan training pada model User-Based Collaborative Filtering, hasil prediksi rating untuk buku-buku yang direkomendasikan cukup tinggi, seperti terlihat pada User-Based CF Recommendations untuk User-ID 106893, dengan prediksi rating yang cukup baik untuk buku-buku seperti Old Devils (6.7) dan The Polish Way (5.2).
-- Namun, Precision dan Recall yang rendah pada evaluasi menunjukkan ketidaksesuaian antara prediksi rating dan hasil rekomendasi aktual yang relevan untuk pengguna. Hal ini bisa disebabkan oleh beberapa faktor:
-- Keterbatasan Data: Jika data rating pengguna terbatas atau tidak representatif terhadap preferensi mereka, model akan kesulitan menghasilkan rekomendasi yang relevan.
-- Model Hyperparameter: Parameter yang digunakan dalam model, seperti jumlah tetangga terdekat (k_neighbors) atau cara menghitung kesamaan antar pengguna, mungkin belum optimal.
-- Sparsity dalam Data: Kekurangan interaksi (rating) antara pengguna dan buku dapat menyebabkan model kesulitan untuk menemukan kesamaan yang tepat.
-
-Kesimpulan:    
-- Meskipun model User-Based Collaborative Filtering menunjukkan prediksi rating yang tinggi pada tahap training, hasil evaluasi menggunakan Precision@10 dan Recall@10 menunjukkan bahwa model ini belum berhasil merekomendasikan buku yang relevan dengan preferensi pengguna.
-- Perlu adanya perbaikan dalam data input atau penyesuaian hyperparameter untuk meningkatkan kualitas rekomendasi. Penyempurnaan model, misalnya dengan mengatasi masalah sparsity atau menggunakan algoritma yang lebih robust, bisa meningkatkan relevansi rekomendasi di masa mendatang.
-
-----
-
-#### Evaluation Results
-
-| Model                          | Precision@10 | Recall@10 | RMSE   | MAE    |
-|---------------------------------|--------------|-----------|--------|--------|
-| Content-Based Filtering (CBF)   | 0.0000       | 0.0000    | -      | -      |
-| Item-Based Collaborative Filtering | -          | -         | 7.5156 | 7.0376 |
-| User-Based Collaborative Filtering | 0.0000     | 0.0000    | -      | -      |
-
-Berdasarkan hasil evaluasi terhadap beberapa pendekatan sistem rekomendasi:
-
-- Content-Based Filtering    
-Content-Based Filtering menunjukkan hasil yang sangat rendah pada Precision dan Recall. Tidak ada rekomendasi yang relevan dengan preferensi pengguna yang sudah diketahui. Hal ini menunjukkan bahwa model belum efektif dalam merekomendasikan buku berdasarkan kemiripan konten.    
-
-    Pelatihan:   
-Pada data pelatihan, model berhasil menghasilkan rekomendasi yang cukup relevan, namun pada evaluasi, model kesulitan dalam merekomendasikan buku yang sesuai dengan preferensi pengguna. Ini bisa disebabkan oleh faktor ekstraksi fitur yang tidak cukup representatif atau kurangnya perbedaan fitur antar buku.
-
-- Item-Based Collaborative Filtering (menggunakan SVD)    
-Model ini menunjukkan kesalahan prediksi yang cukup tinggi dengan RMSE dan MAE di atas 7. Hal ini mengindikasikan bahwa meskipun sistem dapat melakukan prediksi rating, perbedaan antara rating prediksi dan aktual masih cukup besar. 
-   
-    Pelatihan:     
-Sistem dapat memberikan prediksi rating yang cukup baik, tetapi ketepatannya belum optimal. Ini bisa disebabkan oleh sparsity data (kurangnya interaksi antara pengguna dan buku), serta jumlah latent factors yang belum optimal.
-
-- User-Based Collaborative Filtering    
-Model User-Based Collaborative Filtering juga tidak memberikan hasil yang relevan untuk rekomendasi. Meskipun ada penghitungan kesamaan antar pengguna, hasil rekomendasi yang diberikan tidak sesuai dengan buku yang telah disukai pengguna.    
-
-    Pelatihan:       
-Pada tahap pelatihan, model ini menunjukkan prediksi rating yang cukup baik, namun tidak efektif dalam mengenali pola kesamaan antar pengguna yang dapat mengarah pada rekomendasi yang relevan.
+### Kesimpulan 
+- Model Neural Collaborative Filtering (NCF) menunjukkan kinerja yang solid dengan penurunan loss yang stabil selama pelatihan dan hasil RMSE yang terbilang baik (2.2320). Namun, masih ada ruang untuk peningkatan, terutama terkait dengan akurasi prediksi rating pada data uji.
+- Dengan beberapa perbaikan, seperti penyempurnaan hyperparameter tuning, penambahan fitur, dan penerapan teknik regularisasi, model ini berpotensi memberikan rekomendasi yang lebih akurat bagi pengguna di masa mendatang.
 
 --- 
 
-#### Kesimpulan dan Rekomendasi Model:    
-Dari ketiga pendekatan yang dievaluasi, Item-Based Collaborative Filtering (SVD) terlihat sebagai model yang paling layak untuk dipilih dalam tahap awal, meskipun masih menunjukkan kesalahan prediksi yang signifikan. Model ini memiliki kemampuan untuk menghasilkan prediksi rating numerik yang mendekati kenyataan, yang membuatnya lebih dapat diandalkan sebagai dasar pengembangan sistem rekomendasi berbasis perilaku pengguna.    
-Alasan memilih Item-Based Collaborative Filtering (SVD):
-- Model ini merupakan satu-satunya pendekatan yang dapat memberikan prediksi rating numerik yang relevan, meskipun ada kesalahan yang cukup besar.
-- Pendekatan ini memiliki potensi untuk ditingkatkan lebih lanjut dengan perbaikan pada data (misalnya, menangani masalah sparsity) atau penambahan informasi pengguna dan buku melalui teknik hybrid.
-
-
----- 
-
-### Kesimpulan Evaluasi
-Hasil evaluasi sistem rekomendasi menunjukkan bahwa pendekatan yang diterapkan sebagian telah membantu menjawab permasalahan yang dirumuskan dalam tahap Business Understanding:
+### Hasil Akhir
+Hasil evaluasi sistem rekomendasi menunjukkan bahwa pendekatan Content-Based Filtering (CBF) dan Neural Collaborative Filtering (NCF) telah berkontribusi dalam menjawab sebagian permasalahan yang dirumuskan pada tahap Business Understanding. Namun, masih terdapat ruang yang signifikan untuk perbaikan.
 
 1. Problem Statement 1 – Masalah Pilihan Buku yang Berlebihan:    
-Pendekatan Collaborative Filtering (baik user-based maupun item-based/SVD) bertujuan mengurangi kebingungan pengguna dalam memilih buku dengan memberikan rekomendasi yang dipersonalisasi.
-Namun, berdasarkan hasil evaluasi, sistem ini belum mampu menghasilkan rekomendasi yang relevan secara konsisten (Precision@10 dan Recall@10 = 0 untuk user-based, dan RMSE/MAE cukup besar untuk item-based). Ini menunjukkan bahwa masalah kebingungan dalam memilih buku belum terselesaikan secara optimal.
+Pendekatan Neural Collaborative Filtering (NCF) digunakan untuk memberikan rekomendasi yang dipersonalisasi berdasarkan pola interaksi pengguna.
+Model berhasil menunjukkan penurunan loss yang stabil selama pelatihan dan menghasilkan RMSE = 2.2320 pada data uji, menandakan bahwa sistem sudah mampu mempelajari preferensi pengguna.
+Namun, nilai RMSE tersebut masih mengindikasikan prediksi rating belum terlalu akurat, sehingga belum sepenuhnya mengurangi kebingungan pengguna dalam memilih buku secara optimal.
+
 
 2. Problem Statement 2 – Kurangnya Rekomendasi yang Relevan:    
-Content-Based Filtering mencoba menawarkan rekomendasi buku yang mirip dengan buku yang disukai pengguna.
-Namun, hasil evaluasi menunjukkan Precision@10 dan Recall@10 = 0, yang berarti rekomendasi yang dihasilkan masih belum cukup relevan dengan preferensi pengguna. Dengan demikian, sistem belum berhasil sepenuhnya menjawab kebutuhan pengguna akan rekomendasi yang lebih personal.
+Pendekatan Content-Based Filtering (CBF) diterapkan dengan menggunakan Cosine Similarity antar konten buku.
+Hasil evaluasi menunjukkan nilai:
 
-3. Problem Statement 3 – Tidak Ada Sistem untuk Meningkatkan Penjualan Buku:    
-Karena relevansi rekomendasi masih rendah, potensi untuk meningkatkan penjualan buku melalui penemuan buku baru juga belum maksimal.
-Sistem rekomendasi yang relevan diperlukan untuk mendorong penjualan, tetapi saat ini performa model masih perlu ditingkatkan untuk mencapai tujuan ini.
+- Precision@10 = 0.10
+- Recall@10 = 0.50
+
+Ini menandakan bahwa sistem berhasil menangkap separuh dari buku yang relevan, namun hanya 10% dari rekomendasi yang diberikan benar-benar sesuai dengan preferensi pengguna.
+Meskipun demikian, heatmap cosine similarity memperlihatkan kemampuan sistem dalam mengenali keterkaitan tematik antar buku, terutama dalam seri seperti The Wheel of Time, yang menunjukkan skor similarity tinggi (0.6–0.8).
 
 #### Pencapaian Goals Proyek
-Meskipun terdapat banyak ruang untuk perbaikan, beberapa goals proyek tetap tercapai:
-- Pengembangan sistem rekomendasi berbasis Collaborative Filtering dan Content-Based Filtering telah berhasil dilakukan sesuai rencana solusi.
-- Evaluasi model telah dilakukan menggunakan metrik yang sesuai:
-      - Precision@K dan Recall@K untuk mengevaluasi relevansi rekomendasi.
-      - RMSE dan MAE untuk mengukur akurasi prediksi rating.
-- Penerapan teknik Cosine Similarity dan SVD memungkinkan sistem memahami hubungan antar pengguna dan antar item, sesuai dengan pendekatan yang direncanakan.
+Beberapa tujuan proyek yang berhasil dicapai seperti penerapan dan integrasi dua pendekatan rekomendasi:
 
-Namun, dari segi dampak terhadap tujuan bisnis (meningkatkan relevansi rekomendasi, pengalaman pengguna, dan potensi penjualan), hasil saat ini menunjukkan bahwa performa sistem masih perlu diperbaiki untuk memberikan dampak bisnis yang signifikan.
+- Content-Based Filtering (CBF) menggunakan cosine similarity antar fitur buku
+- Neural Collaborative Filtering (NCF) dengan optimisasi parameter model dan evaluasi berbasis RMSE
 
-#### Kesimpulan Akhir
-Model rekomendasi yang dikembangkan sudah menjawab sebagian aspek solusi dengan membangun Content-Based dan Collaborative Filtering.
-Namun, performa aktual model saat ini belum cukup kuat untuk benar-benar mengatasi masalah utama yang telah dirumuskan. Pengembangan lebih lanjut sangat diperlukan, seperti:
-- Peningkatan kualitas data,
-- Penambahan informasi metadata buku,
-- Penerapan hybrid recommendation system,
-- Dan tuning lebih lanjut terhadap model Collaborative Filtering.
+Evaluasi model dilakukan menggunakan metrik:
+- Precision@K dan Recall@K (CBF)
+- RMSE (NCF)
+- Visualisasi tambahan seperti training loss curve dan cosine similarity heatmap mendukung interpretasi hasil dan pemahaman performa model.
 
-Dengan peningkatan ini, diharapkan sistem rekomendasi dapat lebih relevan, personal, dan efektif, sehingga benar-benar mendorong pengalaman pengguna dan pertumbuhan penjualan buku di platform.
+#### Saran Pengembangan 
+Secara umum, sistem rekomendasi yang dibangun sudah menjawab sebagian permasalahan utama dengan menggunakan pendekatan CBF dan NCF.
+Namun, relevansi rekomendasi dan akurasi prediksi masih belum cukup kuat untuk memberikan dampak bisnis yang signifikan.
+Rekomendasi Pengembangan Selanjutnya:
+- Menambahkan metadata buku seperti genre, tahun terbit, sinopsis
+- Menggabungkan pendekatan CBF dan NCF ke dalam sistem hybrid
+- Melakukan tuning parameter lebih lanjut pada arsitektur model NCF
+- Meningkatkan representasi fitur konten pada CBF agar lebih informatif
+
+Dengan pengembangan ini, sistem diharapkan mampu memberikan rekomendasi yang lebih relevan, personal, dan berdampak terhadap pengalaman pengguna serta peningkatan penjualan.
+
 
 
 

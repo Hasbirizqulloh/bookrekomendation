@@ -181,13 +181,38 @@ Berdasarkan evaluasi tersebut, sistem rekomendasi akan dibangun dengan menggabun
 ## Data Preparation
 Pada tahap ini, dilakukan serangkaian proses untuk mempersiapkan data agar siap digunakan dalam proses pemodelan sistem rekomendasi berbasis Collaborative Filtering. 
 
-### 1. Pembersihan Data Rating
-**Langkah yang Dilakukan:** 
-
-Dihapus semua entri pada Ratings.csv yang memiliki nilai rating 0, karena dianggap sebagai umpan balik implisit atau tidak valid.
+### 1. Pembersihan Data 
+Pembersihan data dilakukan pada tiga dataset utama: Books.csv, Ratings.csv, dan Users.csv, guna meningkatkan kualitas data untuk analisis dan pemodelan sistem rekomendasi. 
+#### Books.csv
+Langkah yang Dilakukan:
+- Mengonversi kolom Year-Of-Publication menjadi tipe data numerik.
+- Mengisi missing values dengan 'Unknown' pada kolom Book-Author, Publisher, Year-Of-Publication, Image-URL-L
+- Melakukan seleksi fitur dengan hanya mempertahankan kolom ISBN, Book-Title, Book-Author, Publisher
 
 **Pertimbangan:**   
-Langkah ini dilakukan untuk menjaga kualitas data input untuk Colaborative Filtering serta mengurangi beban memori komputasi.
+- Konversi tipe data penting agar kolom tahun publikasi dapat digunakan dalam analisis kuantitatif.
+- Pengisian nilai kosong dengan 'Unknown' mencegah error saat pemrosesan tanpa menghilangkan data yang masih berguna.
+- Seleksi kolom dilakukan untuk mengurangi kompleksitas data dan fokus pada atribut yang relevan untuk analisis dan rekomendasi.
+
+#### Ratings.csv
+Langkah yang Dilakukan:  
+
+Menghapus semua entri yang memiliki nilai rating 0.
+
+Pertimbangan:
+- Rating 0 dianggap sebagai interaksi pasif atau umpan balik implisit, bukan penilaian sebenarnya.
+- Menghapus data ini akan meningkatkan kualitas input untuk algoritma Collaborative Filtering serta mengurangi beban memori saat pemrosesan.
+
+#### Users.csv
+Langkah yang Dilakukan:
+- Mengisi missing values pada kolom Age dengan nilai median dari kolom tersebut.
+- Menyaring data pengguna, hanya mempertahankan usia dalam rentang 10 hingga 99 tahun.
+- Mengisi missing values pada kolom Location dengan 'Unknown'.
+
+Pertimbangan:
+- Penggunaan median untuk pengisian nilai Age lebih tahan terhadap outlier dibanding rata-rata.
+- Rentang usia 10–99 dianggap sebagai rentang yang valid dan realistis untuk pengguna.
+- Mengisi lokasi kosong dengan 'Unknown' menjaga konsistensi data tanpa membuang baris.
 
 ### 2. Seleksi Data Buku Berdasarkan Data Rating
 **Langkah yang Dilakukan:**
@@ -207,32 +232,7 @@ Menjamin bahwa semua entri pada data rating memiliki referensi metadata buku yan
 **Pertimbangan:**    
 Penggabungan data ini memungkinkan analisis yang lebih mendalam terhadap preferensi pengguna berdasarkan karakteristik demografis mereka.
 
-### 4. Pembersihan Data yang Sudah Digabungkan
-
-**Langkah yang Dilakukan:**
-- Outlier pada kolom usia yang ekstrem (misalnya, usia 0 atau 244) akan dihapus atau diganti dengan nilai yang wajar melalui teknik imputasi.
-- Data yang hilang pada kolom Age akan ditangani dengan teknik imputasi yang sesuai (misalnya, menggunakan nilai rata-rata atau median).
-- Data Location yang kosong atau tidak relevan juga akan dipertimbangkan untuk dibersihkan atau diisi dengan nilai default (misalnya, "Unknown").
-
-**Pertimbangan:**  
-Pembersihan ini dilakukan untuk memastikan bahwa data pengguna yang digunakan dalam model bersih, konsisten, dan tidak mengandung nilai ekstrem yang dapat mengganggu hasil rekomendasi.
-
-
-### 5. Seleksi dan Reduksi Fitur
-**Langkah yang Dilakukan:**  
-
-Kolom yang tidak memberikan kontribusi terhadap representasi konten buku seperti `Image-URL-S`, `Image-URL-M`, `Year-Of-Publication`, dan `Image-URL-L` dihapus dari dataset.  
-
-Hanya atribut utama yang dipertahankan, yaitu:  
-- `Book-Title`  
-- `Book-Author`  
-- `Publisher`  
-
-
-**Pertimbangan:**  
-Fitur-fitur tersebut memiliki nilai deskriptif terhadap konten buku dan akan digunakan sebagai dasar dalam proses ekstraksi fitur berbasis teks.
-
-### 6. Penggabungan Ketiga Dataset untuk Persiapan Final
+### 4. Penggabungan Ketiga Dataset untuk Persiapan Final
 
 Langkah yang Dilakukan:
 - Setelah semua data dibersihkan, dataset Ratings.csv, Books.csv, dan Users.csv akan digabungkan. Data akan digabungkan berdasarkan kolom User-ID untuk menggabungkan data pengguna dengan rating yang diberikan dan ISBN untuk menggabungkan data rating dengan metadata buku.
@@ -242,7 +242,7 @@ Langkah yang Dilakukan:
 **Pertimbangan:**  
 Penggabungan ketiga dataset ini memungkinkan untuk membangun sistem rekomendasi yang lebih kaya dan lebih akurat dengan informasi lengkap tentang buku, pengguna, dan preferensi rating.
 
-### 7. Sampling Data
+### 5. Sampling Data
 
 **Langkah yang Dilakukan:**
 - Setelah data final disiapkan, dilakukan sampling untuk memilih subset data yang lebih kecil untuk pelatihan model. Karena keterbatasan memori, sekitar 10.000 entri akan dipilih dari gabungan ketiga dataset tersebut.
@@ -263,19 +263,30 @@ Langkah-langkah:
 - Memberikan top-N rekomendasi item yang paling mirip dengan item yang pernah disukai pengguna.
   
 Top-N Recommendation Output:  
-Sebagai contoh, untuk seorang pengguna yang menyukai film aksi, sistem merekomendasikan 5 film lain yang memiliki genre serupa dan tingkat kemiripan tinggi. Contoh, untuk pengguna yang menyukai buku "**Fire and Hemlock**", sistem merekomendasikan:                                                                                                                                           
-| Rank | Book Title             | Book Author         | Predicted Rating |
-|:----:|:-----------------------|:--------------------|:----------------:|
-| 1    | Power of three          | Diana Wynne Jones    | 5.9              |
-| 2    | Dark Lord of Derkholm   | Diana Wynne Jones    | 4.7              |
-| 3    | Hemlock Bay             | Catherine Coulter    | 3.1              |
-| 4    | No Other Option         | Marcus Wynne         | 2.6              |
-| 5    | Stuart Little           | E. B. White          | 2.0              |
-| 6    | Stuart Little           | E. B. White          | 2.0              |
-| 7    | Voyager                 | DIANA GABALDON       | 1.9              |
-| 8    | Outlander               | DIANA GABALDON       | 1.9              |
-| 9    | Outlander               | DIANA GABALDON       | 1.9              |
-| 10   | Outlander               | DIANA GABALDON       | 1.9              |
+Sebagai contoh, untuk seorang pengguna yang menyukai film aksi, sistem merekomendasikan 10 film lain yang memiliki genre serupa dan tingkat kemiripan tinggi. Contoh, untuk pengguna yang menyukai buku "**The Dragon Reborn (The Wheel of Time, Book 3)**", sistem merekomendasikan:                                                                                                                                           
+| No | Book Title                                                                 | Book Author     | Predicted Rating |
+|----|-----------------------------------------------------------------------------|------------------|------------------|
+| 1  | The Eye of the World (The Wheel of Time, Book 1)                           | Robert Jordan    | 10.0             |
+| 2  | The Eye of the World (The Wheel of Time, Book 1)                           | Robert Jordan    | 7.0              |
+| 3  | The World of Robert Jordan's The Wheel of Time...                          | Robert Jordan    | 7.0              |
+| 4  | Lord of Chaos (The Wheel of Time, Book 6)                                  | Robert Jordan    | 6.8              |
+| 5  | A Crown of Swords (The Wheel of Time, Book 7)                              | Robert Jordan    | 6.7              |
+| 6  | A Crown of Swords (The Wheel of Time, Book 7)                              | Robert Jordan    | 6.6              |
+| 7  | A Crown of Swords (The Wheel of Time, Book 7)                              | Robert Jordan    | 6.6              |
+| 8  | The Great Hunt: Book Two of 'The Wheel of Time'                            | Robert Jordan    | 6.6              |
+| 9  | The Shadow Rising: Book Four of 'The Wheel of Time'                        | Robert Jordan    | 6.3              |
+| 10 | The Shadow Rising: Book Four of 'The Wheel of Time'                        | *Unknown*        | 6.3              |
+
+#### 📊 Insight dari Rekomendasi Content-Based untuk 'The Dragon Reborn (The Wheel of Time, Book 3)'
+Berdasarkan sistem rekomendasi berbasis konten, hasilnya menunjukkan bahwa buku-buku yang sangat mirip dengan "The Dragon Reborn" adalah buku-buku lain dalam seri "The Wheel of Time" karya Robert Jordan. Ini mencakup buku seperti "The Eye of the World" dan "The Lord of Chaos", yang juga merupakan bagian dari seri yang sama. Hal ini mengonfirmasi bahwa sistem dapat mengenali pola konten yang konsisten di antara buku-buku dalam satu seri.
+
+- Buku dengan peringkat tertinggi: "The Eye of the World" muncul beberapa kali di rekomendasi, dengan peringkat yang sangat tinggi (10.0).
+- Buku lain dalam seri yang sama: Banyak buku dari seri "The Wheel of Time", seperti "Lord of Chaos" dan "A Crown of Swords", juga mendapatkan peringkat yang cukup baik (di atas 6.0), menunjukkan bahwa kemiripan tematik dan genre sangat mempengaruhi rekomendasi.
+- Peringkat Prediksi: Peringkat prediksi untuk buku-buku terkait berkisar antara 6.3 hingga 10.0, memberikan gambaran bahwa pengguna kemungkinan besar akan tertarik pada buku-buku dalam seri yang sama, dengan variasi dalam tingkat kesukaan.  
+
+Dengan rekomendasi ini, sistem berhasil mengidentifikasi dan menyarankan buku-buku yang sangat relevan, meningkatkan pengalaman pengguna dalam menemukan buku-buku lanjutan dalam seri yang mereka sukai.
+
+----
 
 ### 2. Item-Based Collaborative Filtering
 Pada pendekatan Collaborative Filtering, sistem menggunakan pola rating pengguna untuk menemukan kesamaan perilaku antar pengguna. Dengan Singular Value Decomposition (SVD), sistem memprediksi rating buku yang belum pernah dinilai oleh pengguna.   
@@ -286,21 +297,30 @@ Langkah-langkah:
 - Memberikan top-10 rekomendasi buku berdasarkan prediksi rating tertinggi.
 
 Top-10 Recommendation Output:  
-Sebagai contoh, sistem merekomendasikan 10 film yang secara historis disukai oleh pengguna lain yang memiliki pola rating serupa. Contoh, untuk pengguna ID 116320 yang suka dengan genre fantasi dan sebelumnya memberikan rating tinggi untuk "The Lord of the Rings", sistem merekomendasikan:
+Sebagai contoh, sistem merekomendasikan 10 buku yang secara historis disukai oleh pengguna lain yang memiliki pola rating serupa. Contoh, untuk pengguna ID 123284 yang suka dengan buku sebelumnya memberikan rating tinggi untuk "Year of Wonders", sistem merekomendasikan:
+| Rank | Book Title                                                                     | Book Author         | Predicted Rating     |
+|------|----------------------------------------------------------------------------------|----------------------|-----------------------|
+| 1    | A Child's Christmas in Wales                                                    | Dylan Thomas         | 6.93×10⁻¹⁷           |
+| 2    | Rainbow Tribe: Ordinary People Journeying on the Red Road                      | Ed McGaa             | 6.93×10⁻¹⁷           |
+| 3    | The Compact Trail of Tsathoggua (Call of Cthulhu Role Playing Game Supplement) | Keith Herber         | 6.93×10⁻¹⁷           |
+| 4    | Standing Stones: Stonehenge, Carnac and the World of Megaliths                 | Jean Pierre Mohen    | 6.93×10⁻¹⁷           |
+| 5    | The Doctors Book of Home Remedies  Revised Edition                             | Prevention Magazine  | 6.93×10⁻¹⁷           |
+| 6    | A Dictionary of Sussex Folk Medicine                                            | Andrew Allen         | 6.93×10⁻¹⁷           |
+| 7    | Terry Pratchett's "Discworld" Quizbook                                          | David Langford       | 6.93×10⁻¹⁷           |
+| 8    | Coyote Waits (Joe Leaphorn/Jim Chee Novels)                                     | Tony Hillerman       | 7.54×10⁻¹⁷           |
+| 9    | Sacred Space                                                                    | Denise Linn          | 6.93×10⁻¹⁷           |
+| 10   | The Well of Loneliness                                                          | Radclyffe Hall       | 6.93×10⁻¹⁷           |
 
+#### 📊 Insight dari Rekomendasi Item-Based Collaborative Filtering untuk User-ID 123284
+Berdasarkan Item-Based Collaborative Filtering, sistem merekomendasikan buku-buku yang serupa dengan buku yang telah diberikan rating oleh pengguna. Berikut adalah beberapa insight dari hasil tersebut:
 
-| Rank | Book Title                                        | Book Author         | Predicted Rating   |
-|:----:|:--------------------------------------------------|:--------------------|:------------------:|
-| 1    | The Alienist                                       | Caleb Carr           | 3.77e-17           |
-| 2    | A College of Magics                                | Caroline Stevermer   | 3.10e-17           |
-| 3    | The Lovely Bones: A Novel                          | Alice Sebold         | 1.12e-16           |
-| 4    | The Many-Colored Land                              | Julian May           | 3.45e-17           |
-| 5    | Stealing Heaven: The Love Story of Heloise and...  | Marion Meade         | 3.10e-17           |
-| 6    | Blue Guide: Wales and the Marches                  | Tomeo                | 3.10e-17           |
-| 7    | The Inner Sky: How to Make Wiser Choices for a...  | Steven Forrest       | 3.45e-17           |
-| 8    | Asteroid Goddesses                                 | Demetra George       | 3.10e-17           |
-| 9    | A Dictionary of Heraldry                           | Stephen Friar        | 3.45e-17           |
-| 10   | The Npr Guide to Building a Classical Cd Collection| Ted Libbey           | 3.45e-17           |
+- Rekomendasi Berdasarkan Kemiripan Item: Rekomendasi buku yang diberikan didasarkan pada kemiripan antara buku yang telah dinilai oleh pengguna dengan buku lainnya. Hal ini menunjukkan bahwa sistem mencari buku-buku dengan pola rating yang serupa untuk memberikan rekomendasi.
+- Buku yang Berbeda Genre dan Tema: Sebagai contoh, buku seperti "A Child's Christmas in Wales" dan "Rainbow Tribe" disarankan meskipun genre dan temanya bisa sangat berbeda. Ini menunjukkan bahwa sistem melihat kesamaan dalam rating pengguna, meskipun buku tersebut mungkin memiliki topik yang berbeda.
+- Prediksi Rating yang Sangat Rendah: Prediksi rating untuk buku-buku ini, yang semuanya berada di angka sekitar 6.93e-17, mengindikasikan bahwa sistem mungkin mengalami masalah dalam memprediksi rating dengan baik, mungkin karena data sparsity atau kesalahan dalam dekomposisi matriks.
+- Rekomendasi yang Tidak Spesifik: Meskipun buku yang disarankan sesuai dengan pola rating pengguna lain, prediksi rating yang hampir sama rendahnya untuk semua buku menunjukkan bahwa sistem belum optimal dalam memberikan rekomendasi yang lebih terpersonalisasi. Data yang lebih kaya atau teknik lain seperti Matrix Factorization atau Deep Learning bisa membantu meningkatkan akurasi prediksi.
+
+🔎 Kesimpulan:
+Sistem Item-Based Collaborative Filtering berhasil memberikan rekomendasi berdasarkan kesamaan antar buku. Namun, kualitas rekomendasi dan prediksi rating perlu diperbaiki, mengingat prediksi rating yang rendah untuk sebagian besar buku. Untuk meningkatkan kualitas rekomendasi, teknik tambahan seperti Matrix Factorization atau Penurunan Dimensi bisa dicoba, atau memperkaya data dengan informasi lebih lanjut tentang interaksi pengguna.
 
 ---
 ### 3. User-Based Collaborative Filtering
@@ -312,21 +332,37 @@ Langkah-langkah:
 - Menghitung weighted average rating buku dari tetangga terdekat.
 
 Top-10 Recommendation Output:    
-Sebagai contoh, sistem merekomendasikan 10 buku yang secara historis disukai oleh pengguna lain dengan pola rating serupa. Contohnya, untuk User-ID 232959, sistem merekomendasikan:
+Sebagai contoh, sistem merekomendasikan 10 buku yang secara historis disukai oleh pengguna lain dengan pola rating serupa. Contohnya, untuk User-ID 106893, sistem merekomendasikan:
 
-| Rank | Book Title                                         | Book Author           | Predicted Rating |
-|:----:|:---------------------------------------------------|:----------------------|:----------------:|
-| 1    | Fiona Range                                        | Mary McGarry Morris    | 2.64             |
-| 2    | The Buddha of Brewer Street                        | Michael Dobbs          | 1.68             |
-| 3    | With Thanks and Appreciation: The Sweet Nellie... | Pat Ross               | 1.52             |
-| 4    | Talk Before Sleep: A Novel                         | Elizabeth Berg         | 1.52             |
-| 5    | Now All We Need Is a Title: Famous Book Titles...  | Andre Bernard          | 1.35             |
-| 6    | Liar                                               | Stephen Fry            | 1.35             |
-| 7    | Betrayal in Death                                  | Nora Roberts           | 1.35             |
-| 8    | Mrs Dalloway                                       | Virginia Woolf         | 1.18             |
-| 9    | Timoleon Vieta Come Home: A Sentimental Journey    | Dan Rhodes             | 0.00             |
-| 10   | The Master of All Desires                          | Judith Merkle Riley     | 0.00             |
+| Rank | Book Title                                                                 | Book Author       | Predicted Rating |
+|------|-----------------------------------------------------------------------------|-------------------|------------------|
+| 1    | Old Devils                                                                  | Kingsley Amis     | 6.70             |
+| 2    | The Polish Way: A Thousand-Year History of the Poles and Their Culture     | Adam Zamoyski     | 5.21             |
+| 3    | Vamps and Tramps: New Essays                                                | Camille Paglia    | 2.55             |
+| 4    | How to Become a Virgin                                                      | Quentin Crisp     | 2.55             |
+| 5    | The Hippopotamus                                                            | Stephen Fry       | 2.55             |
+| 6    | Skipped Parts                                                               | Tim Sandlin       | 2.30             |
+| 7    | Armadillo                                                                   | William Boyd      | 2.30             |
+| 8    | Neverwhere: A Novel                                                         | Neil Gaiman       | 2.30             |
+| 9    | Whit                                                                         | Iain Banks        | 2.30             |
+| 10   | Careless Love: The Unmaking of Elvis Presley                               | Peter Guralnick   | 2.30             |
 
+
+#### 📊 Insight dari User-Based CF Recommendations untuk User-ID 106893
+Sistem User-Based Collaborative Filtering berhasil memberikan rekomendasi buku untuk User-ID 106893 berdasarkan kemiripan preferensi dengan pengguna lainnya. Berikut adalah beberapa temuan dari hasil rekomendasi:
+
+- Buku dengan Peringkat Prediksi Tertinggi: Buku pertama yang direkomendasikan adalah "Old Devils" oleh Kingsley Amis, dengan rating yang diprediksi cukup tinggi (6.7). Ini menunjukkan bahwa buku tersebut memiliki kemiripan dengan preferensi pengguna.
+
+- Buku dengan Prediksi Rating Lebih Rendah: Buku seperti "The Polish Way" dan "Vamps and Tramps" memiliki rating yang lebih rendah (5.2 dan 2.55), namun tetap termasuk dalam rekomendasi, mengindikasikan bahwa mereka memiliki beberapa kesamaan dengan minat pengguna, meskipun tidak sekuat rekomendasi lainnya.
+
+- Buku Populer dan Tidak Familiar: Ada beberapa buku yang direkomendasikan, seperti "The Hippopotamus" dan "Neverwhere", yang beragam dalam genre dan tema. Ini menunjukkan bahwa sistem memberikan berbagai pilihan berdasarkan keberagaman minat pengguna yang serupa.
+
+- Rentang Prediksi Rating: Prediksi rating untuk buku yang direkomendasikan bervariasi antara 6.7 hingga 2.3. Buku-buku dengan rating rendah kemungkinan besar adalah buku yang relevan dalam konteks genre atau tema, tetapi dengan minat yang lebih terbatas dari pengguna serupa.    
+
+
+Dengan rekomendasi ini, pengguna diberikan berbagai pilihan buku yang relevan berdasarkan kesamaan rating dari pengguna lain yang memiliki preferensi serupa.
+
+---
 
 ## Evaluation
 Dalam proyek ini menggunakan beberapa metrik evaluasi yang disesuaikan dengan pendekatan sistem rekomendasi yang diterapkan, yaitu Content-Based Filtering dan Collaborative Filtering.
@@ -379,70 +415,77 @@ MAE menghitung rata-rata dari selisih absolut antara nilai aktual dan nilai pred
 - ŷᵢ = rating prediksi ke-i
 - N = jumlah observasi (jumlah pasangan data aktual dan prediksi)
 
-### Hasil Evaluasi
+### Analisis Evaluasi
 
 #### Content-Based Filtering 
-Buku yang Disukai oleh User:
-- Monkeys on the Interstate: And Other Tales from America's Favorite Zookeeper
-- The Lost Boy: A Foster Child's Search for the Love of a Family
-- The Four Agreements: A Practical Guide to Personal Freedom
-- Color Purple
-- Marilyn Monroe: Photographs 1945-1962 (Schirmer's Visual Library)
-- Jurassic Park
-- Macroscope
-- How Stella Got Her Groove Back
-- Letters from the Earth
-- My Story
+Buku yang Disukai oleh User:    
+['Fatal Voyage', 'A Prayer for the Dying', 'I Killed June Cleaver: Modern Moms Shatter the Myth of  Perfect Parenting']
 
-Hasil Rekomendasi Model:
-- Power of three
-- Dark Lord of Derkholm
-- Hemlock Bay
-- No Other Option
-- Stuart Little
-- Stuart Little
-- Voyager
-- Outlander
-- Outlander
-- Outlander
+Hasil Rekomendasi Model:    
+['Deja Dead', 'Death du Jour', 'Bare Bones : A Novel', 'Bare Bones : A Novel', 'Deadly Decisions', 'Death du Jour', 'Death du Jour', 'Lasst Knochen Sprechen', 'Fatal', 'Fatal']
 
 Evaluation Metrics:
 - Precision@5: 0.00
 - Recall@5: 0.00
 
 Interpretasi:    
-Model Content-Based Filtering belum berhasil memberikan rekomendasi yang sesuai dengan buku-buku yang disukai pengguna. Tidak ada satu pun rekomendasi yang cocok. Ini menunjukkan perlunya perbaikan pada teknik ekstraksi fitur atau metode similarity.
+Model Content-Based Filtering yang diterapkan pada dataset ini belum berhasil memberikan rekomendasi yang sesuai dengan buku-buku yang disukai oleh pengguna. Dari 10 buku yang direkomendasikan, tidak ada satu pun yang relevan dengan preferensi yang telah ditunjukkan oleh pengguna. Precision@5 dan Recall@5 yang bernilai 0 menunjukkan bahwa model tidak dapat memberikan rekomendasi yang memadai pada level tersebut.
+
+Beberapa faktor yang dapat menyebabkan hasil ini antara lain:
+- Kemiripan Fitur yang Terbatas: Model hanya mengandalkan beberapa fitur seperti judul, penulis, dan penerbit, yang mungkin tidak cukup kuat untuk menangkap nuansa preferensi pengguna. Banyaknya kemiripan kata-kata dalam judul (seperti "Fatal" yang muncul di beberapa buku) bisa menyebabkan model kesulitan dalam membedakan antara buku yang relevan dan yang tidak.
+- Evaluasi yang Terpisah dari Training Data: Jika evaluasi dilakukan dengan data yang terpisah dari training data, model mungkin kesulitan memberikan rekomendasi yang relevan pada data yang belum pernah dilihat sebelumnya.
+- Fitur yang Tidak Memadai: Penggunaan fitur yang terbatas pada judul, penulis, dan penerbit saja mungkin belum cukup untuk menghasilkan rekomendasi yang tepat. Penggunaan fitur tambahan seperti deskripsi buku atau genre dapat meningkatkan akurasi model.    
+
+Secara keseluruhan, hasil evaluasi ini menunjukkan bahwa ada kebutuhan untuk memperbaiki teknik ekstraksi fitur atau metode similarity yang digunakan, serta mengeksplorasi kemungkinan untuk menggabungkan berbagai teknik lain seperti Collaborative Filtering atau menggunakan model berbasis deep learning untuk meningkatkan kualitas rekomendasi yang dihasilkan. Perbandingan antara **hasil training** dan **hasil evaluasi** menunjukkan adanya gap yang signifikan, yang mengindikasikan bahwa sistem perlu dilakukan penyempurnaan terutama pada bagian **penanganan data pengguna** dan **ekstraksi fitur**.
+
+#### **Kesimpulan dan Rekomendasi**
+- **Model Content-Based Filtering** dalam bentuk yang saat ini diterapkan belum memberikan rekomendasi yang memadai pada tahap evaluasi. Meskipun pada **training** hasil prediksi tampak baik, model perlu ditingkatkan dengan memperhatikan fitur yang lebih kaya dan teknik similarity yang lebih baik.
+- Evaluasi yang lebih beragam dan penggunaan **hybrid approaches** (misalnya menggabungkan model content-based dengan collaborative filtering) bisa menjadi solusi untuk mengatasi masalah ini.
+- Penambahan fitur **metadata** seperti **kategori buku**, **deskripsi singkat**, atau bahkan **review pengguna** bisa meningkatkan hasil rekomendasi secara keseluruhan.
+
+---
 
 #### Item-Based Collaborative Filtering (SVD)  
 - RMSE: 7.5156
 - MAE: 7.0376
 
 Interpretasi:  
-Model Item-Based Collaborative Filtering berbasis SVD menunjukkan kesalahan prediksi yang cukup tinggi.
-RMSE dan MAE di atas 7 berarti rata-rata prediksi rating berbeda jauh dari rating aktual. Ini bisa disebabkan oleh sparsity data (rating yang sedikit) atau kurang optimalnya jumlah latent factors.
+Model Item-Based Collaborative Filtering berbasis Singular Value Decomposition (SVD) menunjukkan kinerja yang kurang optimal dengan nilai RMSE dan MAE yang cukup tinggi, masing-masing 7.5156 dan 7.0376. Kedua metrik ini menunjukkan bahwa prediksi rating yang dihasilkan model masih memiliki kesalahan yang cukup besar dari rating yang sebenarnya diberikan oleh pengguna.
+
+Beberapa faktor yang dapat menyebabkan hasil ini antara lain:
+- Sparsity Data: Dalam data yang memiliki banyak nilai kosong (rating yang hilang), model akan kesulitan memberikan prediksi yang akurat. Banyaknya data yang tidak diberi rating bisa mempengaruhi performa model secara signifikan.
+- Jumlah Latent Factors yang Kurang Optimal: Penggunaan 20 latent factors dalam dekomposisi SVD mungkin belum cukup untuk menangkap kompleksitas hubungan antara pengguna dan buku. Pengoptimalan jumlah latent factors bisa meningkatkan akurasi model.
+
+Kesimpulan:
+- RMSE dan MAE yang tinggi mengindikasikan bahwa model Collaborative Filtering berbasis SVD belum dapat memberikan prediksi yang akurat.
+- Rekomendasi yang dihasilkan tidak sesuai dengan rating yang seharusnya diberikan, kemungkinan karena data yang sangat jarang (sparse) atau pemilihan jumlah latent factors yang belum cukup baik.
+- Perlu ada upaya untuk mengoptimalkan model, seperti menyesuaikan jumlah latent factors atau menerapkan teknik lain untuk menangani sparsity dalam data, guna meningkatkan kualitas prediksi dan rekomendasi.
 
 #### User-Based Collaborative Filtering (UserCF)
-Buku yang Disukai oleh User:
-- Confessions of a Shopaholic
+Buku yang Disukai oleh User:    
+['The Godforsaken']
 
-Hasil Rekomendasi Model:
-- A Trip to the Light Fantastic: Travels With a Mexican Circus
-- House of Cards
-- The Buddha of Brewer Street
-- Queen of Shaba: The Story of an African Leopard
-- Triple Factor
-- Liar
-- Airport International: Level 4 - Intermediate (Nelson Readers)
-- Steel Bonnets: The Story of the Anglo-Scottish Border Reivers
-- Girlfriend in a Coma
-- Firewing
+Hasil Rekomendasi Model:    
+['The Best of Rock: The Essential Cd Guide (The Essential CD Guides)', 'The angry tide: A novel of Cornwall, 1798-9', 'Collins guide to dinosaurs', 'The first Eden: The Mediterranean world and man', "Stalin's nose: Across the face of Europe", 'Girlfriend In a Coma', 'Forms of Devotion: Stories and Pictures', "Black as he's painted", "Little Wolf's Book of Badness", 'Agent In Place']
 
 Evaluation Metrics:
 - Precision@10: 0.0000
 - Recall@10: 0.0000
 
 Interpretasi:    
-Sama seperti Content-Based Filtering, model User-Based Collaborative Filtering saat ini juga belum mampu merekomendasikan buku yang relevan. Meskipun pola kesamaan antar pengguna sudah dihitung, namun belum mampu menangkap preferensi pengguna dengan akurat.
+Model User-Based Collaborative Filtering saat ini belum mampu memberikan rekomendasi buku yang relevan dengan preferensi pengguna. Meskipun model telah menghitung kesamaan antar pengguna, hasil rekomendasi yang dihasilkan tidak relevan dengan buku yang telah disukai oleh pengguna.
+Precision@10 dan Recall@10 yang menunjukkan nilai 0.0000 mengindikasikan bahwa tidak ada satu pun rekomendasi yang relevan dengan buku yang disukai oleh pengguna. Dalam hal ini, tidak ada kesamaan antara buku yang disukai pengguna dengan rekomendasi yang diberikan oleh model.
+
+Perbandingan dengan Hasil Training:    
+Ketika melakukan training pada model User-Based Collaborative Filtering, hasil prediksi rating untuk buku-buku yang direkomendasikan cukup tinggi, seperti terlihat pada User-Based CF Recommendations untuk User-ID 106893, dengan prediksi rating yang cukup baik untuk buku-buku seperti Old Devils (6.7) dan The Polish Way (5.2).
+- Namun, Precision dan Recall yang rendah pada evaluasi menunjukkan ketidaksesuaian antara prediksi rating dan hasil rekomendasi aktual yang relevan untuk pengguna. Hal ini bisa disebabkan oleh beberapa faktor:
+- Keterbatasan Data: Jika data rating pengguna terbatas atau tidak representatif terhadap preferensi mereka, model akan kesulitan menghasilkan rekomendasi yang relevan.
+- Model Hyperparameter: Parameter yang digunakan dalam model, seperti jumlah tetangga terdekat (k_neighbors) atau cara menghitung kesamaan antar pengguna, mungkin belum optimal.
+- Sparsity dalam Data: Kekurangan interaksi (rating) antara pengguna dan buku dapat menyebabkan model kesulitan untuk menemukan kesamaan yang tepat.
+
+Kesimpulan:    
+- Meskipun model User-Based Collaborative Filtering menunjukkan prediksi rating yang tinggi pada tahap training, hasil evaluasi menggunakan Precision@10 dan Recall@10 menunjukkan bahwa model ini belum berhasil merekomendasikan buku yang relevan dengan preferensi pengguna.
+- Perlu adanya perbaikan dalam data input atau penyesuaian hyperparameter untuk meningkatkan kualitas rekomendasi. Penyempurnaan model, misalnya dengan mengatasi masalah sparsity atau menggunakan algoritma yang lebih robust, bisa meningkatkan relevansi rekomendasi di masa mendatang.
 
 #### Evaluation Results
 
@@ -455,22 +498,31 @@ Sama seperti Content-Based Filtering, model User-Based Collaborative Filtering s
 Berdasarkan hasil evaluasi terhadap beberapa pendekatan sistem rekomendasi:
 
 - Content-Based Filtering    
-Menghasilkan Precision@10 dan Recall@10 sebesar 0.0000. Ini menunjukkan bahwa sistem belum mampu merekomendasikan buku yang benar-benar relevan berdasarkan kemiripan konten buku. Dengan demikian, pendekatan ini belum efektif untuk kebutuhan rekomendasi dalam platform.
+Content-Based Filtering menunjukkan hasil yang sangat rendah pada Precision dan Recall. Tidak ada rekomendasi yang relevan dengan preferensi pengguna yang sudah diketahui. Hal ini menunjukkan bahwa model belum efektif dalam merekomendasikan buku berdasarkan kemiripan konten.
+
+Pelatihan:   
+Pada data pelatihan, model berhasil menghasilkan rekomendasi yang cukup relevan, namun pada evaluasi, model kesulitan dalam merekomendasikan buku yang sesuai dengan preferensi pengguna. Ini bisa disebabkan oleh faktor ekstraksi fitur yang tidak cukup representatif atau kurangnya perbedaan fitur antar buku.
 
 - Item-Based Collaborative Filtering (menggunakan SVD)    
-Model ini menunjukkan hasil evaluasi RMSE sebesar 7.5156 dan MAE sebesar 7.0376. Meskipun prediksi rating dapat dilakukan, error yang relatif besar ini menunjukkan bahwa model belum cukup akurat dalam memahami preferensi pengguna.
+Model ini menunjukkan kesalahan prediksi yang cukup tinggi dengan RMSE dan MAE di atas 7. Hal ini mengindikasikan bahwa meskipun sistem dapat melakukan prediksi rating, perbedaan antara rating prediksi dan aktual masih cukup besar.
+
+Pelatihan:     
+Sistem dapat memberikan prediksi rating yang cukup baik, tetapi ketepatannya belum optimal. Ini bisa disebabkan oleh sparsity data (kurangnya interaksi antara pengguna dan buku), serta jumlah latent factors yang belum optimal.
 
 - User-Based Collaborative Filtering    
-Pendekatan ini menghasilkan Precision@10 dan Recall@10 sebesar 0.0000, yang menunjukkan bahwa sistem belum berhasil memberikan rekomendasi berbasis pola kesamaan antar pengguna.
+Model User-Based Collaborative Filtering juga tidak memberikan hasil yang relevan untuk rekomendasi. Meskipun ada penghitungan kesamaan antar pengguna, hasil rekomendasi yang diberikan tidak sesuai dengan buku yang telah disukai pengguna.
 
-Dari ketiga pendekatan yang dievaluasi, Item-Based Collaborative Filtering (SVD) menjadi model yang paling layak untuk dipilih dalam tahap awal, karena:
-- Satu-satunya pendekatan yang mampu menghasilkan prediksi rating numerik.
-- Meskipun error masih cukup besar, pendekatan ini lebih dekat untuk membangun fondasi sistem rekomendasi berbasis perilaku pengguna.
+Pelatihan:     
+Pada tahap pelatihan, model ini menunjukkan prediksi rating yang cukup baik, namun tidak efektif dalam mengenali pola kesamaan antar pengguna yang dapat mengarah pada rekomendasi yang relevan.
 
-Dengan perbaikan pada sisi data (seperti filtering data sparse, pengayaan metadata buku, atau hybrid dengan content-based), model ini berpotensi memberikan hasil yang jauh lebih baik.
+--- 
 
-📌 Model yang Dipilih:  
-Item-Based Collaborative Filtering menggunakan SVD dipilih sebagai dasar pengembangan sistem rekomendasi, karena memiliki performa prediksi terbaik dibandingkan pendekatan lain yang diuji.
+Kesimpulan dan Rekomendasi Model:
+Dari ketiga pendekatan yang dievaluasi, Item-Based Collaborative Filtering (SVD) terlihat sebagai model yang paling layak untuk dipilih dalam tahap awal, meskipun masih menunjukkan kesalahan prediksi yang signifikan. Model ini memiliki kemampuan untuk menghasilkan prediksi rating numerik yang mendekati kenyataan, yang membuatnya lebih dapat diandalkan sebagai dasar pengembangan sistem rekomendasi berbasis perilaku pengguna.
+
+Alasan memilih Item-Based Collaborative Filtering (SVD):
+- Model ini merupakan satu-satunya pendekatan yang dapat memberikan prediksi rating numerik yang relevan, meskipun ada kesalahan yang cukup besar.
+- Pendekatan ini memiliki potensi untuk ditingkatkan lebih lanjut dengan perbaikan pada data (misalnya, menangani masalah sparsity) atau penambahan informasi pengguna dan buku melalui teknik hybrid.
 
 ### Kesimpulan Evaluasi
 Hasil evaluasi sistem rekomendasi menunjukkan bahwa pendekatan yang diterapkan sebagian telah membantu menjawab permasalahan yang dirumuskan dalam tahap Business Understanding:

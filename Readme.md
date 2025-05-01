@@ -236,7 +236,7 @@ Penggabungan data ini memungkinkan analisis yang lebih mendalam terhadap prefere
 
 Langkah yang Dilakukan:
 - Setelah semua data dibersihkan, dataset Ratings.csv, Books.csv, dan Users.csv akan digabungkan. Data akan digabungkan berdasarkan kolom User-ID untuk menggabungkan data pengguna dengan rating yang diberikan dan ISBN untuk menggabungkan data rating dengan metadata buku.
-- Cek kembali missing values pada data yang digabungkan karena diduga akan terjadi missing values dari metadata buku yang baru digabungkan.
+- Cek kembali missing values pada data yang digabungkan karena diduga akan terjadi missing values dari metadata buku yang baru digabungkan. Hapus missing values pada Book-Title, Book-Author, dan Publisher karena terdeteksi 49829 missing valuesnya langsung drop saja karena tidak akan mengurangi informasi dari data mengingat datanya sangat banyak 433671 baris data.
 - Gabungan ini akan menghasilkan sebuah dataset yang komprehensif, yang mencakup informasi pengguna, rating buku, serta metadata buku yang relevan.
 
 **Pertimbangan:**  

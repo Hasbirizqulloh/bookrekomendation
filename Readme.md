@@ -261,6 +261,17 @@ Langkah-langkah:
 - Melakukan ekstraksi fitur teks menggunakan TF-IDF Vectorizer.  
 - Menghitung kemiripan antar buku menggunakan Cosine Similarity.
 - Memberikan top-N rekomendasi item yang paling mirip dengan item yang pernah disukai pengguna.
+
+Kelebihan:
+- Personalisasi Tinggi, Rekomendasi berdasarkan preferensi individu pengguna.
+- Tidak Bergantung pada Pengguna Lain, Tidak memerlukan data dari pengguna lain untuk merekomendasikan buku.
+- Dapat Mengatasi Cold-Start Item, Buku baru bisa direkomendasikan jika memiliki fitur yang jelas.
+
+Kekurangan:
+- Kurang Diversitas membuat rekomendasi cenderung terbatas pada buku dengan fitur yang mirip.
+- Sulit Menangkap Nuansa sehingga tidak dapat menangkap preferensi yang lebih kompleks di luar fitur eksplisit.
+- Bergantung pada Kualitas Fitur dan keberhasilan sistem sangat tergantung pada kelengkapan dan akurasi fitur yang ada.
+
   
 Top-N Recommendation Output:  
 Sebagai contoh, untuk seorang pengguna yang menyukai film aksi, sistem merekomendasikan 10 film lain yang memiliki genre serupa dan tingkat kemiripan tinggi. Contoh, untuk pengguna yang menyukai buku "**The Dragon Reborn (The Wheel of Time, Book 3)**", sistem merekomendasikan:                                                                                                                                           
@@ -296,6 +307,16 @@ Langkah-langkah:
 - Memperkirakan rating buku yang belum pernah dibaca pengguna.
 - Memberikan top-10 rekomendasi buku berdasarkan prediksi rating tertinggi.
 
+Kelebihan:
+- Menggunakan Data Historis yang memanfaatkan rating pengguna untuk memberikan rekomendasi yang lebih relevan.
+- Dapat Menangani Sparsity melakukan dekomposisi matriks dengan SVD membantu mengatasi masalah sparsity data (data yang jarang).
+- Fleksibel dan dapat digunakan untuk prediksi rating buku yang belum pernah dinilai pengguna.
+
+Kekurangan:
+- Memerlukan banyak data pengguna untuk memberikan rekomendasi yang akurat (lebih baik dengan data yang lebih padat).
+- Kesulitan dalam merekomendasikan item baru atau item yang tidak cukup mendapat rating.
+- Proses dekomposisi matriks dengan SVD bisa memakan waktu dan sumber daya komputasi yang besar, terutama untuk dataset besar.
+
 Top-10 Recommendation Output:  
 Sebagai contoh, sistem merekomendasikan 10 buku yang secara historis disukai oleh pengguna lain yang memiliki pola rating serupa. Contoh, untuk pengguna ID 123284 yang suka dengan buku sebelumnya memberikan rating tinggi untuk "Year of Wonders", sistem merekomendasikan:
 | Rank | Book Title                                                                     | Book Author         | Predicted Rating     |
@@ -330,6 +351,17 @@ Langkah-langkah:
 - Menghitung cosine similarity antar pengguna untuk mengukur tingkat kemiripan preferensi.
 - Menentukan k tetangga terdekat (k-nearest neighbors) berdasarkan skor kemiripan tertinggi.
 - Menghitung weighted average rating buku dari tetangga terdekat.
+
+Kelebihan:
+- Memberikan rekomendasi berdasarkan kesamaan preferensi pengguna yang memiliki perilaku serupa, yang bisa lebih relevan untuk pengguna.
+- Algoritma User-Based Collaborative Filtering mudah dipahami dan diimplementasikan.
+- Memberikan rekomendasi yang lebih terpersonalisi dengan memanfaatkan informasi dari pengguna yang memiliki minat sama.
+
+Kekurangan:
+- Semakin banyak pengguna dan item, semakin sulit menghitung kemiripan antar pengguna, terutama dengan dataset besar.
+- Sulit untuk memberikan rekomendasi yang baik kepada pengguna baru atau item baru yang belum memiliki cukup interaksi.
+- Jika sebagian besar rating data pengguna kosong atau tidak lengkap, hasil rekomendasi bisa kurang akurat.
+- Pendekatan ini hanya efektif jika banyak pengguna yang aktif memberikan rating.
 
 Top-10 Recommendation Output:    
 Sebagai contoh, sistem merekomendasikan 10 buku yang secara historis disukai oleh pengguna lain dengan pola rating serupa. Contohnya, untuk User-ID 106893, sistem merekomendasikan:

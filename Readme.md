@@ -73,11 +73,10 @@ Pendekatan ini efektif untuk menangkap kemiripan tematik, terutama untuk seri bu
 2. Neural Collaborative Filtering (NCF)  
 Neural Collaborative Filtering adalah pendekatan deep learning yang memodelkan interaksi non-linear antara pengguna dan item. NCF tidak memerlukan informasi konten, melainkan belajar dari pola interaksi historis pengguna.    
 Langkah-langkah utama:
-
-- Penggunaan embedding layers untuk merepresentasikan User dan Item (ISBN) dalam bentuk vektor.
-- Pemrosesan vektor melalui jaringan neural yang mempelajari hubungan kompleks antara pengguna dan buku.
-- Model dilatih untuk meminimalkan error prediksi rating terhadap data yang tersedia.
-- Evaluasi dilakukan menggunakan Root Mean Squared Error (RMSE) untuk mengukur akurasi prediksi rating, serta visualisasi training loss untuk memantau proses pelatihan.
+    - Penggunaan embedding layers untuk merepresentasikan User dan Item (ISBN) dalam bentuk vektor.
+    - Pemrosesan vektor melalui jaringan neural yang mempelajari hubungan kompleks antara pengguna dan buku.
+    - Model dilatih untuk meminimalkan error prediksi rating terhadap data yang tersedia.
+    - Evaluasi dilakukan menggunakan Root Mean Squared Error (RMSE) untuk mengukur akurasi prediksi rating, serta visualisasi training loss untuk memantau proses pelatihan.
 
 Dengan kombinasi CBF dan NCF, sistem rekomendasi ini mampu memberikan rekomendasi berbasis kesamaan konten buku (CBF) dan rekomendasi berbasis pola perilaku pengguna (NCF). Pendekatan ini diharapkan memberikan saran buku yang lebih personal dan relevan, sekaligus mengatasi keterbatasan masing-masing metode jika digunakan secara terpisah.
 
@@ -270,7 +269,7 @@ Kekurangan:
 - Bergantung pada Kualitas Fitur dan keberhasilan sistem sangat tergantung pada kelengkapan dan akurasi fitur yang ada.
 
   
-Top-N Recommendation Output:  
+Top-10 Recommendation Output:  
 Sebagai contoh, untuk seorang pengguna yang menyukai buku dalam seri tertentu, sistem merekomendasikan 10 buku lain yang memiliki penulis serupa dan tingkat kemiripan tinggi. Contoh, untuk pengguna yang menyukai buku "**The Dragon Reborn (The Wheel of Time, Book 3)**", sistem merekomendasikan:                                                                                                                                           
 | Rank | Judul Buku | Penulis | Penerbit | Predicted Rating |
 |------|------------|---------|----------|------------------|

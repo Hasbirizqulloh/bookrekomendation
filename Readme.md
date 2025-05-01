@@ -236,9 +236,9 @@ Penggabungan ketiga dataset ini memungkinkan untuk membangun sistem rekomendasi 
 
 - Setelah data final disiapkan, dilakukan sampling untuk memilih subset data yang lebih kecil untuk pelatihan model. Karena keterbatasan memori, sekitar 10.000 entri akan dipilih dari gabungan ketiga dataset tersebut.
 
-- Selanjutnya, dilakukan proses **encoding** terhadap kolom `User-ID` dan `ISBN`. Karena kedua kolom ini bersifat kategorikal (berisi string atau kode unik), perlu diubah menjadi nilai numerik menggunakan `LabelEncoder`. Hal ini penting karena sebagian besar algoritma machine learning hanya dapat memproses data numerik. (Khusus untuk Colaborative Filtering)
+- Selanjutnya, dilakukan proses **encoding** terhadap kolom `User-ID` dan `ISBN`. Karena kedua kolom ini bersifat kategorikal (berisi string atau kode unik), perlu diubah menjadi nilai numerik menggunakan `LabelEncoder`. Hal ini penting karena sebagian besar algoritma machine learning hanya dapat memproses data numerik. (Khusus untuk Neural Collaborative Filtering)
 
-- Setelah data dalam bentuk numerik siap, dataset dibagi menjadi dua bagian menggunakan metode **train-test split**: 80% data untuk pelatihan dan 20% data untuk pengujian. Ini bertujuan agar performa model dapat dievaluasi pada data yang belum pernah dilihat sebelumnya. (Khusus untuk Colaborative Filtering)
+- Setelah data dalam bentuk numerik siap, dataset dibagi menjadi dua bagian menggunakan metode **train-test split**: 80% data untuk pelatihan dan 20% data untuk pengujian. Ini bertujuan agar performa model dapat dievaluasi pada data yang belum pernah dilihat sebelumnya. (Khusus untuk Neural Collaborative Filtering)
 
 **Pertimbangan:**  
 - Sampling data bertujuan untuk mengurangi beban komputasi saat pelatihan model, tanpa harus mengolah seluruh data asli yang jauh lebih besar.  
@@ -248,7 +248,7 @@ Penggabungan ketiga dataset ini memungkinkan untuk membangun sistem rekomendasi 
 
 ## Modeling and Result
 ### Sistem Rekomendasi yang Dibangun
-Untuk menyelesaikan permasalahan dalam memberikan rekomendasi yang relevan kepada pengguna, kami mengembangkan dua pendekatan sistem rekomendasi, yaitu Content-Based Filtering dan Collaborative Filtering. Masing-masing pendekatan menggunakan algoritma yang berbeda untuk mengakomodasi karakteristik data dan kebutuhan pengguna.
+Untuk menyelesaikan permasalahan dalam memberikan rekomendasi yang relevan kepada pengguna, kami mengembangkan dua pendekatan sistem rekomendasi, yaitu Content-Based Filtering dan Neural Collaborative Filtering. Masing-masing pendekatan menggunakan algoritma yang berbeda untuk mengakomodasi karakteristik data dan kebutuhan pengguna.
 
 ### 1. Content-Based Filtering
 Pada pendekatan Content-Based Filtering, sistem merekomendasikan buku berdasarkan kesamaan fitur antar buku. Fitur yang digunakan meliputi judul buku, penulis, dan penerbit. Buku yang memiliki karakteristik serupa dengan buku yang disukai pengguna akan direkomendasikan.  

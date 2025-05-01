@@ -461,6 +461,8 @@ Kesimpulan:
 - Rekomendasi yang dihasilkan tidak sesuai dengan rating yang seharusnya diberikan, kemungkinan karena data yang sangat jarang (sparse) atau pemilihan jumlah latent factors yang belum cukup baik.
 - Perlu ada upaya untuk mengoptimalkan model, seperti menyesuaikan jumlah latent factors atau menerapkan teknik lain untuk menangani sparsity dalam data, guna meningkatkan kualitas prediksi dan rekomendasi.
 
+---
+
 #### User-Based Collaborative Filtering (UserCF)
 Buku yang Disukai oleh User:    
 ['The Godforsaken']
@@ -486,6 +488,8 @@ Ketika melakukan training pada model User-Based Collaborative Filtering, hasil p
 Kesimpulan:    
 - Meskipun model User-Based Collaborative Filtering menunjukkan prediksi rating yang tinggi pada tahap training, hasil evaluasi menggunakan Precision@10 dan Recall@10 menunjukkan bahwa model ini belum berhasil merekomendasikan buku yang relevan dengan preferensi pengguna.
 - Perlu adanya perbaikan dalam data input atau penyesuaian hyperparameter untuk meningkatkan kualitas rekomendasi. Penyempurnaan model, misalnya dengan mengatasi masalah sparsity atau menggunakan algoritma yang lebih robust, bisa meningkatkan relevansi rekomendasi di masa mendatang.
+
+----
 
 #### Evaluation Results
 
@@ -523,6 +527,9 @@ Dari ketiga pendekatan yang dievaluasi, Item-Based Collaborative Filtering (SVD)
 Alasan memilih Item-Based Collaborative Filtering (SVD):
 - Model ini merupakan satu-satunya pendekatan yang dapat memberikan prediksi rating numerik yang relevan, meskipun ada kesalahan yang cukup besar.
 - Pendekatan ini memiliki potensi untuk ditingkatkan lebih lanjut dengan perbaikan pada data (misalnya, menangani masalah sparsity) atau penambahan informasi pengguna dan buku melalui teknik hybrid.
+
+
+---- 
 
 ### Kesimpulan Evaluasi
 Hasil evaluasi sistem rekomendasi menunjukkan bahwa pendekatan yang diterapkan sebagian telah membantu menjawab permasalahan yang dirumuskan dalam tahap Business Understanding:

@@ -318,23 +318,22 @@ Kekurangan:
 Top-10 Recommendation Output:  
 Berikut adalah daftar **top-10 rekomendasi buku** untuk pengguna yang dihasilkan oleh model **Neural Collaborative Filtering (NCF)**.
 
-| No | Book Title | Author | Publisher | ISBN |
-|----|------------|--------|-----------|------|
-| 1  | Holes (Newbery Medal Book) | Louis Sachar | Farrar, Straus and Giroux (BYR) | 0374332657 |
-| 2  | Cryptonomicon | Neal Stephenson | Avon | 0380973464 |
-| 3  | The Blue Viking | Sandra Hill | Leisure Books | 0843948272 |
-| 4  | Acts of the Apostles | John F. X. Sundman | Rosalita Associates | 192975213X |
-| 5  | El fantasma de Canterville/El retrato de Dorian Gray/De profundis/La importancia de llamarse Ernesto/El abanico de Lady Windermere | Oscar Wilde | Edimat Libros | 8484036383 |
-| 6  | Before Night Falls | Reinaldo Arenas | Penguin Books | 0140157654 |
-| 7  | From the Mixed Up Files of Mrs Basil E. Frankweiler | E. L. Konigsburg | Random House Childrens Pub (Mm) | 044022733X |
-| 8  | Harry Bear's Railway Adventure | C.J. Whiting | Minerva Press | 186106800X |
-| 9  | To Marry an Irish Rogue (Irish Eyes Romance Series, 2) | Lisa Hendrix | Jove Books | 0515127868 |
-| 10 | Six Hours One Friday : Anchoring to the Power of the Cross | Max Lucado | Multnomah | 1576736016 |
-
+| No | Book Title                                               | Author              | Publisher                          | ISBN         |
+|----|-----------------------------------------------------------|---------------------|-------------------------------------|--------------|
+| 1  | Fault Lines                                              | Anne Rivers Siddons | HarperTorch                         | 0061093343   |
+| 2  | Desert Solitaire                                          | Edward Abbey        | Touchstone                          | 0671695886   |
+| 3  | Walt Disney's Dumbo on Land, on Sea, in the Air          | Jerry Walters       | Random House Children's Books       | 0394825187   |
+| 4  | Magician: Apprentice (Riftwar Saga)                      | Raymond Feist       | Bantam                              | 0553564943   |
+| 5  | The Black Lyon                                            | Jude Deveraux       | Avon                                | 038075911X   |
+| 6  | Anna Karenina (Oprah's Book Club)                        | Leo Tolstoy         | Penguin Books                       | 0143035002   |
+| 7  | Insiders                                                  | Rosemary Rogers     | Avon                                | 0380405768   |
+| 8  | To the Stars: The Autobiography of George Takei          | George Takei        | Pocket Books                        | 0671890085   |
+| 9  | The Mulberry Tree                                         | Jude Deveraux       | Pocket                              | 0743437640   |
+| 10 | Native Tongue                                             | Carl Hiaasen        | Fawcett Books                       | 0449221180   |
 
 #### 📊 Insight dari Rekomendasi **Neural Collaborative Filtering** 
 - Rekomendasi mencakup berbagai genre seperti petualangan, sejarah, sastra klasik, dan spiritualitas. Model collaborative filtering memberikan rekomendasi yang beragam, menunjukkan kecenderungan pengguna terhadap berbagai topik dan gaya bacaan.
-- Buku yang direkomendasikan berasal dari penulis dan penerbit yang berbeda, mulai dari penulis terkenal seperti Oscar Wilde hingga penulis yang kurang dikenal. Ini menunjukkan kemampuan model dalam mengenali beragam penulis dan memperkenalkan buku dari penulis yang lebih niche.
+- Buku yang direkomendasikan berasal dari penulis dan penerbit yang berbeda, mulai dari penulis terkenal seperti Jerry Walters hingga penulis yang kurang dikenal. Ini menunjukkan kemampuan model dalam mengenali beragam penulis dan memperkenalkan buku dari penulis yang lebih niche.
 - Collaborative filtering mencocokkan pola perilaku pembaca lain yang serupa dengan User 20. Buku-buku dalam daftar ini kemungkinan besar dipilih berdasarkan kesamaan preferensi dengan pengguna lain, menciptakan rekomendasi yang relevan dan menarik.
 
 ---
@@ -421,10 +420,10 @@ MSE menghitung rata-rata dari kuadrat selisih antara nilai aktual dan nilai pred
 
   Penurunan loss yang stabil ini menunjukkan bahwa model berhasil belajar dan melakukan optimasi terhadap parameter yang ada selama proses pelatihan. Hal ini mengindikasikan bahwa model menyesuaikan bobotnya dengan baik untuk meminimalkan kesalahan prediksi pada data pelatihan. Tantangan berikutnya adalah memastikan bahwa model tidak hanya bekerja baik pada data pelatihan tetapi juga mampu melakukan generalisasi dengan baik pada data uji.
 
-- Hasil Test RMSE yang diperoleh adalah 2.2320, yang mengukur perbedaan rata-rata antara rating yang diprediksi oleh model dan rating aktual yang diberikan oleh pengguna pada data uji. RMSE yang lebih rendah menunjukkan kinerja model yang baik dalam memprediksi rating dengan akurat. Sebagai acuan, semakin rendah nilai RMSE, semakin dekat prediksi model dengan nilai aktual, yang berarti model lebih akurat dalam memberikan prediksi rating. Dengan nilai RMSE sebesar 2.2320, model menunjukkan performa yang cukup baik, namun masih ada ruang untuk perbaikan lebih lanjut. Nilai RMSE ini menunjukkan bahwa model bisa lebih baik dalam menangkap variasi rating pengguna pada data yang lebih luas atau variatif.
+- Hasil Test RMSE yang diperoleh adalah 2.1969, yang mengukur perbedaan rata-rata antara rating yang diprediksi oleh model dan rating aktual yang diberikan oleh pengguna pada data uji. RMSE yang lebih rendah menunjukkan kinerja model yang baik dalam memprediksi rating dengan akurat. Sebagai acuan, semakin rendah nilai RMSE, semakin dekat prediksi model dengan nilai aktual, yang berarti model lebih akurat dalam memberikan prediksi rating. Dengan nilai RMSE sebesar 2.1969, model menunjukkan performa yang cukup baik, namun masih ada ruang untuk perbaikan lebih lanjut. Nilai RMSE ini menunjukkan bahwa model bisa lebih baik dalam menangkap variasi rating pengguna pada data yang lebih luas atau variatif.
 
 ### Kesimpulan 
-- Model Neural Collaborative Filtering (NCF) menunjukkan kinerja yang solid dengan penurunan loss yang stabil selama pelatihan dan hasil RMSE yang terbilang baik (2.2320). Namun, masih ada ruang untuk peningkatan, terutama terkait dengan akurasi prediksi rating pada data uji.
+- Model Neural Collaborative Filtering (NCF) menunjukkan kinerja yang solid dengan penurunan loss yang stabil selama pelatihan dan hasil RMSE yang terbilang baik (2.1969). Namun, masih ada ruang untuk peningkatan, terutama terkait dengan akurasi prediksi rating pada data uji.
 - Dengan beberapa perbaikan, seperti penyempurnaan hyperparameter tuning, penambahan fitur, dan penerapan teknik regularisasi, model ini berpotensi memberikan rekomendasi yang lebih akurat bagi pengguna di masa mendatang.
 
 --- 
@@ -434,7 +433,7 @@ Hasil evaluasi sistem rekomendasi menunjukkan bahwa pendekatan Content-Based Fil
 
 1. Problem Statement 1 – Masalah Pilihan Buku yang Berlebihan:    
 Pendekatan Neural Collaborative Filtering (NCF) digunakan untuk memberikan rekomendasi yang dipersonalisasi berdasarkan pola interaksi pengguna.
-Model berhasil menunjukkan penurunan loss yang stabil selama pelatihan dan menghasilkan RMSE = 2.2320 pada data uji, menandakan bahwa sistem sudah mampu mempelajari preferensi pengguna.
+Model berhasil menunjukkan penurunan loss yang stabil selama pelatihan dan menghasilkan RMSE = 2.1969 pada data uji, menandakan bahwa sistem sudah mampu mempelajari preferensi pengguna.
 Namun, nilai RMSE tersebut masih mengindikasikan prediksi rating belum terlalu akurat, sehingga belum sepenuhnya mengurangi kebingungan pengguna dalam memilih buku secara optimal.
 
 

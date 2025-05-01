@@ -502,28 +502,27 @@ Kesimpulan:
 Berdasarkan hasil evaluasi terhadap beberapa pendekatan sistem rekomendasi:
 
 - Content-Based Filtering    
-Content-Based Filtering menunjukkan hasil yang sangat rendah pada Precision dan Recall. Tidak ada rekomendasi yang relevan dengan preferensi pengguna yang sudah diketahui. Hal ini menunjukkan bahwa model belum efektif dalam merekomendasikan buku berdasarkan kemiripan konten.
+Content-Based Filtering menunjukkan hasil yang sangat rendah pada Precision dan Recall. Tidak ada rekomendasi yang relevan dengan preferensi pengguna yang sudah diketahui. Hal ini menunjukkan bahwa model belum efektif dalam merekomendasikan buku berdasarkan kemiripan konten.    
 
-Pelatihan:   
+    Pelatihan:   
 Pada data pelatihan, model berhasil menghasilkan rekomendasi yang cukup relevan, namun pada evaluasi, model kesulitan dalam merekomendasikan buku yang sesuai dengan preferensi pengguna. Ini bisa disebabkan oleh faktor ekstraksi fitur yang tidak cukup representatif atau kurangnya perbedaan fitur antar buku.
 
 - Item-Based Collaborative Filtering (menggunakan SVD)    
-Model ini menunjukkan kesalahan prediksi yang cukup tinggi dengan RMSE dan MAE di atas 7. Hal ini mengindikasikan bahwa meskipun sistem dapat melakukan prediksi rating, perbedaan antara rating prediksi dan aktual masih cukup besar.
-
-Pelatihan:     
+Model ini menunjukkan kesalahan prediksi yang cukup tinggi dengan RMSE dan MAE di atas 7. Hal ini mengindikasikan bahwa meskipun sistem dapat melakukan prediksi rating, perbedaan antara rating prediksi dan aktual masih cukup besar. 
+   
+    Pelatihan:     
 Sistem dapat memberikan prediksi rating yang cukup baik, tetapi ketepatannya belum optimal. Ini bisa disebabkan oleh sparsity data (kurangnya interaksi antara pengguna dan buku), serta jumlah latent factors yang belum optimal.
 
 - User-Based Collaborative Filtering    
-Model User-Based Collaborative Filtering juga tidak memberikan hasil yang relevan untuk rekomendasi. Meskipun ada penghitungan kesamaan antar pengguna, hasil rekomendasi yang diberikan tidak sesuai dengan buku yang telah disukai pengguna.
+Model User-Based Collaborative Filtering juga tidak memberikan hasil yang relevan untuk rekomendasi. Meskipun ada penghitungan kesamaan antar pengguna, hasil rekomendasi yang diberikan tidak sesuai dengan buku yang telah disukai pengguna.    
 
-Pelatihan:     
+    Pelatihan:       
 Pada tahap pelatihan, model ini menunjukkan prediksi rating yang cukup baik, namun tidak efektif dalam mengenali pola kesamaan antar pengguna yang dapat mengarah pada rekomendasi yang relevan.
 
 --- 
 
-Kesimpulan dan Rekomendasi Model:
-Dari ketiga pendekatan yang dievaluasi, Item-Based Collaborative Filtering (SVD) terlihat sebagai model yang paling layak untuk dipilih dalam tahap awal, meskipun masih menunjukkan kesalahan prediksi yang signifikan. Model ini memiliki kemampuan untuk menghasilkan prediksi rating numerik yang mendekati kenyataan, yang membuatnya lebih dapat diandalkan sebagai dasar pengembangan sistem rekomendasi berbasis perilaku pengguna.
-
+#### Kesimpulan dan Rekomendasi Model:    
+Dari ketiga pendekatan yang dievaluasi, Item-Based Collaborative Filtering (SVD) terlihat sebagai model yang paling layak untuk dipilih dalam tahap awal, meskipun masih menunjukkan kesalahan prediksi yang signifikan. Model ini memiliki kemampuan untuk menghasilkan prediksi rating numerik yang mendekati kenyataan, yang membuatnya lebih dapat diandalkan sebagai dasar pengembangan sistem rekomendasi berbasis perilaku pengguna.    
 Alasan memilih Item-Based Collaborative Filtering (SVD):
 - Model ini merupakan satu-satunya pendekatan yang dapat memberikan prediksi rating numerik yang relevan, meskipun ada kesalahan yang cukup besar.
 - Pendekatan ini memiliki potensi untuk ditingkatkan lebih lanjut dengan perbaikan pada data (misalnya, menangani masalah sparsity) atau penambahan informasi pengguna dan buku melalui teknik hybrid.

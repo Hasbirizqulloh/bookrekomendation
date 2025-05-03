@@ -598,13 +598,11 @@ train, test = train_test_split(df[['user', 'item', 'Book-Rating']], test_size=0.
 
 - Dataset dibagi menjadi dua bagian: 80% untuk melatih model dan 20% untuk mengujinya. Pembagian ini penting untuk mengevaluasi performa model secara adil dan menghindari overfitting terhadap data pelatihan. (khusus untuk Colaborative Filtering)
 
-# 5. **Model Development**
+## Ekstraksi Fitur
 
-## Content-Based Filtering
+### Content-Based Filtering (Metode TF-IDF)
 
-📚 Sistem Rekomendasi Berbasis Konten Menggunakan TF-IDF dan Cosine Similarity
-
-Pada tahap ini, dilakukan pendekatan Content-Based Filtering untuk sistem rekomendasi buku. Data fitur seperti judul buku, penulis, dan penerbit digabung dan diubah menjadi representasi vektor menggunakan TF-IDF. Kemudian, dihitung kemiripan antar buku menggunakan cosine similarity untuk menemukan buku-buku yang mirip secara konten. Hasilnya digunakan untuk merekomendasikan buku lain yang paling relevan dengan buku yang dipilih oleh pengguna.
+Data fitur seperti judul buku, penulis, dan penerbit digabung dan diubah menjadi representasi vektor menggunakan TF-IDF.
 """
 
 # Reset index dulu supaya 0 sampai 9999
@@ -616,6 +614,43 @@ df_final_sample_reset['combined_features'] = df_final_sample_reset['Book-Title']
 # TF-IDF Vectorization
 tfidf = TfidfVectorizer(stop_words='english')
 tfidf_matrix = tfidf.fit_transform(df_final_sample_reset['combined_features'])
+
+"""### Neural Colaborative Filtering (Membuat Matriks Interaksi Pengguna-item)
+
+Persiapan Dataset dan DataLoader
+
+Tahap ini bertujuan untuk memformat data agar dapat digunakan oleh model Neural Collaborative Filtering (NCF) dalam PyTorch. Sebuah custom dataset `RatingDataset` dibuat untuk menyimpan informasi pengguna, item, dan rating dari DataFrame, lalu dikonversi menjadi tensor. Dataset ini kemudian digunakan untuk membentuk `DataLoader` yang memfasilitasi proses pelatihan dengan pengambilan batch secara efisien. `train_loader` digunakan untuk data pelatihan dengan shuffle aktif, sedangkan `test_loader` digunakan untuk evaluasi model.
+"""
+
+class RatingDataset(Dataset):
+    def __init__(self, df):
+        self.users = torch.tensor(df['user'].values, dtype=torch.long)
+        self.items = torch.tensor(df['item'].values, dtype=torch.long)
+        self.ratings = torch.tensor(df['Book-Rating'].values, dtype=torch.float)
+
+    def __len__(self):
+        return len(self.ratings)
+
+    def __getitem__(self, idx):
+        return self.users[idx], self.items[idx], self.ratings[idx]
+
+train_ds = RatingDataset(train)
+test_ds = RatingDataset(test)
+
+train_loader = DataLoader(train_ds, batch_size=64, shuffle=True)
+test_loader = DataLoader(test_ds, batch_size=64, shuffle=False)
+
+"""### Insight
+Semua data sudah siap untuk digunakan pelatihan untuk setiap model yang nantinya akan dibangun yaitu Content-Based Filtering menggunakan cosine similarity dan Colaborative Filtering menggunakan model deep learning.
+
+# 5. **Model Development**
+
+## Content-Based Filtering
+
+📚 Sistem Rekomendasi Berbasis Konten Menggunakan TF-IDF dan Cosine Similarity
+
+Pada tahap ini, dilakukan pendekatan Content-Based Filtering untuk sistem rekomendasi buku. Data fitur seperti judul buku, penulis, dan penerbit digabung dan diubah menjadi representasi vektor menggunakan TF-IDF. Kemudian, dihitung kemiripan antar buku menggunakan cosine similarity untuk menemukan buku-buku yang mirip secara konten. Hasilnya digunakan untuk merekomendasikan buku lain yang paling relevan dengan buku yang dipilih oleh pengguna.
+"""
 
 # Hitung cosine similarity antar buku
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
@@ -672,30 +707,7 @@ Metode content-based ini **sangat baik untuk merekomendasikan kelanjutan seri at
 
 ## Collaborative Filtering
 
-Persiapan Dataset dan DataLoader
-
-Tahap ini bertujuan untuk memformat data agar dapat digunakan oleh model Neural Collaborative Filtering (NCF) dalam PyTorch. Sebuah custom dataset `RatingDataset` dibuat untuk menyimpan informasi pengguna, item, dan rating dari DataFrame, lalu dikonversi menjadi tensor. Dataset ini kemudian digunakan untuk membentuk `DataLoader` yang memfasilitasi proses pelatihan dengan pengambilan batch secara efisien. `train_loader` digunakan untuk data pelatihan dengan shuffle aktif, sedangkan `test_loader` digunakan untuk evaluasi model.
-"""
-
-class RatingDataset(Dataset):
-    def __init__(self, df):
-        self.users = torch.tensor(df['user'].values, dtype=torch.long)
-        self.items = torch.tensor(df['item'].values, dtype=torch.long)
-        self.ratings = torch.tensor(df['Book-Rating'].values, dtype=torch.float)
-
-    def __len__(self):
-        return len(self.ratings)
-
-    def __getitem__(self, idx):
-        return self.users[idx], self.items[idx], self.ratings[idx]
-
-train_ds = RatingDataset(train)
-test_ds = RatingDataset(test)
-
-train_loader = DataLoader(train_ds, batch_size=64, shuffle=True)
-test_loader = DataLoader(test_ds, batch_size=64, shuffle=False)
-
-"""🧠 Neural Collaborative Filtering (NCF) Model Overview
+🧠 Neural Collaborative Filtering (NCF) Model Overview
 
 Model berikut adalah implementasi dasar dari Neural Collaborative Filtering (NCF) menggunakan PyTorch. Model ini bertujuan untuk memprediksi interaksi antara pengguna dan item (seperti rating atau kemungkinan klik).
 """

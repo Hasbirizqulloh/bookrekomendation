@@ -437,7 +437,8 @@ MSE menghitung rata-rata dari kuadrat selisih antara nilai aktual dan nilai pred
 ### Analisis Evaluasi 
 
 - Grafik Loss Curve yang dihasilkan selama pelatihan menunjukkan penurunan yang signifikan pada nilai loss dari epoch pertama hingga epoch ke-20. Di awal pelatihan, nilai loss cukup tinggi (sekitar 13.3), namun dengan bertambahnya epoch, loss menurun secara konsisten, mencapai nilai terendah pada epoch terakhir (sekitar 0.04).
-![download (1)](https://github.com/user-attachments/assets/dda7777f-756e-4e12-9c43-d24bb750c9b7)    
+![download (2)](https://github.com/user-attachments/assets/e46b034e-95c2-4d82-9300-c1449fe22924)
+    
 
   Penurunan loss yang stabil ini menunjukkan bahwa model berhasil belajar dan melakukan optimasi terhadap parameter yang ada selama proses pelatihan. Hal ini mengindikasikan bahwa model menyesuaikan bobotnya dengan baik untuk meminimalkan kesalahan prediksi pada data pelatihan. Tantangan berikutnya adalah memastikan bahwa model tidak hanya bekerja baik pada data pelatihan tetapi juga mampu melakukan generalisasi dengan baik pada data uji.
 

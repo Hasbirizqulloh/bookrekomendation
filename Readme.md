@@ -341,16 +341,16 @@ Berikut adalah daftar **top-10 rekomendasi buku** untuk pengguna yang dihasilkan
 
 | No | Book Title                                                | Author                   | Publisher                          | ISBN        |
 |----|------------------------------------------------------------|--------------------------|-------------------------------------|-------------|
-| 0  | A Time for Pink Roses: All My Life                        | Teresa Louise Stanisha   | Publishamerica                      | 1591296137  |
-| 1  | In the Heart of the Sea: The Tragedy of the Wh...         | Nathaniel Philbrick      | Penguin Putnam                      | 0670891576  |
-| 2  | Shibumi                                                    | Trevanian                | Ballantine Books                    | 0345311809  |
-| 3  | The Fellowship of the Ring (Lord of the Rings ...)        | J. R. R. Tolkien          | Ballantine Books                    | 0345296052  |
-| 4  | Insatiable                                                 | David Dvorkin            | Pinnacle Books                      | 1558177698  |
-| 5  | SEE YOU LATER                                              | Christopher Pike         | Simon Pulse                         | 0671020250  |
-| 6  | Walt Disney's Dumbo on Land, on Sea, in the Ai...         | Jerry Walters            | Random House Children's Books       | 0394825187  |
-| 7  | Ellen Foster                                               | Kaye Gibbons             | Algonquin Books of Chapel Hill      | 1565122054  |
-| 8  | The Bondwoman's Narrative                                  | Hannah Crafts            | Warner Books                        | 0446530085  |
-| 9  | Paula - Bolsillo                                           | Isabel Allende           | Sudamericana                        | 9500720426  |
+| 1  | A Time for Pink Roses: All My Life                        | Teresa Louise Stanisha   | Publishamerica                      | 1591296137  |
+| 2  | In the Heart of the Sea: The Tragedy of the Wh...         | Nathaniel Philbrick      | Penguin Putnam                      | 0670891576  |
+| 3  | Shibumi                                                    | Trevanian                | Ballantine Books                    | 0345311809  |
+| 4  | The Fellowship of the Ring (Lord of the Rings ...)        | J. R. R. Tolkien          | Ballantine Books                    | 0345296052  |
+| 5  | Insatiable                                                 | David Dvorkin            | Pinnacle Books                      | 1558177698  |
+| 6  | SEE YOU LATER                                              | Christopher Pike         | Simon Pulse                         | 0671020250  |
+| 7  | Walt Disney's Dumbo on Land, on Sea, in the Ai...         | Jerry Walters            | Random House Children's Books       | 0394825187  |
+| 8  | Ellen Foster                                               | Kaye Gibbons             | Algonquin Books of Chapel Hill      | 1565122054  |
+| 9  | The Bondwoman's Narrative                                  | Hannah Crafts            | Warner Books                        | 0446530085  |
+| 10  | Paula - Bolsillo                                           | Isabel Allende           | Sudamericana                        | 9500720426  |
 
 #### 📊 Insight dari Rekomendasi **Neural Collaborative Filtering** 
 - Rekomendasi mencakup berbagai genre seperti petualangan, sejarah, sastra klasik, dan spiritualitas. Model collaborative filtering memberikan rekomendasi yang beragam, menunjukkan kecenderungan pengguna terhadap berbagai topik dan gaya bacaan.

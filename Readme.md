@@ -445,7 +445,7 @@ MSE menghitung rata-rata dari kuadrat selisih antara nilai aktual dan nilai pred
 - Hasil Test RMSE yang diperoleh adalah 2.2604, yang mengukur perbedaan rata-rata antara rating yang diprediksi oleh model dan rating aktual yang diberikan oleh pengguna pada data uji. RMSE yang lebih rendah menunjukkan kinerja model yang baik dalam memprediksi rating dengan akurat. Sebagai acuan, semakin rendah nilai RMSE, semakin dekat prediksi model dengan nilai aktual, yang berarti model lebih akurat dalam memberikan prediksi rating. Dengan nilai RMSE sebesar 2.2604, model menunjukkan performa yang cukup baik, namun masih ada ruang untuk perbaikan lebih lanjut. Nilai RMSE ini menunjukkan bahwa model bisa lebih baik dalam menangkap variasi rating pengguna pada data yang lebih luas atau variatif.
 
 ### Kesimpulan 
-- Model Neural Collaborative Filtering (NCF) menunjukkan kinerja yang solid dengan penurunan loss yang stabil selama pelatihan dan hasil RMSE yang terbilang baik (2.1969). Namun, masih ada ruang untuk peningkatan, terutama terkait dengan akurasi prediksi rating pada data uji.
+- Model Neural Collaborative Filtering (NCF) menunjukkan kinerja yang solid dengan penurunan loss yang stabil selama pelatihan dan hasil RMSE yang terbilang baik (2.2604). Namun, masih ada ruang untuk peningkatan, terutama terkait dengan akurasi prediksi rating pada data uji.
 - Dengan beberapa perbaikan, seperti penyempurnaan hyperparameter tuning, penambahan fitur, dan penerapan teknik regularisasi, model ini berpotensi memberikan rekomendasi yang lebih akurat bagi pengguna di masa mendatang.
 
 --- 

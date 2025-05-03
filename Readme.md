@@ -245,6 +245,30 @@ Penggabungan ketiga dataset ini memungkinkan untuk membangun sistem rekomendasi 
 - Encoding memungkinkan sistem memahami data kategorikal dalam bentuk angka yang dapat dimanfaatkan model.  
 - Train-test split penting untuk mengevaluasi kemampuan generalisasi model dan mencegah overfitting terhadap data pelatihan.
 
+### 6. Ektraksi Fitur
+
+**Langkah yang Dilakukan:**
+
+Pada tahap ini, dilakukan ekstraksi fitur untuk dua pendekatan yang berbeda dalam sistem rekomendasi, yaitu Content-Based Filtering dan Neural Collaborative Filtering. Tujuannya adalah menyiapkan representasi data yang sesuai dengan kebutuhan masing-masing model.
+
+#### Untuk Content-Based Filtering (Metode TF-IDF)
+
+- Dataset hasil sampling terlebih dahulu di-reset index-nya agar urutan data menjadi 0 hingga 9999, sehingga mudah diproses secara konsisten.
+- Dilakukan penggabungan tiga kolom penting dari metadata buku, yaitu Book-Title, Book-Author, dan Publisher, menjadi satu kolom baru bernama combined_features. Kolom ini menciptakan deskripsi gabungan dari sebuah buku yang mencerminkan konten dan atribut utama buku tersebut.
+- Setelah fitur gabungan dibuat, dilakukan proses TF-IDF (Term Frequency-Inverse Document Frequency) Vectorization. Teknik ini digunakan untuk mengubah teks pada kolom combined_features menjadi representasi vektor numerik. TF-IDF memberikan bobot lebih tinggi pada kata-kata yang unik dalam sebuah dokumen namun jarang muncul di dokumen lain, sehingga model dapat menangkap ciri khas masing-masing buku.
+- Output dari proses ini adalah sebuah matrix bernilai numerik yang mewakili semua buku dalam bentuk vektor, dan dapat digunakan untuk menghitung kemiripan antar buku menggunakan cosine similarity sebagai dasar rekomendasi.
+
+#### Untuk Neural Collaborative Filtering (Membuat Matriks Interaksi Pengguna-item)
+
+- Dibuat kelas khusus bernama RatingDataset yang digunakan untuk mengatur struktur data agar kompatibel dengan model berbasis PyTorch. Dataset ini berisi tiga komponen penting: user, item (ISBN yang telah di-encode), dan Book-Rating.
+- Setiap data diubah menjadi tensor (tipe data numerik yang dapat diproses oleh PyTorch), dengan tipe long untuk ID pengguna dan item, serta float untuk rating.
+- Setelah kelas dataset dibuat, data pelatihan (train) dan data pengujian (test) masing-masing dimasukkan ke dalam instance RatingDataset.
+- Data kemudian dikemas ulang ke dalam bentuk DataLoader dengan batch size 64. DataLoader ini digunakan untuk menyuplai data secara bertahap ke dalam model neural network selama proses pelatihan dan evaluasi, memungkinkan pelatihan yang efisien dan teratur.
+
+**Pertimbangan:**
+
+Setiap pendekatan membutuhkan jenis fitur yang berbeda. Content-Based Filtering bergantung pada metadata buku, sehingga ekstraksi fitur teks menggunakan TF-IDF sangat penting untuk mengukur kesamaan antar buku. Sebaliknya, Neural Collaborative Filtering fokus pada interaksi pengguna-item, sehingga fitur yang dibutuhkan adalah representasi numerik dari pengguna dan buku beserta rating-nya. Proses ini merupakan fondasi penting agar masing-masing model dapat belajar secara optimal berdasarkan struktur data yang sesuai.
+
 
 ## Modeling and Result
 ### Sistem Rekomendasi yang Dibangun
@@ -253,8 +277,6 @@ Untuk menyelesaikan permasalahan dalam memberikan rekomendasi yang relevan kepad
 ### 1. Content-Based Filtering
 Pada pendekatan Content-Based Filtering, sistem merekomendasikan buku berdasarkan kesamaan fitur antar buku. Fitur yang digunakan meliputi judul buku, penulis, dan penerbit. Buku yang memiliki karakteristik serupa dengan buku yang disukai pengguna akan direkomendasikan.  
 Langkah-langkah:
-- Menggabungkan fitur teks seperti Book-Title, Book-Author, dan Publisher.
-- Melakukan ekstraksi fitur teks menggunakan TF-IDF Vectorizer.  
 - Menghitung kemiripan antar buku menggunakan Cosine Similarity.
 - Memberikan top-N rekomendasi item yang paling mirip dengan item yang pernah disukai pengguna.
 
@@ -299,7 +321,6 @@ Sebagai contoh, untuk seorang pengguna yang menyukai buku dalam seri tertentu, s
 Pada pendekatan **Neural Collaborative Filtering (NCF)**, sistem menggunakan pola interaksi pengguna dan item (seperti buku) untuk memprediksi rating atau preferensi yang belum diberikan oleh pengguna. NCF menggunakan model berbasis **neural network** yang lebih fleksibel dan dapat menangkap hubungan non-linear antara pengguna dan item. 
 
 Langkah-langkah:
-- **Membuat Matriks Interaksi Pengguna-Item** dengan menggunakan **User-ID**, **Item-ID** (misalnya ISBN), dan **Rating** untuk membangun matriks interaksi. Matriks ini berisi data rating yang diberikan pengguna terhadap item (buku).
 - Membangun **Model NCF** dengan menggunakan jaringan saraf, **embedding layer** digunakan untuk merepresentasikan pengguna dan item dalam bentuk vektor laten. Vektor-vektor ini kemudian digabungkan melalui lapisan **MLP (Multilayer Perceptron)** untuk memprediksi rating.
 - Model dilatih untuk meminimalkan **loss function** yaitu, **MSE Loss**, dengan memperkirakan rating yang belum pernah diberikan oleh pengguna.
 - Setelah model terlatih, prediksi rating dilakukan untuk item-item yang belum dinilai oleh pengguna, dan kemudian diberikan **top-10 rekomendasi buku** berdasarkan rating tertinggi.
@@ -318,18 +339,18 @@ Kekurangan:
 Top-10 Recommendation Output:  
 Berikut adalah daftar **top-10 rekomendasi buku** untuk pengguna yang dihasilkan oleh model **Neural Collaborative Filtering (NCF)**.
 
-| No | Book Title                                               | Author              | Publisher                          | ISBN         |
-|----|-----------------------------------------------------------|---------------------|-------------------------------------|--------------|
-| 1  | Fault Lines                                              | Anne Rivers Siddons | HarperTorch                         | 0061093343   |
-| 2  | Desert Solitaire                                          | Edward Abbey        | Touchstone                          | 0671695886   |
-| 3  | Walt Disney's Dumbo on Land, on Sea, in the Air          | Jerry Walters       | Random House Children's Books       | 0394825187   |
-| 4  | Magician: Apprentice (Riftwar Saga)                      | Raymond Feist       | Bantam                              | 0553564943   |
-| 5  | The Black Lyon                                            | Jude Deveraux       | Avon                                | 038075911X   |
-| 6  | Anna Karenina (Oprah's Book Club)                        | Leo Tolstoy         | Penguin Books                       | 0143035002   |
-| 7  | Insiders                                                  | Rosemary Rogers     | Avon                                | 0380405768   |
-| 8  | To the Stars: The Autobiography of George Takei          | George Takei        | Pocket Books                        | 0671890085   |
-| 9  | The Mulberry Tree                                         | Jude Deveraux       | Pocket                              | 0743437640   |
-| 10 | Native Tongue                                             | Carl Hiaasen        | Fawcett Books                       | 0449221180   |
+| No | Book Title                                                | Author                   | Publisher                          | ISBN        |
+|----|------------------------------------------------------------|--------------------------|-------------------------------------|-------------|
+| 0  | A Time for Pink Roses: All My Life                        | Teresa Louise Stanisha   | Publishamerica                      | 1591296137  |
+| 1  | In the Heart of the Sea: The Tragedy of the Wh...         | Nathaniel Philbrick      | Penguin Putnam                      | 0670891576  |
+| 2  | Shibumi                                                    | Trevanian                | Ballantine Books                    | 0345311809  |
+| 3  | The Fellowship of the Ring (Lord of the Rings ...)        | J. R. R. Tolkien          | Ballantine Books                    | 0345296052  |
+| 4  | Insatiable                                                 | David Dvorkin            | Pinnacle Books                      | 1558177698  |
+| 5  | SEE YOU LATER                                              | Christopher Pike         | Simon Pulse                         | 0671020250  |
+| 6  | Walt Disney's Dumbo on Land, on Sea, in the Ai...         | Jerry Walters            | Random House Children's Books       | 0394825187  |
+| 7  | Ellen Foster                                               | Kaye Gibbons             | Algonquin Books of Chapel Hill      | 1565122054  |
+| 8  | The Bondwoman's Narrative                                  | Hannah Crafts            | Warner Books                        | 0446530085  |
+| 9  | Paula - Bolsillo                                           | Isabel Allende           | Sudamericana                        | 9500720426  |
 
 #### 📊 Insight dari Rekomendasi **Neural Collaborative Filtering** 
 - Rekomendasi mencakup berbagai genre seperti petualangan, sejarah, sastra klasik, dan spiritualitas. Model collaborative filtering memberikan rekomendasi yang beragam, menunjukkan kecenderungan pengguna terhadap berbagai topik dan gaya bacaan.
@@ -415,12 +436,12 @@ MSE menghitung rata-rata dari kuadrat selisih antara nilai aktual dan nilai pred
 
 ### Analisis Evaluasi 
 
-- Grafik Loss Curve yang dihasilkan selama pelatihan menunjukkan penurunan yang signifikan pada nilai loss dari epoch pertama hingga epoch ke-20. Di awal pelatihan, nilai loss cukup tinggi (sekitar 16.03), namun dengan bertambahnya epoch, loss menurun secara konsisten, mencapai nilai terendah pada epoch terakhir (sekitar 0.04).
+- Grafik Loss Curve yang dihasilkan selama pelatihan menunjukkan penurunan yang signifikan pada nilai loss dari epoch pertama hingga epoch ke-20. Di awal pelatihan, nilai loss cukup tinggi (sekitar 13.3), namun dengan bertambahnya epoch, loss menurun secara konsisten, mencapai nilai terendah pada epoch terakhir (sekitar 0.04).
 ![download (1)](https://github.com/user-attachments/assets/dda7777f-756e-4e12-9c43-d24bb750c9b7)    
 
   Penurunan loss yang stabil ini menunjukkan bahwa model berhasil belajar dan melakukan optimasi terhadap parameter yang ada selama proses pelatihan. Hal ini mengindikasikan bahwa model menyesuaikan bobotnya dengan baik untuk meminimalkan kesalahan prediksi pada data pelatihan. Tantangan berikutnya adalah memastikan bahwa model tidak hanya bekerja baik pada data pelatihan tetapi juga mampu melakukan generalisasi dengan baik pada data uji.
 
-- Hasil Test RMSE yang diperoleh adalah 2.1969, yang mengukur perbedaan rata-rata antara rating yang diprediksi oleh model dan rating aktual yang diberikan oleh pengguna pada data uji. RMSE yang lebih rendah menunjukkan kinerja model yang baik dalam memprediksi rating dengan akurat. Sebagai acuan, semakin rendah nilai RMSE, semakin dekat prediksi model dengan nilai aktual, yang berarti model lebih akurat dalam memberikan prediksi rating. Dengan nilai RMSE sebesar 2.1969, model menunjukkan performa yang cukup baik, namun masih ada ruang untuk perbaikan lebih lanjut. Nilai RMSE ini menunjukkan bahwa model bisa lebih baik dalam menangkap variasi rating pengguna pada data yang lebih luas atau variatif.
+- Hasil Test RMSE yang diperoleh adalah 2.2604, yang mengukur perbedaan rata-rata antara rating yang diprediksi oleh model dan rating aktual yang diberikan oleh pengguna pada data uji. RMSE yang lebih rendah menunjukkan kinerja model yang baik dalam memprediksi rating dengan akurat. Sebagai acuan, semakin rendah nilai RMSE, semakin dekat prediksi model dengan nilai aktual, yang berarti model lebih akurat dalam memberikan prediksi rating. Dengan nilai RMSE sebesar 2.2604, model menunjukkan performa yang cukup baik, namun masih ada ruang untuk perbaikan lebih lanjut. Nilai RMSE ini menunjukkan bahwa model bisa lebih baik dalam menangkap variasi rating pengguna pada data yang lebih luas atau variatif.
 
 ### Kesimpulan 
 - Model Neural Collaborative Filtering (NCF) menunjukkan kinerja yang solid dengan penurunan loss yang stabil selama pelatihan dan hasil RMSE yang terbilang baik (2.1969). Namun, masih ada ruang untuk peningkatan, terutama terkait dengan akurasi prediksi rating pada data uji.
@@ -433,7 +454,7 @@ Hasil evaluasi sistem rekomendasi menunjukkan bahwa pendekatan Content-Based Fil
 
 1. Problem Statement 1 – Masalah Pilihan Buku yang Berlebihan:    
 Pendekatan Neural Collaborative Filtering (NCF) digunakan untuk memberikan rekomendasi yang dipersonalisasi berdasarkan pola interaksi pengguna.
-Model berhasil menunjukkan penurunan loss yang stabil selama pelatihan dan menghasilkan RMSE = 2.1969 pada data uji, menandakan bahwa sistem sudah mampu mempelajari preferensi pengguna.
+Model berhasil menunjukkan penurunan loss yang stabil selama pelatihan dan menghasilkan RMSE = 2.2604 pada data uji, menandakan bahwa sistem sudah mampu mempelajari preferensi pengguna.
 Namun, nilai RMSE tersebut masih mengindikasikan prediksi rating belum terlalu akurat, sehingga belum sepenuhnya mengurangi kebingungan pengguna dalam memilih buku secara optimal.
 
 
